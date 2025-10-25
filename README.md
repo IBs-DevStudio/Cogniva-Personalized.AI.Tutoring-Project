@@ -22,7 +22,7 @@ An AI-powered learning companion that delivers personalized tutoring for any sub
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Frontend and Backend**: Next.js 14, TypeScript, Tailwind CSS, OpenAI
 - **Authentication**: Clerk
 - **Database**: Supabase
 - **Voice AI**: Vapi
