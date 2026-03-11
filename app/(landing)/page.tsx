@@ -1,0 +1,558 @@
+'use client';
+
+import Link from "next/link";
+import Image from "next/image";
+import { Code, Sparkles, Linkedin, Github, FileText } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Users,
+  Zap,
+  Brain,
+  MessageCircle,
+  TrendingUp,
+  Mic,
+  Target,
+  Award,
+  Clock,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import LandingNavbar from "@/components/LandingNavbar";
+import LoadingButton from "@/components/LoadingButton";
+import MobileWarningModal from "@/components/MobileWarningModal";
+import TypewriterText from "@/components/TypewriterText";
+
+const LandingPage = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentFeature, setCurrentFeature] = useState(0);
+
+  const features = [
+    { icon: Mic, text: "Voice-Powered Tutoring" },
+    { icon: Target, text: "Interview Preparation" },
+    { icon: Award, text: "Exam Excellence" },
+    { icon: Clock, text: "Learn Quickly" },
+  ];
+
+  // Initialize page loaded state
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Cycle through features
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFeature((prev) => (prev + 1) % features.length);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [features.length]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 overflow-hidden">
+      {/* Mobile Warning Modal */}
+      <MobileWarningModal />
+
+      {/* Landing Navbar */}
+      <LandingNavbar />
+
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-cta-gold/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "4s" }}
+        ></div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <section className="min-h-screen flex items-center justify-center px-4 pt-20 mb-24">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div className="text-center lg:text-left space-y-8">
+                <div
+                  className={`space-y-6 transform transition-all duration-1000 delay-300 ${isLoaded
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                    }`}
+                >
+                  {/* Added Tagline */}
+                  <div className="inline-block">
+                    <div className="bg-gradient-to-r from-primary/10 via-cta-gold/10 to-primary/10 border-2 border-primary/30 rounded-full px-6 py-3 mb-4">
+                      <p className="text-lg font-bold bg-gradient-to-r from-primary via-cta-gold to-primary bg-clip-text text-transparent">
+                        <TypewriterText
+                          initialText="Your Personal AI Faculty, "
+                          rotatingTexts={[
+                            "Anytime, Anywhere",
+                            "Just Say a Word..!",
+                            " Coding",
+                            " Maths",
+                            " Interview",
+                            " Operating Systems"
+                          ]}
+                          speed={80}
+                          deleteSpeed={50}
+                          pauseTime={500}
+                        />
+                      </p>
+                    </div>
+                  </div>
+
+                  <h1 className="text-6xl font-extrabold text-foreground mb-6 leading-tight">
+                    The Future of{" "}
+                    <span className="bg-gradient-to-r from-primary via-cta-gold to-primary bg-clip-text text-transparent animate-pulse">
+                      Personalized Learning
+                    </span>{" "}
+                    is Here
+                  </h1>
+
+                  {/* Rotating Feature Display */}
+                  <div className="relative h-20 flex items-center justify-center lg:justify-start">
+                    {features.map((feature, index) => (
+                      <div
+                        key={index}
+                        className={`absolute left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0
+                          flex items-center gap-3 px-6 py-3 rounded-4xl
+                          border-2 border-primary/20 bg-white/80 backdrop-blur-sm
+                          transition-all duration-300 ease-in-out
+                          ${currentFeature === index
+                            ? "opacity-100 scale-100 translate-y-0 z-10"
+                            : "opacity-0 scale-95 translate-y-3 z-0"
+                          }`}
+                      >
+                        <feature.icon className="w-6 h-6 text-primary" />
+                        <span className="text-lg font-semibold text-foreground">
+                          {feature.text}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="text-xl text-muted-foreground leading-relaxed">
+                    Unlock your potential with AI-powered companions that adapt
+                    to your unique learning style. Experience education like
+                    never before.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Side Image */}
+              <div
+                className={`transform transition-all duration-1000 delay-700 ${isLoaded
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-20 opacity-0"
+                  }`}
+              >
+                <div className="bg-white rounded-4xl shadow-2xl p-6 border border-primary/10">
+                  <div className="relative overflow-hidden rounded-3xl" style={{ aspectRatio: "16 / 9" }}>
+                    <video
+                      className="absolute inset-0 w-full h-full object-cover"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      poster="/dashboard-preview.png"
+                    >
+                      <source src="/Cogniva_Demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <div className="text-center mt-4">
+                    <h3 className="text-xl font-bold text-foreground mb-2">
+                      Your AI Learning Dashboard
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Personalized companions, progress tracking, and seamless
+                      learning
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Feature Cards */}
+            <div className="relative mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {[
+          {
+            icon: Brain,
+            title: "AI-Powered",
+            desc: "Smart tutors that adapt",
+          },
+          {
+            icon: Mic,
+            title: "Voice-First",
+            desc: "Natural conversations",
+          },
+          {
+            icon: Zap,
+            title: "Instant Help",
+            desc: "24/7 availability",
+          },
+        ].map((card, index) => (
+        
+          <div
+            key={index}
+            className={`
+              group cursor-pointer
+              transition-opacity duration-700 ease-out
+              ${isLoaded ? "opacity-100" : "opacity-0"}
+            `}
+            style={{ transitionDelay: `${index * 120}ms` }}
+          >
+            <div
+              className="
+                relative rounded-4xl p-6 text-center
+                bg-white/70 backdrop-blur-md
+                border border-primary/15
+                shadow-[0_8px_30px_rgba(0,0,0,0.06)]
+                transition-all duration-500 ease-out
+                group-hover:bg-white/85
+                group-hover:border-primary/30
+              "
+            >
+              {/* Inner glow layer */}
+              <div
+                className="
+                  pointer-events-none absolute inset-0 rounded-4xl
+                  opacity-0 group-hover:opacity-100
+                  transition-opacity duration-500
+                  bg-[radial-gradient(60%_60%_at_50%_0%,rgba(255,255,255,0.6),transparent)]
+                "
+              />
+
+              
+
+              {/* Icon */}
+              <div
+                className="
+                  w-16 h-16 mx-auto mb-4
+                  flex items-center justify-center
+                  rounded-4xl bg-primary/10
+                  transition-all duration-500
+                  group-hover:bg-primary/15
+                "
+              >
+                <card.icon
+                  className="
+                    w-8 h-8 text-primary
+                    transition-all duration-500
+                    group-hover:brightness-110
+                  "
+                />
+              </div>
+
+              <h3 className="text-xl font-bold text-foreground mb-2 tracking-tight">
+                {card.title}
+              </h3>
+
+              <p className="text-muted-foreground/90">
+                {card.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+          </div>
+        </section>
+
+        {/* About Cogniva & IB's Dev World Section */}
+        <section className="py-16 px-4 bg-gradient-to-r from-cta/5 to-primary/5">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-foreground mb-4">
+                About Cogniva
+              </h2>
+              <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 border border-primary/20 shadow-lg max-w-4xl mx-auto">
+                <p className="text-lg text-foreground leading-relaxed">
+                  <span className="font-semibold text-primary">Cogniva</span> is
+                  an innovative AI learning app where students get instant voice
+                  tutors for interviews, exams, and learning any subject
+                  quickly. Our platform revolutionizes education by providing
+                  personalized, voice-powered learning experiences tailored to
+                  each student&apos;s unique needs.
+                </p>
+              </div>
+            </div>
+
+            {/* Creator & Company Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left - Ikram Banadar */}
+              <div className="bg-white rounded-3xl p-8 border border-primary/20 shadow-lg">
+                <div className="text-center mb-6">
+                  <img
+                    src="/images/Ib's1.jpg"
+                    alt="Ikram Banadar"
+                    className="w-24 h-24 rounded-full mx-auto mb-4 shadow-lg object-cover border-4 border-primary/20"
+                  />
+
+                  <h3 className="text-3xl font-bold mb-2 text-primary">
+                    Ikram Banadar
+                  </h3>
+
+                  <p className="text-base text-cta font-semibold mb-3">
+                    Lead Developer &amp; Founder of IB&apos;s Dev World
+                  </p>
+
+                  <div className="flex justify-center gap-3 mb-4">
+                    <a
+                      href="https://www.linkedin.com/in/ikrambanadarwebdev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://github.com/IBs-DevStudio"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://www.notion.so/1eac89999f3080bd89b0cd5971f8768e?v=219c89999f308099aa8a000c124c0c8a"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-primary/10 hover:bg-primary rounded-full flex items-center justify-center transition-all group"
+                      aria-label="View Notion database"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        preserveAspectRatio="xMidYMid"
+                        viewBox="0 0 256 268"
+                      >
+                        <path fill="#FFF" d="M16.092 11.538 164.09.608c18.179-1.56 22.85-.508 34.28 7.801l47.243 33.282C253.406 47.414 256 48.975 256 55.207v182.527c0 11.439-4.155 18.205-18.696 19.24L65.44 267.378c-10.913.517-16.11-1.043-21.825-8.327L8.826 213.814C2.586 205.487 0 199.254 0 191.97V29.726c0-9.352 4.155-17.153 16.092-18.188Z" />
+                        <path d="M164.09.608 16.092 11.538C4.155 12.573 0 20.374 0 29.726v162.245c0 7.284 2.585 13.516 8.826 21.843l34.789 45.237c5.715 7.284 10.912 8.844 21.825 8.327l171.864-10.404c14.532-1.035 18.696-7.801 18.696-19.24V55.207c0-5.911-2.336-7.614-9.21-12.66l-1.185-.856L198.37 8.409C186.94.1 182.27-.952 164.09.608ZM69.327 52.22c-14.033.945-17.216 1.159-25.186-5.323L23.876 30.778c-2.06-2.086-1.026-4.69 4.163-5.207l142.274-10.395c11.947-1.043 18.17 3.12 22.842 6.758l24.401 17.68c1.043.525 3.638 3.637.517 3.637L71.146 52.095l-1.819.125Zm-16.36 183.954V81.222c0-6.767 2.077-9.887 8.3-10.413L230.02 60.93c5.724-.517 8.31 3.12 8.31 9.879v153.917c0 6.767-1.044 12.49-10.387 13.008l-161.487 9.361c-9.343.517-13.489-2.594-13.489-10.921ZM212.377 89.53c1.034 4.681 0 9.362-4.681 9.897l-7.783 1.542v114.404c-6.758 3.637-12.981 5.715-18.18 5.715-8.308 0-10.386-2.604-16.609-10.396l-50.898-80.079v77.476l16.1 3.646s0 9.362-12.989 9.362l-35.814 2.077c-1.043-2.086 0-7.284 3.63-8.318l9.351-2.595V109.823l-12.98-1.052c-1.044-4.68 1.55-11.439 8.826-11.965l38.426-2.585 52.958 81.113v-71.76l-13.498-1.552c-1.043-5.733 3.111-9.896 8.3-10.404l35.84-2.087Z" />
+                      </svg>
+                    </a>
+                  </div>
+
+                  <p className="text-muted-foreground leading-relaxed">
+                    Ikram is a passionate developer and founder who specializes
+                    in creating cutting-edge digital solutions. Through IB&apos;s Dev
+                    World, he transforms complex ideas into simple, user-friendly
+                    applications that solve real-world problems.
+                  </p>
+                </div>
+
+                <div className="flex gap-3 mt-6">
+                  <div className="flex-1 bg-primary/5 rounded-2xl p-4 border border-primary/10">
+                    <Code className="w-6 h-6 text-primary mb-2" />
+                    <h4 className="font-semibold text-foreground text-sm mb-1">
+                      User-Centric Design
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Every app designed with the user in mind
+                    </p>
+                  </div>
+                  <div className="flex-1 bg-cta/5 rounded-2xl p-4 border border-cta/10">
+                    <Sparkles className="w-6 h-6 text-cta mb-2" />
+                    <h4 className="font-semibold text-foreground text-sm mb-1">
+                      Cutting-Edge Tech
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      Latest technologies for best performance
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: IB's Dev World */}
+              <div className="space-y-6">
+                <div className="bg-white rounded-3xl p-8 border border-primary/20 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-cta/20 rounded-2xl flex items-center justify-center">
+                      <Target className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground">
+                      IB&apos;s Dev World
+                    </h3>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    At IB&apos;s Dev World, we believe that the most powerful
+                    solutions are often the simplest ones. Our development
+                    philosophy centers on creating intuitive, accessible
+                    applications that anyone can use effectively.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-br from-primary to-cta-gold rounded-3xl p-8 shadow-lg text-white">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Brain className="w-10 h-10 text-white" />
+                    <h4 className="text-2xl font-bold">Ikram&apos;s Mission</h4>
+                  </div>
+                  <p className="leading-relaxed opacity-95">
+                    Through IB&apos;s Dev World, I aim to democratize access to
+                    advanced technology by developing innovative applications
+                    that bridge the gap between complex functionality and
+                    intuitive user experiences. Our mission is to make
+                    AI-powered education accessible and engaging for students
+                    worldwide, empowering the next generation to learn, create,
+                    and innovate with ease.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Students Choose Cogniva Section */}
+        <section id="features" className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold text-foreground mb-6">
+                Why Students Choose Cogniva
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Transform your learning experience with AI tutors designed for modern education
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Target,
+                  title: "Interview Ready",
+                  description: "Practice with AI interviewers for job interviews, college admissions, and professional certifications",
+                  gradient: "from-primary/20 to-primary/5"
+                },
+                {
+                  icon: Award,
+                  title: "Exam Excellence",
+                  description: "Master any subject with personalized study sessions and instant feedback on your progress",
+                  gradient: "from-cta-gold/20 to-cta-gold/5"
+                },
+                {
+                  icon: Clock,
+                  title: "Learn Quickly",
+                  description: "Accelerate your learning with AI that adapts to your pace and learning style",
+                  gradient: "from-cta/20 to-cta/5"
+                },
+                {
+                  icon: MessageCircle,
+                  title: "Voice Conversations",
+                  description: "Natural voice interactions make learning feel like talking with a knowledgeable friend",
+                  gradient: "from-primary/20 to-primary/5"
+                },
+                {
+                  icon: BookOpen,
+                  title: "Any Subject",
+                  description: "From mathematics to literature, coding to history - we cover everything you need to learn",
+                  gradient: "from-cta-gold/20 to-cta-gold/5"
+                },
+                {
+                  icon: TrendingUp,
+                  title: "Track Progress",
+                  description: "Visual analytics show your improvement over time and identify areas for growth",
+                  gradient: "from-cta/20 to-cta/5"
+                }
+              ].map((feature, index) => (
+                <div
+                  key={index}
+                  className="group bg-white rounded-4xl p-8 border border-border hover:border-primary/30 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+                >
+                  <div className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-4xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <feature.icon className="w-10 h-10 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-cta via-cta to-primary text-white rounded-4xl px-12 py-16 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-cta-gold/20 animate-pulse"></div>
+              <div className="relative z-10 space-y-8">
+                <div className="inline-flex items-center px-6 py-3 bg-cta-gold rounded-4xl text-cta text-lg font-semibold animate-bounce">
+                  <Zap className="w-5 h-5 mr-2" />
+                  Ready to Transform Your Learning?
+                </div>
+                <h2 className="text-6xl font-bold max-sm:text-4xl">
+                  Start Your Journey
+                  <span className="block text-cta-gold">
+                    With Cogniva Today
+                  </span>
+                </h2>
+                <p className="text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto">
+                  Join to accelerate your learning with AI-powered tutors
+                </p>
+                <div className="flex items-center justify-center gap-6 max-sm:flex-col">
+                  <LoadingButton
+                    href="/dashboard"
+                    variant="secondary"
+                    className="rounded-4xl px-12 py-6 text-2xl font-bold"
+                  >
+                    Enter Cogniva Now
+                  </LoadingButton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 px-4 border-t border-border/20">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between max-sm:flex-col max-sm:gap-6">
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/images/logo.png"
+                  alt="Cogniva Logo"
+                  width={48}
+                  height={48}
+                  className="rounded-lg"
+                />
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">Cogniva</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Your Personal AI Faculty, Anytime, Anywhere
+                  </p>
+                </div>
+              </div>
+
+              <div className="text-center max-sm:text-left">
+                <p className="text-muted-foreground text-lg mb-2">
+                  Built with ❤️ by{" "}
+                  <span className="text-primary font-semibold">Ikram Banadar</span>
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Lead Developer &amp; Founder of IB&apos;s Dev World
+                </p>
+              </div>
+
+              <div className="text-right max-sm:text-center">
+                <p className="text-muted-foreground">
+                  © 2024 Cogniva &amp; IB&apos;s Dev World
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Empowering learning through AI
+                </p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default LandingPage;
