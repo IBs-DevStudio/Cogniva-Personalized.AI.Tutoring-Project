@@ -160,9 +160,12 @@ body {
   .rounded-border {
     @apply rounded-4xl border border-black;
   }
+
+  /* CTA: fills its grid column, centers content, no fixed width constraints */
   .cta-section {
-    @apply bg-cta text-white rounded-4xl px-6 py-6 flex flex-col items-center text-center gap-4 w-full max-w-[360px] max-lg:max-w-[480px] max-md:w-full shadow-lg;
+    @apply bg-cta text-white rounded-4xl px-7 py-10 flex flex-col items-center text-center gap-5 w-full;
   }
+
   .cta-badge {
     @apply bg-cta-gold rounded-4xl px-3 py-1.5 text-black;
   }
@@ -183,24 +186,7 @@ body {
   }
 
   .companion-section {
-    /* Gradient double border effect similar to reference */
-    @apply relative w-2/3 max-sm:w-full flex flex-col gap-4 justify-center items-center rounded-lg bg-white;
-  }
-  .companion-section::before {
-    content: "";
-    @apply absolute inset-0 rounded-lg pointer-events-none;
-    background: linear-gradient(180deg, #ff6a3d, #fccc41);
-    padding: 2px;
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box, 
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-  }
-  .companion-section::after {
-    content: "";
-    @apply absolute inset-1 rounded-lg pointer-events-none;
-    border: 2px solid rgba(0,0,0,0.1);
+    @apply border-2 border-orange-500 w-2/3 max-sm:w-full flex flex-col gap-4 justify-center items-center rounded-lg;
   }
 
   .companion-avatar {
@@ -241,18 +227,3 @@ body {
     scrollbar-width: none;
   }
 }
-
-/* Custom animations for loading button */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(200%);
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 1.5s infinite;
-}
-

@@ -289,7 +289,7 @@ const LandingPage = () => {
               <div className="bg-white rounded-3xl p-8 border border-primary/20 shadow-lg">
                 <div className="text-center mb-6">
                   <img
-                    src="/images/Ib's1.jpg"
+                    src="/images/ib-2.png"
                     alt="Ikram Banadar"
                     className="w-24 h-24 rounded-full mx-auto mb-4 shadow-lg object-cover border-4 border-primary/20"
                   />
