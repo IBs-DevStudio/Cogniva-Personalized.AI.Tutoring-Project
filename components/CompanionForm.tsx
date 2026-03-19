@@ -337,7 +337,7 @@ const CompanionForm = () => {
                                 </>
                             ) : (
                                 <>
-                                    <Sparkles className="h-4 w-4" />
+                                    <Sparkles className="h-4 w-3" />
                                     Build Your Companion
                                     <ChevronRight className="h-4 w-4 ml-auto opacity-70" />
                                 </>
