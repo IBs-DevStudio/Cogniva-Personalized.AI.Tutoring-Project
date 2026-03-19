@@ -161,6 +161,31 @@ export const getUserCompanions = async (userId: string) => {
     return data;
 }
 
+export const getCompanionCredits = async (): Promise<{ used: number; limit: number; canCreate: boolean }> => {
+    const { userId, has } = await auth();
+    if (!userId) return { used: 0, limit: 3, canCreate: false };
+
+    const supabase = createSupabaseClient();
+
+    if (has({ plan: 'pro' })) {
+        return { used: 0, limit: Infinity, canCreate: true };
+    }
+
+    let limit = 3;
+    if (has({ feature: '10_companion_limit' })) limit = 10;
+    else if (has({ feature: '3_companion_limit' })) limit = 3;
+
+    const { data, error } = await supabase
+        .from('companions')
+        .select('id', { count: 'exact' })
+        .eq('author', userId);
+
+    if (error) throw new Error(error.message);
+
+    const used = data?.length ?? 0;
+    return { used, limit, canCreate: used < limit };
+}
+
 export const newCompanionPermissions = async () => {
     const { userId, has } = await auth();
     const supabase = createSupabaseClient();

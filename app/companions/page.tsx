@@ -1,10 +1,11 @@
-import {getAllCompanions} from "@/lib/actions/companions.action";
+import {getAllCompanions, getCompanionCredits} from "@/lib/actions/companions.action";
 import CompanionCard from "@/components/CompanionCard";
 import {getSubjectColor} from "@/lib/utils";
 import SearchInput from "@/components/SearchInputs";
 import SubjectFilter from "@/components/SubjectFilter";
 import Link from "next/link";
 import {recentSessions} from "@/constants";
+import CompanionCreditBadge from "@/components/CompanionCreditBadge";
 
 const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
     const filters = await searchParams;
@@ -12,7 +13,14 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
     const topic = filters.topic ? filters.topic : '';
 
     let companions;
-    
+    let credits = { used: 0, limit: 3, canCreate: true };
+
+    try {
+        credits = await getCompanionCredits();
+    } catch {
+        // fall back to defaults
+    }
+
     try {
         companions = await getAllCompanions({ subject, topic });
         // Only show actual database companions, no fallback to mock data
@@ -28,7 +36,8 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
         <main>
             <section className="flex justify-between gap-4 max-sm:flex-col">
                 <h1>Companion Library</h1>
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4 flex-wrap">
+                    <CompanionCreditBadge used={credits.used} limit={credits.limit} />
                     <SearchInput />
                     <SubjectFilter />
                 </div>
@@ -49,8 +58,11 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
                             <p className="text-gray-600 mb-6">
                                 You haven't created any companions yet. Create your first AI tutor to get started!
                             </p>
-                            <Link href="/companions/new" className="btn-primary inline-block">
-                                Create Your First Companion
+                            <Link
+                                href={credits.canCreate ? "/companions/new" : "/subscription"}
+                                className="btn-primary inline-block"
+                            >
+                                {credits.canCreate ? "Create Your First Companion" : "Upgrade to Create Companions"}
                             </Link>
                         </div>
                     </div>

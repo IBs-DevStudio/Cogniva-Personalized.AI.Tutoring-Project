@@ -359,6 +359,7 @@ const LandingPage = () => {
                     <Sparkles className="w-6 h-6 text-cta mb-2" />
                     <h4 className="font-semibold text-foreground text-sm mb-1">
                       Cutting-Edge Tech
+                      
                     </h4>
                     <p className="text-xs text-muted-foreground">
                       Latest technologies for best performance

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Lock } from "lucide-react";
 
 const CTA_PHRASES = [
   "Start learning your way.",
@@ -16,7 +17,11 @@ const CTA_PHRASES = [
    "Give it a try"
 ];
 
-const Cta = () => {
+interface CtaProps {
+  canCreate?: boolean;
+}
+
+const Cta = ({ canCreate = true }: CtaProps) => {
   // Typewriter effect for the yellow badge text (multiple phrases)
   const [displayText, setDisplayText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
@@ -61,13 +66,23 @@ const Cta = () => {
         <span>{displayText}</span>
         <span className="ml-0.5 inline-block w-[1ch] animate-pulse">|</span>
       </div>
-      <h2 className="text-3xl font-bold">
-        Build and Personalize Learning Companion
-      </h2>
-      <p>Pick a name, subject, voice, & personality — and start learning through voice conversations that feel natural and fun.</p>
-      <Image src="images/cta.svg" alt="cta" width={362} height={232} />
-      <button
-        className="btn-primary relative overflow-hidden transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0.1"
+      <div className="max-w-[280px]">
+        <h2 className="text-2xl font-semibold leading-tight">
+          Build & Personalize your Companion
+        </h2>
+        <p className="text-sm mt-2">Pick a name, subject, voice & personality — start learning through short voice conversations.</p>
+      </div>
+      <div className="w-full flex justify-center mt-4">
+        <Image src="images/cta.svg" alt="cta" width={240} height={154} />
+      </div>
+      <Link
+        href={canCreate ? "/companions/new" : "/subscription"}
+        className={[
+          "btn-primary relative overflow-hidden transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0.1 inline-flex items-center gap-2 no-underline",
+          !canCreate && "opacity-90",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         style={{ animation: "ctaPulse 8s ease-in-out infinite" }}
       >
         <span
@@ -75,11 +90,13 @@ const Cta = () => {
           className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
           style={{ animation: "shimmer 2.5s linear infinite" }}
         />
-        <Image src="/icons/plus.svg" alt="plus" width={12} height={12} />
-        <Link href="/companions/new">
-          <p>Build a New Companion</p>
-        </Link>
-      </button>
+        {canCreate ? (
+          <Image src="/icons/plus.svg" alt="plus" width={12} height={12} />
+        ) : (
+          <Lock className="h-3.5 w-3.5 shrink-0" />
+        )}
+        {canCreate ? "Build a New Companion" : "Upgrade for More Companions"}
+      </Link>
       <style>{`
         @keyframes shimmer {
           0% { transform: translateX(-100%); }

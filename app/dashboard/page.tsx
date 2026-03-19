@@ -7,13 +7,15 @@ import CTA from "@/components/CTA";
 // import { DashboardWelcomeCarousel } from "@/components/DashboardWelcomeCarousel";
 import DashboardWelcomeCarousel from "@/components/DashboardWelcomeCarousel";
 import {recentSessions} from "@/constants";
-import {getAllCompanions, getRecentSessions} from "@/lib/actions/companions.action";
+import {getAllCompanions, getRecentSessions, getCompanionCredits} from "@/lib/actions/companions.action";
 import {getSubjectColor} from "@/lib/utils";
+import CompanionCreditBadge from "@/components/CompanionCreditBadge";
 
 
 const HomePage = () => {
     const [companions, setCompanions] = useState<Companion[]>([]);
     const [recentSessionsCompanions, setRecentSessionsCompanions] = useState<Companion[]>([]);
+    const [credits, setCredits] = useState<{ used: number; limit: number; canCreate: boolean }>({ used: 0, limit: 3, canCreate: true });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -29,6 +31,13 @@ const HomePage = () => {
             } catch (error) {
                 console.warn('Failed to fetch featured companions, using mock data:', error);
                 setCompanions(recentSessions.slice(0, 3));
+            }
+
+            try {
+                const fetchedCredits = await getCompanionCredits();
+                setCredits(fetchedCredits);
+            } catch {
+                // fall back to defaults
             }
 
             try {
@@ -68,37 +77,51 @@ const HomePage = () => {
       {/* Dashboard Welcome Carousel */}
       <DashboardWelcomeCarousel/>
       
-      <h1>Featured Companions</h1>
+      <div className="flex items-start justify-between mb-6">
+        <h1 className="text-3xl font-bold">Featured Companions</h1>
+        {credits.limit !== Infinity && (
+          <div>
+            <CompanionCreditBadge used={credits.used} limit={credits.limit} />
+          </div>
+        )}
+      </div>
 
-        <section className="home-section">
-            {companions.map((companion) => (
-                <CompanionCard
-                    key={companion.id}
-                    {...companion}
-                    color={getSubjectColor(companion.subject)}
-                />
-            ))}
+      <section className="home-section">
+        {companions.map((companion) => (
+          <CompanionCard
+            key={companion.id}
+            {...companion}
+            color={getSubjectColor(companion.subject)}
+          />
+        ))}
+      </section>
 
-        </section>
-        <section className="home-section">
-            {recentSessionsCompanions.length > 0 ? (
-                <CompanionsList
-                    title="Recently completed sessions"
-                    companions={recentSessionsCompanions}
-                    classNames="w-2/3 max-lg:w-full"
-                />
-            ) : (
-                <div className="w-2/3 max-lg:w-full">
-                    <h2 className="font-bold text-3xl mb-4">Recently completed sessions</h2>
-                    <div className="bg-gray-50 rounded-lg p-8 text-center">
-                        <p className="text-gray-600">
-                            No sessions completed yet. Start a session with any companion to see your history here!
-                        </p>
-                    </div>
-                </div>
-            )}
-            <CTA />
-        </section>
+      <section className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start">
+        <div>
+          {recentSessionsCompanions.length > 0 ? (
+            <CompanionsList
+              title="Recently completed sessions"
+              companions={recentSessionsCompanions}
+              classNames="w-full"
+            />
+          ) : (
+            <div className="w-full">
+              <h2 className="font-bold text-3xl mb-4">Recently completed sessions</h2>
+              <div className="bg-gray-50 rounded-lg p-8 text-center">
+                <p className="text-gray-600">
+                  No sessions completed yet. Start a session with any companion to see your history here!
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-3 items-center lg:items-start">
+          <div className="w-full max-w-[380px] lg:ml-auto lg:mr-6">
+            <CTA canCreate={credits.canCreate} />
+          </div>
+        </div>
+      </section>
     </main>
   )
 }
