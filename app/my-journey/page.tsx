@@ -74,7 +74,7 @@ const Profile = async () => {
               <h1 className="text-3xl font-bold">
                 {user.firstName} {user.lastName}
               </h1>
-              <span className="bg-black text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
+              <span className="bg-[#fe5933] text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
                 Lvl {level} · {title}
               </span>
             </div>
@@ -87,19 +87,17 @@ const Profile = async () => {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { value: sessionCount,        label: "Sessions Completed", icon: "/icons/check.svg" },
-            { value: companionCount,      label: "Companions Built",   icon: "/icons/cap.svg"   },
-            { value: `Lvl ${level}`,      label: "Current Rank",       icon: null               },
-            { value: `${sessionCount * 8}m`, label: "Mins Learned",   icon: null               },
+            { value: sessionCount,           label: "Sessions Completed", icon: "/icons/check.svg"  },
+            { value: companionCount,         label: "Companions Built",   icon: "/icons/cap.svg"    },
+            { value: `Lvl ${level}`,         label: "Current Rank",       icon: "/icons/star.png"   },
+            { value: `${sessionCount * 8}m`, label: "Mins Learned",       icon: "/icons/clock.svg"  },
           ].map((stat) => (
             <div
               key={stat.label}
               className="rounded-3xl border border-black px-5 py-4 flex flex-col gap-1"
             >
               <div className="flex items-center gap-2">
-                {stat.icon && (
-                  <Image src={stat.icon} alt="" width={18} height={18} />
-                )}
+                <Image src={stat.icon} alt="" width={18} height={18} />
                 <span className="text-2xl font-bold">{stat.value}</span>
               </div>
               <span className="text-xs text-muted-foreground">{stat.label}</span>
@@ -109,7 +107,7 @@ const Profile = async () => {
 
         {/* AI quip */}
         <div className="rounded-3xl border border-black/10 bg-[#f9f9f9] px-5 py-3 flex items-start gap-3">
-          <span className="text-base mt-0.5"></span>
+          <span className="text-base mt-0.5">🤖</span>
           <p className="text-sm text-muted-foreground italic">{quip}</p>
         </div>
       </section>

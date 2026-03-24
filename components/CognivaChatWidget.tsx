@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, FormEvent } from "react";
+import Image from "next/image";
 
  type Message = {
   id: number;
@@ -92,10 +93,10 @@ export default function CognivaWidget() {
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-black/25 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full  "
         aria-label="Open Cogniva assistant "
       >
-        <span className="text-2xl">💬</span>
+       <Image className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-lg cursor-pointer" src="/images/robo-2.png" alt="Cogniva" width={100} height={108}  />
       </button>
 
       {/*  window */}
