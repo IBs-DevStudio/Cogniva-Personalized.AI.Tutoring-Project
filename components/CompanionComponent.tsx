@@ -98,7 +98,10 @@ const CompanionComponent = ({
       serverMessages: [],
     };
     // @ts-expect-error
-    vapi.start(configureAssistant(voice || "female", style || "casual"), assistantOverrides);
+    vapi.start(
+      configureAssistant(voice || "female", style || "casual"),
+      assistantOverrides,
+    );
   };
 
   const handleDisconnect = () => {
@@ -107,7 +110,10 @@ const CompanionComponent = ({
   };
 
   const handleRepeat = () => {
-    if (callStatus === CallStatus.ACTIVE || callStatus === CallStatus.CONNECTING) {
+    if (
+      callStatus === CallStatus.ACTIVE ||
+      callStatus === CallStatus.CONNECTING
+    ) {
       vapi.stop();
     }
     setMessages([]);
@@ -125,42 +131,70 @@ const CompanionComponent = ({
 
   return (
     <section className="session-root">
-
       {/* ── TOP ARENA ── */}
       <div className="arena-wrapper">
-
         {/* Ambient glow behind companion */}
         <div
           className="arena-glow"
-          style={{ background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${subjectColor}33 0%, transparent 70%)` }}
+          style={{
+            background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${subjectColor}33 0%, transparent 70%)`,
+          }}
         />
 
         {/* ── COMPANION CARD ── */}
-        <div className={cn("companion-card", isActive && "companion-card--active", isConnecting && "companion-card--connecting")}>
-
+        <div
+          className={cn(
+            "companion-card",
+            isActive && "companion-card--active",
+            isConnecting && "companion-card--connecting",
+          )}
+        >
           {/* Ripple rings when active & speaking */}
           {isActive && isSpeaking && (
             <>
-              <span className="ripple ripple-1" style={{ borderColor: subjectColor }} />
-              <span className="ripple ripple-2" style={{ borderColor: subjectColor }} />
-              <span className="ripple ripple-3" style={{ borderColor: subjectColor }} />
+              <span
+                className="ripple ripple-1"
+                style={{ borderColor: subjectColor }}
+              />
+              <span
+                className="ripple ripple-2"
+                style={{ borderColor: subjectColor }}
+              />
+              <span
+                className="ripple ripple-3"
+                style={{ borderColor: subjectColor }}
+              />
             </>
           )}
 
           {/* Avatar box */}
-          <div className="companion-avatar-box" style={{ backgroundColor: subjectColor }}>
-
+          <div
+            className="companion-avatar-box"
+            style={{ backgroundColor: subjectColor }}
+          >
             {/* Static icon */}
-            <div className={cn(
-              "avatar-icon-wrap",
-              (isInactive || isFinished) ? "opacity-100" : "opacity-0",
-              isConnecting && "opacity-100 animate-pulse"
-            )}>
-              <Image src={`/icons/${subject}.svg`} alt={subject} width={80} height={80} />
+            <div
+              className={cn(
+                "avatar-icon-wrap",
+                isInactive || isFinished ? "opacity-100" : "opacity-0",
+                isConnecting && "opacity-100 animate-pulse",
+              )}
+            >
+              <Image
+                src={`/icons/${subject}.svg`}
+                alt={subject}
+                width={80}
+                height={80}
+              />
             </div>
 
             {/* Soundwave lottie */}
-            <div className={cn("avatar-icon-wrap", isActive ? "opacity-100" : "opacity-0")}>
+            <div
+              className={cn(
+                "avatar-icon-wrap",
+                isActive ? "opacity-100" : "opacity-0",
+              )}
+            >
               <Lottie
                 lottieRef={lottieRef}
                 animationData={soundwaves}
@@ -181,45 +215,64 @@ const CompanionComponent = ({
           <p className="companion-name">{name}</p>
 
           {/* Status line */}
-          <p className={cn("companion-status", isActive && "status-active", isConnecting && "status-connecting", isFinished && "status-finished")}>
+          <p
+            className={cn(
+              "companion-status",
+              isActive && "status-active",
+              isConnecting && "status-connecting",
+              isFinished && "status-finished",
+            )}
+          >
             {isActive
-              ? isSpeaking ? "Speaking..." : "Listening..."
+              ? isSpeaking
+                ? "Speaking..."
+                : "Listening..."
               : isConnecting
-              ? "Connecting..."
-              : isFinished
-              ? "Session ended"
-              : "Ready to start"}
+                ? "Connecting..."
+                : isFinished
+                  ? "Session ended"
+                  : "Ready to start"}
           </p>
         </div>
 
         {/* ── USER CARD ── */}
         <div className="user-card">
           <div className="user-avatar-ring">
-            <Image src={userImage} alt={userName} width={72} height={72} className="user-photo" />
+            <Image
+              src={userImage}
+              alt={userName}
+              width={72}
+              height={72}
+              className="user-photo"
+            />
             {/* Online dot */}
             <span className="online-dot" />
           </div>
           <p className="user-name">{userName}</p>
           <p className="user-label">Student</p>
         </div>
-
       </div>
 
       {/* ── CONTROLS BAR ── */}
       <div className="controls-bar">
-
         {/* Mic */}
         <button
           onClick={toggleMicrophone}
           disabled={!isActive}
-          className={cn("ctrl-btn", !isMuted && isActive ? "ctrl-btn--mic-on" : "ctrl-btn--muted", !isActive && "ctrl-btn--disabled")}
+          className={cn(
+            "ctrl-btn",
+            !isMuted && isActive ? "ctrl-btn--mic-on" : "ctrl-btn--muted",
+            !isActive && "ctrl-btn--disabled",
+          )}
           title={isMuted ? "Unmute" : "Mute"}
         >
           <div className="relative">
-            {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-            {!isMuted && isActive && (
-              <span className="mic-live-dot" />
+            {isMuted ? (
+              <MicOff className="w-5 h-5" />
+            ) : (
+              <Mic className="w-5 h-5" />
             )}
+            {!isMuted && isActive && <span className="mic-live-dot" />}
           </div>
           <span className="ctrl-label">{isMuted ? "Unmute" : "Mute"}</span>
         </button>
@@ -231,7 +284,7 @@ const CompanionComponent = ({
           className={cn(
             "ctrl-btn-main",
             isActive ? "ctrl-btn-main--end" : "ctrl-btn-main--start",
-            isConnecting && "ctrl-btn-main--connecting"
+            isConnecting && "ctrl-btn-main--connecting",
           )}
         >
           {isConnecting ? (
@@ -242,7 +295,13 @@ const CompanionComponent = ({
             <Phone className="w-5 h-5" />
           )}
           <span>
-            {isActive ? "End Session" : isConnecting ? "Connecting..." : isFinished ? "Session Ended" : "Start Session"}
+            {isActive
+              ? "End Session"
+              : isConnecting
+                ? "Connecting..."
+                : isFinished
+                  ? "Session Ended"
+                  : "Start Session"}
           </span>
         </button>
 
@@ -250,13 +309,17 @@ const CompanionComponent = ({
         <button
           onClick={handleRepeat}
           disabled={isConnecting}
-          className={cn("ctrl-btn ctrl-btn--repeat", isConnecting && "ctrl-btn--disabled")}
+          className={cn(
+            "ctrl-btn ctrl-btn--repeat",
+            isConnecting && "ctrl-btn--disabled",
+          )}
           title="Restart"
         >
-          <RotateCcw className={cn("w-5 h-5", isConnecting && "animate-spin")} />
+          <RotateCcw
+            className={cn("w-5 h-5", isConnecting && "animate-spin")}
+          />
           <span className="ctrl-label">Restart</span>
         </button>
-
       </div>
 
       {/* ── TRANSCRIPT ── */}
@@ -279,13 +342,13 @@ const CompanionComponent = ({
                 key={index}
                 className={cn(
                   "transcript-msg",
-                  message.role === "assistant" ? "transcript-msg--ai" : "transcript-msg--user"
+                  message.role === "assistant"
+                    ? "transcript-msg--ai"
+                    : "transcript-msg--user",
                 )}
               >
                 <span className="msg-sender">
-                  {message.role === "assistant"
-                    ? name.split(" ")[0]
-                    : userName}
+                  {message.role === "assistant" ? name.split(" ")[0] : userName}
                 </span>
                 <p className="msg-content">{message.content}</p>
               </div>
@@ -296,7 +359,6 @@ const CompanionComponent = ({
 
       {/* ── STYLES ── */}
       <style jsx>{`
-
         /* Root */
         .session-root {
           display: flex;
@@ -336,12 +398,16 @@ const CompanionComponent = ({
           padding: 2rem 2.5rem;
           flex: 1;
           max-width: 520px;
-          transition: border-color 0.4s, box-shadow 0.4s;
+          transition:
+            border-color 0.4s,
+            box-shadow 0.4s;
           overflow: hidden;
         }
         .companion-card--active {
           border-color: hsl(var(--primary) / 0.6);
-          box-shadow: 0 0 0 4px hsl(var(--primary) / 0.08), 0 8px 32px hsl(var(--primary) / 0.12);
+          box-shadow:
+            0 0 0 4px hsl(var(--primary) / 0.08),
+            0 8px 32px hsl(var(--primary) / 0.12);
         }
         .companion-card--connecting {
           border-color: hsl(var(--primary) / 0.4);
@@ -358,13 +424,31 @@ const CompanionComponent = ({
           animation: rippleOut 2s ease-out infinite;
           pointer-events: none;
         }
-        .ripple-1 { width: 180px; height: 180px; animation-delay: 0s; }
-        .ripple-2 { width: 260px; height: 260px; animation-delay: 0.5s; }
-        .ripple-3 { width: 340px; height: 340px; animation-delay: 1s; }
+        .ripple-1 {
+          width: 180px;
+          height: 180px;
+          animation-delay: 0s;
+        }
+        .ripple-2 {
+          width: 260px;
+          height: 260px;
+          animation-delay: 0.5s;
+        }
+        .ripple-3 {
+          width: 340px;
+          height: 340px;
+          animation-delay: 1s;
+        }
 
         @keyframes rippleOut {
-          0%   { opacity: 0.5; transform: translate(-50%, -50%) scale(0.8); }
-          100% { opacity: 0;   transform: translate(-50%, -50%) scale(1.2); }
+          0% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(0.8);
+          }
+          100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.2);
+          }
         }
 
         /* Avatar box */
@@ -376,7 +460,7 @@ const CompanionComponent = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
           flex-shrink: 0;
         }
         .avatar-icon-wrap {
@@ -403,7 +487,7 @@ const CompanionComponent = ({
           display: flex;
           align-items: center;
           gap: 4px;
-          box-shadow: 0 2px 8px rgba(239,68,68,0.5);
+          box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
         }
         .live-dot {
           width: 5px;
@@ -412,7 +496,11 @@ const CompanionComponent = ({
           border-radius: 50%;
           animation: blink 1s step-start infinite;
         }
-        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes blink {
+          50% {
+            opacity: 0;
+          }
+        }
 
         /* Companion text */
         .companion-name {
@@ -428,9 +516,15 @@ const CompanionComponent = ({
           letter-spacing: 0.02em;
           transition: color 0.3s;
         }
-        .status-active  { color: #22c55e; }
-        .status-connecting { color: hsl(var(--primary)); }
-        .status-finished { color: hsl(var(--muted-foreground)); }
+        .status-active {
+          color: #22c55e;
+        }
+        .status-connecting {
+          color: hsl(var(--primary));
+        }
+        .status-finished {
+          color: hsl(var(--muted-foreground));
+        }
 
         /* ── User Card ── */
         .user-card {
@@ -550,8 +644,15 @@ const CompanionComponent = ({
           animation: pulse 1.5s ease-in-out infinite;
         }
         @keyframes pulse {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.4); opacity: 0.7; }
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.4);
+            opacity: 0.7;
+          }
         }
 
         /* Main CTA button */
@@ -583,12 +684,12 @@ const CompanionComponent = ({
         .ctrl-btn-main--end {
           background: #ef4444;
           color: white;
-          box-shadow: 0 4px 16px rgba(239,68,68,0.3);
+          box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
         }
         .ctrl-btn-main--end:hover {
           background: #dc2626;
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(239,68,68,0.4);
+          box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
         }
         .ctrl-btn-main--connecting {
           background: hsl(var(--primary) / 0.7);
@@ -597,8 +698,13 @@ const CompanionComponent = ({
           animation: connectingPulse 1.5s ease-in-out infinite;
         }
         @keyframes connectingPulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
         }
 
         /* ── Transcript ── */
