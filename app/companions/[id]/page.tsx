@@ -22,6 +22,8 @@ const CompanionSession = () => {
         topic: string;
         duration: number;
         author?: string;
+        voice?: string;
+        style?: string;
         [key: string]: unknown;
     };
     const [companion, setCompanion] = useState<SessionCompanion | null>(null);
