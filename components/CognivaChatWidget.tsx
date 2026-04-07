@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, FormEvent } from "react";
 import Image from "next/image";
 
- type Message = {
+type Message = {
   id: number;
   role: "user" | "assistant";
   content: string;
@@ -40,11 +40,13 @@ export default function CognivaWidget() {
     let historySnapshot: { role: "user" | "assistant"; content: string }[] = [];
 
     setMessages((prev) => {
-      const nextMessages = [
+      const nextMessages: Message[] = [
         ...prev,
         { id: Date.now(), role: "user", content: text },
       ];
+
       historySnapshot = nextMessages.map(({ role, content }) => ({ role, content }));
+
       return nextMessages;
     });
 
@@ -96,14 +98,13 @@ export default function CognivaWidget() {
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full  "
         aria-label="Open Cogniva assistant "
       >
-       <Image className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-lg cursor-pointer" src="/images/robo-2.png" alt="Cogniva" width={100} height={108}  />
+        <Image className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-lg cursor-pointer" src="/images/robo-2.png" alt="Cogniva" width={100} height={108} />
       </button>
 
       {/*  window */}
       <div
-        className={`${
-          isOpen ? "flex" : "hidden"
-        } fixed bottom-24 right-6 z-50 flex h-[28rem] w-80 flex-col rounded-3xl border border-border bg-background text-foreground shadow-xl shadow-black/30`}
+        className={`${isOpen ? "flex" : "hidden"
+          } fixed bottom-24 right-6 z-50 flex h-[28rem] w-80 flex-col rounded-3xl border border-border bg-background text-foreground shadow-xl shadow-black/30`}
       >
         <div className="flex items-center justify-between border-b border-border px-4 py-2 text-sm font-semibold">
           <span>Cogniva Assistant</span>
@@ -121,16 +122,14 @@ export default function CognivaWidget() {
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex ${message.role === "user" ? "justify-end" : "justify-start"
+                }`}
             >
               <div
-                className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs sm:text-sm ${
-                  message.role === "user"
+                className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs sm:text-sm ${message.role === "user"
                     ? "bg-primary text-white"
                     : "bg-muted text-foreground border border-border"
-                }`}
+                  }`}
               >
                 {message.content}
               </div>
