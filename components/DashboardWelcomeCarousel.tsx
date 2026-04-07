@@ -1,37 +1,38 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
 import { ChevronRight, X, Sparkles, Users, Zap, ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getUserCompanions } from '@/lib/actions/companions.action';
 
 const DashboardWelcomeCarousel = () => {
+  const { user } = useUser();
   const [showCarousel, setShowCarousel] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [hasBuiltCompanions, setHasBuiltCompanions] = useState(false);
 
   useEffect(() => {
+    if (!user) return;
+
     const checkUserCompanions = async () => {
       try {
-        // Check if user has dismissed the carousel for current session only
         const isDismissed = sessionStorage.getItem('dashboard-welcome-carousel-dismissed');
         if (isDismissed === 'true') {
-          return; // Don't show carousel if dismissed for current session
+          return;
         }
-       const userCompanions = await getUserCompanions(user?.id ?? "");
+        const userCompanions = await getUserCompanions(user?.id ?? "");
         const hasCompanions =
           Array.isArray(userCompanions) && userCompanions.length > 0;
 
         setHasBuiltCompanions(hasCompanions);
 
-        // Only show carousel if user hasn't built any companions yet
         if (!hasCompanions) {
           setTimeout(() => setShowCarousel(true), 500);
         }
       } catch (error) {
         console.warn('Could not fetch user companions:', error);
-        // Check dismissal preference even on error
         const isDismissed = sessionStorage.getItem('dashboard-welcome-carousel-dismissed');
         if (isDismissed !== 'true') {
           setTimeout(() => setShowCarousel(true), 500);
@@ -40,12 +41,12 @@ const DashboardWelcomeCarousel = () => {
     };
 
     checkUserCompanions();
-  }, []);
+  }, [user]);
 
   const handleClose = () => {
     setShowCarousel(false);
   };
-
+  
   const handleDontShowAgain = () => {
     // Use sessionStorage for temporary dismissal (only for current session)
     sessionStorage.setItem('dashboard-welcome-carousel-dismissed', 'true');
@@ -130,12 +131,13 @@ const DashboardWelcomeCarousel = () => {
           {carouselSteps.map((_, index) => (
             <div
               key={index}
-              className={`h-2 rounded-full transition-all duration-300 ${index === currentStep
-                ? 'w-8 bg-gradient-to-r from-primary to-cta-gold'
-                : index < currentStep
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === currentStep
+                  ? 'w-8 bg-gradient-to-r from-primary to-cta-gold'
+                  : index < currentStep
                   ? 'w-6 bg-primary/50'
                   : 'w-4 bg-gray-200'
-                }`}
+              }`}
             />
           ))}
         </div>
