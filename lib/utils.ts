@@ -21,7 +21,7 @@ export const formatSubjectName = (subject: string) => {
     'communication': 'Communication',
     'machinelearning': 'Machine Learning',
   };
-  
+
   return subjectMap[subject] || subject.charAt(0).toUpperCase() + subject.slice(1);
 };
 
@@ -68,8 +68,8 @@ Tutor Guidelines:
         },
       ],
     },
-    clientMessages: [],
-    serverMessages: [],
+    clientMessages: [] as any,
+    serverMessages: [] as any,
   };
   return vapiAssistant;
 };
