@@ -19,11 +19,12 @@ const DashboardWelcomeCarousel = () => {
         if (isDismissed === 'true') {
           return; // Don't show carousel if dismissed for current session
         }
-        
-        const userCompanions = await getUserCompanions();
-        const hasCompanions = userCompanions && userCompanions.length > 0;
+       const userCompanions = await getUserCompanions(user?.id ?? "");
+        const hasCompanions =
+          Array.isArray(userCompanions) && userCompanions.length > 0;
+
         setHasBuiltCompanions(hasCompanions);
-        
+
         // Only show carousel if user hasn't built any companions yet
         if (!hasCompanions) {
           setTimeout(() => setShowCarousel(true), 500);
@@ -37,14 +38,14 @@ const DashboardWelcomeCarousel = () => {
         }
       }
     };
-    
+
     checkUserCompanions();
   }, []);
 
   const handleClose = () => {
     setShowCarousel(false);
   };
-  
+
   const handleDontShowAgain = () => {
     // Use sessionStorage for temporary dismissal (only for current session)
     sessionStorage.setItem('dashboard-welcome-carousel-dismissed', 'true');
@@ -129,13 +130,12 @@ const DashboardWelcomeCarousel = () => {
           {carouselSteps.map((_, index) => (
             <div
               key={index}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentStep
-                  ? 'w-8 bg-gradient-to-r from-primary to-cta-gold'
-                  : index < currentStep
+              className={`h-2 rounded-full transition-all duration-300 ${index === currentStep
+                ? 'w-8 bg-gradient-to-r from-primary to-cta-gold'
+                : index < currentStep
                   ? 'w-6 bg-primary/50'
                   : 'w-4 bg-gray-200'
-              }`}
+                }`}
             />
           ))}
         </div>
