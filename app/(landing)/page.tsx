@@ -159,9 +159,9 @@ const LandingPage = () => {
                       loop
                       playsInline
                       poster="/dashboard-preview.png"
+                      preload="auto"
                     >
-                      <source src="/cogniva_demo(main).mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
+                      <source src="https://res.cloudinary.com/dchmterf0/video/upload/q_auto,f_auto/Cogniva_Demo_main_tikqmf.mp4" type="video/mp4" />
                     </video>
                   </div>
                   <div className="text-center mt-4">
@@ -179,36 +179,36 @@ const LandingPage = () => {
 
             {/* Floating Feature Cards */}
             <div className="relative mt-16">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-        {[
-          {
-            icon: Brain,
-            title: "AI-Powered",
-            desc: "Smart tutors that adapt",
-          },
-          {
-            icon: Mic,
-            title: "Voice-First",
-            desc: "Natural conversations",
-          },
-          {
-            icon: Zap,
-            title: "Instant Help",
-            desc: "24/7 availability",
-          },
-        ].map((card, index) => (
-        
-          <div
-            key={index}
-            className={`
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                {[
+                  {
+                    icon: Brain,
+                    title: "AI-Powered",
+                    desc: "Smart tutors that adapt",
+                  },
+                  {
+                    icon: Mic,
+                    title: "Voice-First",
+                    desc: "Natural conversations",
+                  },
+                  {
+                    icon: Zap,
+                    title: "Instant Help",
+                    desc: "24/7 availability",
+                  },
+                ].map((card, index) => (
+
+                  <div
+                    key={index}
+                    className={`
               group cursor-pointer
               transition-opacity duration-700 ease-out
               ${isLoaded ? "opacity-100" : "opacity-0"}
             `}
-            style={{ transitionDelay: `${index * 120}ms` }}
-          >
-            <div
-              className="
+                    style={{ transitionDelay: `${index * 120}ms` }}
+                  >
+                    <div
+                      className="
                 relative rounded-4xl p-6 text-center
                 bg-white/70 backdrop-blur-md
                 border border-primary/15
@@ -217,50 +217,50 @@ const LandingPage = () => {
                 group-hover:bg-white/85
                 group-hover:border-primary/30
               "
-            >
-              {/* Inner glow layer */}
-              <div
-                className="
+                    >
+                      {/* Inner glow layer */}
+                      <div
+                        className="
                   pointer-events-none absolute inset-0 rounded-4xl
                   opacity-0 group-hover:opacity-100
                   transition-opacity duration-500
                   bg-[radial-gradient(60%_60%_at_50%_0%,rgba(255,255,255,0.6),transparent)]
                 "
-              />
+                      />
 
-              
 
-              {/* Icon */}
-              <div
-                className="
+
+                      {/* Icon */}
+                      <div
+                        className="
                   w-16 h-16 mx-auto mb-4
                   flex items-center justify-center
                   rounded-4xl bg-primary/10
                   transition-all duration-500
                   group-hover:bg-primary/15
                 "
-              >
-                <card.icon
-                  className="
+                      >
+                        <card.icon
+                          className="
                     w-8 h-8 text-primary
                     transition-all duration-500
                     group-hover:brightness-110
                   "
-                />
+                        />
+                      </div>
+
+                      <h3 className="text-xl font-bold text-foreground mb-2 tracking-tight">
+                        {card.title}
+                      </h3>
+
+                      <p className="text-muted-foreground/90">
+                        {card.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              <h3 className="text-xl font-bold text-foreground mb-2 tracking-tight">
-                {card.title}
-              </h3>
-
-              <p className="text-muted-foreground/90">
-                {card.desc}
-              </p>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
           </div>
         </section>
 
@@ -359,7 +359,7 @@ const LandingPage = () => {
                     <Sparkles className="w-6 h-6 text-cta mb-2" />
                     <h4 className="font-semibold text-foreground text-sm mb-1">
                       Cutting-Edge Tech
-                      
+
                     </h4>
                     <p className="text-xs text-muted-foreground">
                       Latest technologies for best performance
