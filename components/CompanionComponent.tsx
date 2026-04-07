@@ -95,11 +95,11 @@ const CompanionComponent = ({
       serverMessages: [],
     };
 
-    // @ts-expect-error - vapi.start typing does not cover dynamic assistant config returned by configureAssistant
-    vapi.start(
-      configureAssistant(voice || "female", style || "casual"),
-      assistantOverrides,
-    );
+  
+   vapi.start(
+  configureAssistant(voice || "female", style || "casual"),
+  assistantOverrides as any
+);
   };
 
   const handleDisconnect = () => {

@@ -53,7 +53,7 @@ Tone:
           "X-Title": "Cogniva Universal Assistant",
         },
         body: JSON.stringify({
-          model: "deepseek/deepseek-r1-0528:free",
+          model: "deepseek/deepseek-chat",
           messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: message },
