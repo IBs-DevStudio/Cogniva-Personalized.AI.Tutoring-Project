@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useRouter, useParams } from 'next/navigation';
-import {getCompanion} from "@/lib/actions/companions.action";
-import {getSubjectColor} from "@/lib/utils";
+import { getCompanion } from "@/lib/actions/companions.action";
+import { getSubjectColor } from "@/lib/utils";
 import Image from "next/image";
 import CompanionComponent from "@/components/CompanionComponent";
 import AILearningFlashCard from "@/components/AILearningFlashCard";
-import {recentSessions} from "@/constants";
+import { recentSessions } from "@/constants";
 
 const CompanionSession = () => {
     const params = useParams();
@@ -31,7 +31,7 @@ const CompanionSession = () => {
 
     useEffect(() => {
         if (!isLoaded) return;
-        
+
         if (!user) {
             router.push('/sign-in');
             return;
@@ -40,7 +40,7 @@ const CompanionSession = () => {
         const fetchCompanion = async () => {
             try {
                 let fetchedCompanion = await getCompanion(id);
-                
+
                 // Verify the companion belongs to the current user
                 if (fetchedCompanion && fetchedCompanion.author !== user.id) {
                     // User doesn't own this companion, check if it's a mock companion they can access
@@ -51,20 +51,20 @@ const CompanionSession = () => {
                     }
                     fetchedCompanion = null; // Force to use mock data
                 }
-                
+
                 // If no companion from database, use mock data
                 if (!fetchedCompanion) {
                     fetchedCompanion = recentSessions.find(session => session.id === id);
                 }
-                
+
                 // If still no companion found, redirect
                 if (!fetchedCompanion) {
                     router.push('/companions');
                     return;
                 }
-                
+
                 setCompanion(fetchedCompanion);
-                
+
                 // Always show AI flash card first when landing on companion page
                 const hasSeenAIFlashCard = localStorage.getItem(`ai-flash-card-${id}`);
                 if (!hasSeenAIFlashCard) {
@@ -74,7 +74,7 @@ const CompanionSession = () => {
                     // If tutorial was seen before, skip directly to companion
                     setTutorialCompleted(true);
                 }
-                
+
             } catch (error) {
                 console.error('Error fetching companion from database:', error);
                 // Fallback to mock data
@@ -89,10 +89,10 @@ const CompanionSession = () => {
                 setLoading(false);
             }
         };
-        
+
         fetchCompanion();
     }, [id, user, isLoaded, router]);
-    
+
     const handleCloseAIFlashCard = () => {
         setShowAIFlashCard(false);
         localStorage.setItem(`ai-flash-card-${id}`, 'seen');
@@ -100,13 +100,13 @@ const CompanionSession = () => {
         setTutorialCompleted(true);
     };
 
-    
+
     const handleShowTutorialAgain = () => {
         localStorage.removeItem(`ai-flash-card-${id}`);
         setShowAIFlashCard(true);
         setTutorialCompleted(false);
     };
-    
+
     if (!isLoaded || loading) {
         return (
             <main>
@@ -116,7 +116,7 @@ const CompanionSession = () => {
             </main>
         );
     }
-    
+
     if (!companion) {
         return null;
     }
@@ -125,17 +125,17 @@ const CompanionSession = () => {
     return (
         <main>
             {/* AI Learning Flash Card */}
-            <AILearningFlashCard 
-                show={showAIFlashCard} 
-                onClose={handleCloseAIFlashCard} 
+            <AILearningFlashCard
+                show={showAIFlashCard}
+                onClose={handleCloseAIFlashCard}
             />
-            
+
             {/* Only show companion interface after tutorial is completed */}
             {tutorialCompleted && (
                 <>
                     <article className="flex rounded-border justify-between p-6 max-md:flex-col">
                         <div className="flex items-center gap-2">
-                            <div className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden" style={{ backgroundColor: getSubjectColor(subject)}}>
+                            <div className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden" style={{ backgroundColor: getSubjectColor(subject) }}>
                                 <Image src={`/icons/${subject}.svg`} alt={subject} width={35} height={35} />
                             </div>
 
@@ -155,7 +155,7 @@ const CompanionSession = () => {
                             <div className="text-2xl max-md:hidden">
                                 {duration} minutes
                             </div>
-                            <button 
+                            <button
                                 onClick={handleShowTutorialAgain}
                                 className="text-sm text-primary hover:text-primary/80 underline transition-colors duration-200"
                             >
@@ -169,10 +169,12 @@ const CompanionSession = () => {
                         companionId={id}
                         userName={user.firstName!}
                         userImage={user.imageUrl!}
+                        voice={companion.voice ?? ""}
+                        style={companion.style ?? ""}
                     />
                 </>
             )}
-            
+
             {/* Show message when tutorial hasn't been completed yet */}
             {!tutorialCompleted && !showAIFlashCard && (
                 <div className="flex items-center justify-center min-h-[400px]">
@@ -184,7 +186,7 @@ const CompanionSession = () => {
                         <p className="text-muted-foreground mb-6">
                             Please complete the AI learning tutorial to start your session with {name}
                         </p>
-                        <button 
+                        <button
                             onClick={handleShowTutorialAgain}
                             className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:bg-primary/90 transition-colors duration-200"
                         >
