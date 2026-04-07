@@ -169,8 +169,8 @@ const CompanionSession = () => {
                     <CompanionComponent
                         {...companion}
                         companionId={id}
-                        userName={user.firstName!}
-                        userImage={user.imageUrl!}
+                        userName={user?.firstName ?? ""}
+                        userImage={user?.imageUrl ?? ""}
                         voice={companion.voice ?? ""}
                         style={companion.style ?? ""}
                     />
