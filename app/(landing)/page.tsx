@@ -160,7 +160,7 @@ const LandingPage = () => {
                       playsInline
                       poster="/dashboard-preview.png"
                     >
-                      <source src="/Cogniva_Demo.mp4" type="video/mp4" />
+                      <source src="/cogniva_demo(main).mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
