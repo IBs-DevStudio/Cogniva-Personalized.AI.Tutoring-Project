@@ -55,8 +55,8 @@ const CompanionForm = () => {
     const router = useRouter()
     const [isBuilding, setIsBuilding] = useState(false)
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof formSchema>, any, z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema) as any,
         defaultValues: {
             name: '',
             subject: '',
@@ -342,7 +342,7 @@ const CompanionForm = () => {
                                     <ChevronRight className="h-4 w-4 ml-auto opacity-70" />
                                 </>
                             )}
-                            
+
                         </Button>
                     </div>
                 </form>
