@@ -14,34 +14,11 @@ const DashboardWelcomeCarousel = () => {
   const [hasBuiltCompanions, setHasBuiltCompanions] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
-
-    const checkUserCompanions = async () => {
-      try {
-        const isDismissed = sessionStorage.getItem('dashboard-welcome-carousel-dismissed');
-        if (isDismissed === 'true') {
-          return;
-        }
-        const userCompanions = await getUserCompanions(user?.id ?? "");
-        const hasCompanions =
-          Array.isArray(userCompanions) && userCompanions.length > 0;
-
-        setHasBuiltCompanions(hasCompanions);
-
-        if (!hasCompanions) {
-          setTimeout(() => setShowCarousel(true), 500);
-        }
-      } catch (error) {
-        console.warn('Could not fetch user companions:', error);
-        const isDismissed = sessionStorage.getItem('dashboard-welcome-carousel-dismissed');
-        if (isDismissed !== 'true') {
-          setTimeout(() => setShowCarousel(true), 500);
-        }
-      }
-    };
-
-    checkUserCompanions();
-  }, [user]);
+    const isDismissed = sessionStorage.getItem('dashboard-welcome-carousel-dismissed');
+    if (isDismissed !== 'true') {
+      setTimeout(() => setShowCarousel(true), 500);
+    }
+  }, []);
 
   const handleClose = () => {
     setShowCarousel(false);
