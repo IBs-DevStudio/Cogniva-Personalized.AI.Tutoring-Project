@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   title: "Cogniva",
   description: "Real-time AI Teaching Platform",
   icons: {
-    icon: '/images/logo.png',
-    apple: '/images/logo.png',
-    shortcut: '/images/logo.png',
+    icon: "/images/logo.png",
+    apple: "/images/logo.png",
+    shortcut: "/images/logo.png",
   },
 };
 

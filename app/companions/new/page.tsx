@@ -13,12 +13,12 @@ const NewCompanion = async () => {
     const canCreateCompanion = await newCompanionPermissions();
 
     return (
-        <main className="min-lg:w-1/3 min-md:w-2/3 items-center justify-center">
+        <main className="w-full max-w-2xl mx-auto px-4 sm:px-6">
             {canCreateCompanion ? (
                 <CompanionBuilder />
                 ) : (
                     <article className="companion-limit">
-                        <Image src="/images/limit.svg" alt="Companion limit reached" width={360} height={330} />
+                        <Image src="/images/limit.svg" alt="Companion limit reached" width={360} height={330} className="w-full max-w-[260px] sm:max-w-[360px] mx-auto" />
                         <div className="cta-badge">
                             Upgrade your plan
                         </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -78,10 +78,11 @@ const LandingPage = () => {
               {/* Left Content */}
               <div className="text-center lg:text-left space-y-8">
                 <div
-                  className={`space-y-6 transform transition-all duration-1000 delay-300 ${isLoaded
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-10 opacity-0"
-                    }`}
+                  className={`space-y-6 transform transition-all duration-1000 delay-300 ${
+                    isLoaded
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-10 opacity-0"
+                  }`}
                 >
                   {/* Added Tagline */}
                   <div className="inline-block">
@@ -95,7 +96,7 @@ const LandingPage = () => {
                             " Coding",
                             " Maths",
                             " Interview",
-                            " Operating Systems"
+                            " Operating Systems",
                           ]}
                           speed={80}
                           deleteSpeed={50}
@@ -122,9 +123,10 @@ const LandingPage = () => {
                           flex items-center gap-3 px-6 py-3 rounded-4xl
                           border-2 border-primary/20 bg-white/80 backdrop-blur-sm
                           transition-all duration-300 ease-in-out
-                          ${currentFeature === index
-                            ? "opacity-100 scale-100 translate-y-0 z-10"
-                            : "opacity-0 scale-95 translate-y-3 z-0"
+                          ${
+                            currentFeature === index
+                              ? "opacity-100 scale-100 translate-y-0 z-10"
+                              : "opacity-0 scale-95 translate-y-3 z-0"
                           }`}
                       >
                         <feature.icon className="w-6 h-6 text-primary" />
@@ -145,13 +147,17 @@ const LandingPage = () => {
 
               {/* Right Side Image */}
               <div
-                className={`transform transition-all duration-1000 delay-700 ${isLoaded
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-20 opacity-0"
-                  }`}
+                className={`transform transition-all duration-1000 delay-700 ${
+                  isLoaded
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-20 opacity-0"
+                }`}
               >
                 <div className="bg-white rounded-4xl shadow-2xl p-6 border border-primary/10">
-                  <div className="relative overflow-hidden rounded-3xl" style={{ aspectRatio: "16 / 9" }}>
+                  <div
+                    className="relative overflow-hidden rounded-3xl"
+                    style={{ aspectRatio: "16 / 9" }}
+                  >
                     <video
                       className="absolute inset-0 w-full h-full object-cover"
                       autoPlay
@@ -161,7 +167,10 @@ const LandingPage = () => {
                       poster="/dashboard-preview.png"
                       preload="auto"
                     >
-                      <source src="https://res.cloudinary.com/dchmterf0/video/upload/q_auto,f_auto/Cogniva_Demo_main_tikqmf.mp4" type="video/mp4" />
+                      <source
+                        src="https://res.cloudinary.com/dchmterf0/video/upload/q_auto,f_auto/Cogniva_Demo_main_tikqmf.mp4"
+                        type="video/mp4"
+                      />
                     </video>
                   </div>
                   <div className="text-center mt-4">
@@ -197,7 +206,6 @@ const LandingPage = () => {
                     desc: "24/7 availability",
                   },
                 ].map((card, index) => (
-
                   <div
                     key={index}
                     className={`
@@ -228,8 +236,6 @@ const LandingPage = () => {
                 "
                       />
 
-
-
                       {/* Icon */}
                       <div
                         className="
@@ -253,9 +259,7 @@ const LandingPage = () => {
                         {card.title}
                       </h3>
 
-                      <p className="text-muted-foreground/90">
-                        {card.desc}
-                      </p>
+                      <p className="text-muted-foreground/90">{card.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -331,7 +335,10 @@ const LandingPage = () => {
                         preserveAspectRatio="xMidYMid"
                         viewBox="0 0 256 268"
                       >
-                        <path fill="#FFF" d="M16.092 11.538 164.09.608c18.179-1.56 22.85-.508 34.28 7.801l47.243 33.282C253.406 47.414 256 48.975 256 55.207v182.527c0 11.439-4.155 18.205-18.696 19.24L65.44 267.378c-10.913.517-16.11-1.043-21.825-8.327L8.826 213.814C2.586 205.487 0 199.254 0 191.97V29.726c0-9.352 4.155-17.153 16.092-18.188Z" />
+                        <path
+                          fill="#FFF"
+                          d="M16.092 11.538 164.09.608c18.179-1.56 22.85-.508 34.28 7.801l47.243 33.282C253.406 47.414 256 48.975 256 55.207v182.527c0 11.439-4.155 18.205-18.696 19.24L65.44 267.378c-10.913.517-16.11-1.043-21.825-8.327L8.826 213.814C2.586 205.487 0 199.254 0 191.97V29.726c0-9.352 4.155-17.153 16.092-18.188Z"
+                        />
                         <path d="M164.09.608 16.092 11.538C4.155 12.573 0 20.374 0 29.726v162.245c0 7.284 2.585 13.516 8.826 21.843l34.789 45.237c5.715 7.284 10.912 8.844 21.825 8.327l171.864-10.404c14.532-1.035 18.696-7.801 18.696-19.24V55.207c0-5.911-2.336-7.614-9.21-12.66l-1.185-.856L198.37 8.409C186.94.1 182.27-.952 164.09.608ZM69.327 52.22c-14.033.945-17.216 1.159-25.186-5.323L23.876 30.778c-2.06-2.086-1.026-4.69 4.163-5.207l142.274-10.395c11.947-1.043 18.17 3.12 22.842 6.758l24.401 17.68c1.043.525 3.638 3.637.517 3.637L71.146 52.095l-1.819.125Zm-16.36 183.954V81.222c0-6.767 2.077-9.887 8.3-10.413L230.02 60.93c5.724-.517 8.31 3.12 8.31 9.879v153.917c0 6.767-1.044 12.49-10.387 13.008l-161.487 9.361c-9.343.517-13.489-2.594-13.489-10.921ZM212.377 89.53c1.034 4.681 0 9.362-4.681 9.897l-7.783 1.542v114.404c-6.758 3.637-12.981 5.715-18.18 5.715-8.308 0-10.386-2.604-16.609-10.396l-50.898-80.079v77.476l16.1 3.646s0 9.362-12.989 9.362l-35.814 2.077c-1.043-2.086 0-7.284 3.63-8.318l9.351-2.595V109.823l-12.98-1.052c-1.044-4.68 1.55-11.439 8.826-11.965l38.426-2.585 52.958 81.113v-71.76l-13.498-1.552c-1.043-5.733 3.111-9.896 8.3-10.404l35.84-2.087Z" />
                       </svg>
                     </a>
@@ -339,9 +346,10 @@ const LandingPage = () => {
 
                   <p className="text-muted-foreground leading-relaxed">
                     Ikram is a passionate developer and founder who specializes
-                    in creating cutting-edge digital solutions. Through IB&apos;s Dev
-                    World, he transforms complex ideas into simple, user-friendly
-                    applications that solve real-world problems.
+                    in creating cutting-edge digital solutions. Through
+                    IB&apos;s Dev World, he transforms complex ideas into
+                    simple, user-friendly applications that solve real-world
+                    problems.
                   </p>
                 </div>
 
@@ -359,7 +367,6 @@ const LandingPage = () => {
                     <Sparkles className="w-6 h-6 text-cta mb-2" />
                     <h4 className="font-semibold text-foreground text-sm mb-1">
                       Cutting-Edge Tech
-
                     </h4>
                     <p className="text-xs text-muted-foreground">
                       Latest technologies for best performance
@@ -415,7 +422,8 @@ const LandingPage = () => {
                 Why Students Choose Cogniva
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Transform your learning experience with AI tutors designed for modern education
+                Transform your learning experience with AI tutors designed for
+                modern education
               </p>
             </div>
 
@@ -424,45 +432,53 @@ const LandingPage = () => {
                 {
                   icon: Target,
                   title: "Interview Ready",
-                  description: "Practice with AI interviewers for job interviews, college admissions, and professional certifications",
-                  gradient: "from-primary/20 to-primary/5"
+                  description:
+                    "Practice with AI interviewers for job interviews, college admissions, and professional certifications",
+                  gradient: "from-primary/20 to-primary/5",
                 },
                 {
                   icon: Award,
                   title: "Exam Excellence",
-                  description: "Master any subject with personalized study sessions and instant feedback on your progress",
-                  gradient: "from-cta-gold/20 to-cta-gold/5"
+                  description:
+                    "Master any subject with personalized study sessions and instant feedback on your progress",
+                  gradient: "from-cta-gold/20 to-cta-gold/5",
                 },
                 {
                   icon: Clock,
                   title: "Learn Quickly",
-                  description: "Accelerate your learning with AI that adapts to your pace and learning style",
-                  gradient: "from-cta/20 to-cta/5"
+                  description:
+                    "Accelerate your learning with AI that adapts to your pace and learning style",
+                  gradient: "from-cta/20 to-cta/5",
                 },
                 {
                   icon: MessageCircle,
                   title: "Voice Conversations",
-                  description: "Natural voice interactions make learning feel like talking with a knowledgeable friend",
-                  gradient: "from-primary/20 to-primary/5"
+                  description:
+                    "Natural voice interactions make learning feel like talking with a knowledgeable friend",
+                  gradient: "from-primary/20 to-primary/5",
                 },
                 {
                   icon: BookOpen,
                   title: "Any Subject",
-                  description: "From mathematics to literature, coding to history - we cover everything you need to learn",
-                  gradient: "from-cta-gold/20 to-cta-gold/5"
+                  description:
+                    "From mathematics to literature, coding to history - we cover everything you need to learn",
+                  gradient: "from-cta-gold/20 to-cta-gold/5",
                 },
                 {
                   icon: TrendingUp,
                   title: "Track Progress",
-                  description: "Visual analytics show your improvement over time and identify areas for growth",
-                  gradient: "from-cta/20 to-cta/5"
-                }
+                  description:
+                    "Visual analytics show your improvement over time and identify areas for growth",
+                  gradient: "from-cta/20 to-cta/5",
+                },
               ].map((feature, index) => (
                 <div
                   key={index}
                   className="group bg-white rounded-4xl p-8 border border-border hover:border-primary/30 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
                 >
-                  <div className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-4xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-4xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  >
                     <feature.icon className="w-10 h-10 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
@@ -511,46 +527,222 @@ const LandingPage = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-12 px-4 border-t border-border/20">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between max-sm:flex-col max-sm:gap-6">
-              <div className="flex items-center gap-4">
-                <Image
-                  src="/images/logo.png"
-                  alt="Cogniva Logo"
-                  width={48}
-                  height={48}
-                  className="rounded-lg"
-                />
-                <div>
-                  <h3 className="text-2xl font-bold text-foreground">Cogniva</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Your Personal AI Faculty, Anytime, Anywhere
-                  </p>
-                </div>
-              </div>
+       {/* ═══════════════════════════════════════
+    FOOTER — replace the existing <footer> block
+    in app/page.tsx with this entire block
+═══════════════════════════════════════ */}
 
-              <div className="text-center max-sm:text-left">
-                <p className="text-muted-foreground text-lg mb-2">
-                  Built with ❤️ by{" "}
-                  <span className="text-primary font-semibold">Ikram Banadar</span>
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Lead Developer &amp; Founder of IB&apos;s Dev World
-                </p>
-              </div>
+<footer className="border-t border-border/20 bg-gradient-to-b from-background to-primary/3">
 
-              <div className="text-right max-sm:text-center">
-                <p className="text-muted-foreground">
-                  © 2024 Cogniva &amp; IB&apos;s Dev World
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Empowering learning through AI
-                </p>
-              </div>
+  {/* Top strip — newsletter / tagline */}
+  <div className="bg-gradient-to-r from-primary via-cta-gold to-primary py-10 px-4">
+    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <h3 className="text-2xl font-bold text-white mb-1">
+          Stay ahead of the curve
+        </h3>
+        <p className="text-white/80 text-sm">
+          Get tips, updates, and new companion releases straight to your inbox.
+        </p>
+      </div>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="flex w-full max-w-md gap-2"
+      >
+        <input
+          type="email"
+          placeholder="you@email.com"
+          className="flex-1 rounded-full px-5 py-3 text-sm bg-white/15 backdrop-blur border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
+        />
+        <button
+          type="submit"
+          className="rounded-full px-6 py-3 bg-white text-primary font-semibold text-sm hover:bg-white/90 transition-all shrink-0"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {/* Main footer grid */}
+  <div className="max-w-6xl mx-auto px-4 py-16">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+
+      {/* Col 1 — Brand */}
+      <div className="space-y-5 sm:col-span-2 lg:col-span-1">
+        <div className="flex items-center gap-3">
+          <img
+            src="/images/logo.png"
+            alt="Cogniva Logo"
+            width={44}
+            height={44}
+            className="rounded-xl"
+          />
+          <div>
+            <p className="text-xl font-bold text-foreground">Cogniva</p>
+            <p className="text-xs text-muted-foreground">by IB's Dev World</p>
+          </div>
+        </div>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Your personal AI faculty — available anytime, anywhere. Voice-powered
+          tutors that adapt to how you actually learn.
+        </p>
+        {/* Social links */}
+        <div className="flex items-center gap-3 pt-1">
+          <a
+            href="https://www.linkedin.com/in/ikrambanadarwebdev"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="w-9 h-9 rounded-full bg-primary/10 hover:bg-primary hover:text-white text-primary flex items-center justify-center transition-all"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a
+            href="https://github.com/IBs-DevStudio"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="w-9 h-9 rounded-full bg-primary/10 hover:bg-primary hover:text-white text-primary flex items-center justify-center transition-all"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+          <a
+            href="mailto:ikrambanadar04@gmail.com"
+            aria-label="Email"
+            className="w-9 h-9 rounded-full bg-primary/10 hover:bg-primary hover:text-white text-primary flex items-center justify-center transition-all"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      {/* Col 2 — Platform */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-bold text-foreground uppercase tracking-widest">
+          Platform
+        </h4>
+        <ul className="space-y-3">
+          {[
+            { label: "Home", href: "/" },
+            { label: "Companions", href: "/companions" },
+            { label: "Explore More", href: "/explore" },
+            { label: "My Journey", href: "/my-journey" },
+            { label: "Subscription", href: "/subscription" },
+          ].map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Col 3 — Use Cases */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-bold text-foreground uppercase tracking-widest">
+          Use Cases
+        </h4>
+        <ul className="space-y-3">
+          {[
+            "Interview Preparation",
+            "Exam Excellence",
+            "Coding Practice",
+            "Math & Science",
+            "Communication Skills",
+            "Quick Learning",
+          ].map((item) => (
+            <li key={item}>
+              <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-default">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Col 4 — Built By */}
+      <div className="space-y-4">
+        <h4 className="text-sm font-bold text-foreground uppercase tracking-widest">
+          Built By
+        </h4>
+        <div className="bg-primary/5 border border-primary/15 rounded-2xl p-5 space-y-3">
+          <div className="flex items-center gap-3">
+            <img
+              src="/images/ib-2.png"
+              alt="Ikram Banadar"
+              className="w-10 h-10 rounded-full object-cover border-2 border-primary/20"
+            />
+            <div>
+              <p className="text-sm font-bold text-foreground">Ikram Banadar</p>
+              <p className="text-xs text-muted-foreground">Lead Developer</p>
             </div>
           </div>
-        </footer>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Founder of IB's Dev World — building AI-powered tools that
+            democratize education worldwide.
+          </p>
+          <a
+            href="https://github.com/IBs-DevStudio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-primary hover:underline"
+          >
+            View Projects
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        {/* Tech badges */}
+        <div className="flex flex-wrap gap-2 pt-1">
+          {["Next.js 14", "Vapi", "OpenAI", "Supabase"].map((tech) => (
+            <span
+              key={tech}
+              className="text-xs px-3 py-1 rounded-full bg-primary/8 border border-primary/15 text-primary font-medium"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Bottom bar */}
+  <div className="border-t border-border/20 px-4 py-6">
+    <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p className="text-xs text-muted-foreground text-center sm:text-left">
+        © 2024 Cogniva &amp; IB's Dev World. All rights reserved. Empowering learning through AI.
+      </p>
+      <div className="flex items-center gap-5">
+        {["Privacy Policy", "Terms of Service", "Contact"].map((item) => (
+          <a
+            key={item}
+            href="#"
+            className="text-xs text-muted-foreground hover:text-primary transition-colors"
+          >
+            {item}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+</footer>
       </div>
     </div>
   );

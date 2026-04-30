@@ -105,7 +105,7 @@ const Profile = async () => {
         <div className="hero-bg-orb hero-bg-orb--right" style={{ background: `radial-gradient(ellipse 40% 60% at 100% 100%, ${color}18, transparent 70%)` }} />
 
         {/* Top row: avatar + identity */}
-        <div className="hero-identity">
+        <div className="hero-identity flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
           <div className="avatar-frame" style={{ boxShadow: `0 0 0 3px ${color}, 0 0 24px ${glow}` }}>
             <Image
               src={user.imageUrl}
@@ -120,8 +120,8 @@ const Profile = async () => {
             </span>
           </div>
 
-          <div className="identity-text">
-            <div className="identity-top">
+          <div className="identity-text text-center sm:text-left w-full">
+            <div className="identity-top flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
               <h1 className="identity-name">
                 {user.firstName} {user.lastName}
               </h1>
@@ -151,7 +151,7 @@ const Profile = async () => {
         </div>
 
         {/* Stats grid */}
-        <div className="stats-grid">
+        <div className="stats-grid grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
           {stats.map((s) => (
             <div key={s.label} className="stat-card" style={{ "--accent": s.accent } as React.CSSProperties}>
               <span className="stat-icon" style={{ color: s.accent }}>{s.icon}</span>
@@ -164,7 +164,7 @@ const Profile = async () => {
         </div>
 
         {/* AI quip */}
-        <div className="quip-bar">
+        <div className="quip-bar flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mt-4">
           <span className="quip-icon">🤖</span>
           <p className="quip-text">{quip}</p>
           <span className="quip-tag" style={{ color, borderColor: `${color}40` }}>AI Insight</span>
@@ -172,7 +172,7 @@ const Profile = async () => {
       </section>
 
       {/* ─── ACCORDION SECTIONS ─── */}
-      <div className="accordion-wrap">
+      <div className="accordion-wrap px-4 sm:px-6 lg:px-0 mt-6">
         <Accordion type="multiple" defaultValue={["recent"]}>
 
           <AccordionItem value="recent" className="accordion-item">

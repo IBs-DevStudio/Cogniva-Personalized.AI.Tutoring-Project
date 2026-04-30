@@ -95,11 +95,10 @@ const CompanionComponent = ({
       serverMessages: [],
     };
 
-  
-   vapi.start(
-  configureAssistant(voice || "female", style || "casual"),
-  assistantOverrides as any
-);
+    vapi.start(
+      configureAssistant(voice || "female", style || "casual"),
+      assistantOverrides as any,
+    );
   };
 
   const handleDisconnect = () => {
@@ -126,9 +125,9 @@ const CompanionComponent = ({
   };
 
   return (
-    <section className="flex flex-col h-[70vh]">
-      <section className="flex gap-8 max-sm:flex-col">
-        <div className="companion-section">
+    <section className="flex flex-col min-h-[70vh] h-auto">
+      <section className="flex gap-8 flex-col lg:flex-row">
+        <div className="companion-section w-full lg:w-1/2">
           <div
             className="companion-avatar"
             style={{ backgroundColor: getSubjectColor(subject) }}
@@ -170,7 +169,7 @@ const CompanionComponent = ({
           <p className="font-bold text-2xl">{name}</p>
         </div>
 
-        <div className="user-section">
+        <div className="user-section w-full lg:w-1/2">
           <div className="user-avatar">
             <Image
               src={userImage}
@@ -199,7 +198,7 @@ const CompanionComponent = ({
                   <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-red-500 animate-pulse" />
                 )}
               </div>
-              <p className="max-sm:hidden">
+              <p className="hidden sm:block text-sm">
                 {isMuted ? "Turn on microphone" : "Turn off microphone"}
               </p>
             </button>
@@ -207,7 +206,7 @@ const CompanionComponent = ({
               onClick={handleRepeat}
               disabled={callStatus === CallStatus.CONNECTING}
               className={cn(
-                "group border-2 border-black rounded-lg flex flex-col gap-2 items-center py-8 max-sm:py-2 cursor-pointer w-full",
+                "group border-2 border-black rounded-lg flex flex-col gap-2 items-center py-4 sm:py-8 cursor-pointer w-full",
                 callStatus === CallStatus.CONNECTING
                   ? "opacity-70"
                   : "hover:bg-gray-50",
@@ -226,12 +225,12 @@ const CompanionComponent = ({
                     : "group-hover:rotate-180",
                 )}
               />
-              <p className="max-sm:hidden">Repeat</p>
+              <p className="hidden sm:block text-sm">Repeat</p>
             </button>
           </div>
           <button
             className={cn(
-              "rounded-lg py-2 cursor-pointer transition-colors w-full text-white",
+              "rounded-lg py-3 sm:py-2 cursor-pointer transition-colors w-full text-white text-sm sm:text-base font-semibold",
               callStatus === CallStatus.ACTIVE ? "bg-red-700" : "bg-primary",
               callStatus === CallStatus.CONNECTING && "animate-pulse",
             )}

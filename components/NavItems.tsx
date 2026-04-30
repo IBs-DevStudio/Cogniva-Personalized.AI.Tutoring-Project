@@ -1,35 +1,52 @@
-'use client';
+"use client";
 
 import Link from "next/link";
-import {usePathname} from "next/navigation";
-import {cn} from "@/lib/utils";
-import { Label } from "@radix-ui/react-select";
+import { usePathname } from "next/navigation";
 
-const navItems = [
-    { label:'Home', href: '/dashboard' },
-    { label: 'Companions', href: '/companions' },
-    { label: 'Explore More', href: '/explore-more' },
-    { label: 'My Journey', href: '/my-journey' },
-    { label: 'Subscription', href: '/subscription' },
-]
+const navLinks = [
+  { label: "Home",         href: "/dashboard" },
+  { label: "Companions",   href: "/companions" },
+  { label: "Explore More", href: "/explore" },
+  { label: "My Journey",   href: "/my-journey" },
+  { label: "Subscription", href: "/subscription" },
+];
 
-
-const NavItems = () => {
-    const pathname = usePathname();
-
-    return (
-        <nav className="flex items-center gap-4">
-            {navItems.map(({ label, href }) => (
-                <Link
-                    href={href}
-                    key={label}
-                    className={cn(pathname === href && 'text-primary font-semibold')}
-                >
-                    {label}
-                </Link>
-            ))}
-        </nav>
-    )
+interface NavItemsProps {
+  mobile?: boolean;
+  onClose?: () => void;
 }
 
-export default NavItems
+const NavItems = ({ mobile = false, onClose }: NavItemsProps) => {
+  const pathname = usePathname();
+
+  return (
+    <>
+      {navLinks.map(({ label, href }) => {
+        const isActive = pathname === href;
+
+        return (
+          <Link
+            key={label}
+            href={href}
+            onClick={onClose}
+            className={`
+              transition-colors duration-200 font-medium
+              ${mobile
+                ? "block py-3 px-2 text-base border-b border-gray-100 last:border-0"
+                : "text-sm"
+              }
+              ${isActive
+                ? "text-primary"
+                : "text-gray-700 hover:text-primary"
+              }
+            `}
+          >
+            {label}
+          </Link>
+        );
+      })}
+    </>
+  );
+};
+
+export default NavItems;

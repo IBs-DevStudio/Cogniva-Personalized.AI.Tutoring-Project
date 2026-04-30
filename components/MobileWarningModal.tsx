@@ -109,7 +109,7 @@ const MobileWarningModal = () => {
         <div className="space-y-3">
           <button
             onClick={handleContinue}
-            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 px-4 rounded-3xl hover:from-orange-600 hover:to-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold cursor-pointer py-3 px-4 rounded-3xl hover:from-orange-600 hover:to-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             Continue to Cogniva
           </button>
