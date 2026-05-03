@@ -63,7 +63,7 @@ const AILearningFlashCard = ({ show, onClose }: AILearningFlashCardProps) => {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4">
-      <div className="bg-white/98 backdrop-blur-xl rounded-2xl sm:rounded-3xl md:rounded-[2rem] shadow-2xl max-w-2xl w-full mx-2 sm:mx-4 p-5 sm:p-6 md:p-8 relative animate-in fade-in-50 zoom-in-95 duration-500 border-2 border-primary/20 max-h-[92vh] overflow-y-auto">
+      <div className="bg-white/98 backdrop-blur-xl rounded-2xl sm:rounded-3xl md:rounded-[2rem] shadow-2xl max-w-2xl w-full mx-2 sm:mx-4 p-5 sm:p-6 md:p-8 relative animate-in fade-in-50 zoom-in-95 duration-500 border-2 border-primary/20 max-h-[92vh] overflow-y-auto no-scrollbar">
         {/* Close Button */}
         <button
           onClick={onClose}
