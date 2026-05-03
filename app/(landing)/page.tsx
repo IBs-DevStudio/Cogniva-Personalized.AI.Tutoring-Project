@@ -331,7 +331,6 @@ const LandingPage = () => {
 
   </div>
 </section>
-
         {/* Why Students Choose Cogniva Section */}
         <section id="features" className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
@@ -445,7 +444,16 @@ const LandingPage = () => {
         </section>
 
         {/* Footer */}
-            <footer className="border-t border-white/10 bg-slate-900 text-white">
+        {/* ═══════════════════════════════════════
+    FOOTER — replace the existing <footer> block
+    in app/page.tsx with this entire block
+═══════════════════════════════════════ */}
+
+        {/* ═══════════════════════════════════════
+    FOOTER — with solid background color
+═══════════════════════════════════════ */}
+
+        <footer className="border-t border-white/10 bg-slate-900 text-white">
           {/* Top strip — newsletter / tagline */}
           <div className="bg-gradient-to-r from-primary via-cta-gold to-primary py-10 px-4">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -560,7 +568,7 @@ const LandingPage = () => {
                   {[
                     { label: "Home", href: "/" },
                     { label: "Companions", href: "/companions" },
-                    { label: "Explore More", href: "/explore" },
+                    { label: "Explore More", href: "/explore-more" },
                     { label: "My Journey", href: "/my-journey" },
                     { label: "Subscription", href: "/subscription" },
                   ].map((link) => (
