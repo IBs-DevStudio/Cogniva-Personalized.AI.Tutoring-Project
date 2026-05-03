@@ -74,8 +74,7 @@ const DashboardWelcomeCarousel = () => {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4">
-      <div className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl md:rounded-[2rem] shadow-2xl max-w-2xl w-full mx-2 sm:mx-4 p-5 sm:p-6 md:p-8 relative animate-in fade-in-50 zoom-in-95 duration-500 max-h-[92vh] overflow-y-auto">
-        {/* Close Button */}
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl md:rounded-[2rem] shadow-2xl max-w-2xl w-full mx-2 sm:mx-4 p-5 sm:p-6 md:p-8 relative animate-in fade-in-50 zoom-in-95 duration-500 max-h-[92vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"> {/* Close Button */}
         <button
           onClick={handleClose}
           className="absolute top-3 right-3 sm:top-6 sm:right-6 w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
