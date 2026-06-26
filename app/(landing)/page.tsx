@@ -40,7 +40,7 @@ import TypewriterText from "@/components/TypewriterText";
 const AudioWaveform = ({ active = true, color = "#FF5A36", barCount = 15 }) => {
   const bars = Array.from({ length: barCount });
   return (
-    <div className="flex items-center gap-1.5 h-10 px-2">
+    <div className="flex items-center gap-1.0 h-5">
       {bars.map((_, i) => (
         <motion.div
           key={i}
@@ -80,9 +80,9 @@ const InteractiveDashboard = () => {
   // Simulated live conversations loop
   const simulatedTranscript = [
     { speaker: "AI Coach", text: "Welcome back! Ready to practice behavioral questions?" },
-    { speaker: "Alex (You)", text: "Yes! Can we mock a standard tech product manager opener?" },
+    { speaker: "Ikram (You)", text: "Yes! Can we mock a standard tech product manager opener?" },
     { speaker: "AI Coach", text: "Great. 'Tell me about a time you handled a difficult launch.'" },
-    { speaker: "Alex (You)", text: "Well, we had a dependency slip on our payment API..." },
+    { speaker: "Ikram (You)", text: "Well, we had a dependency slip on our payment API..." },
     { speaker: "AI Coach", text: "Good start. Remember to structure using the STAR method." }
   ];
 
@@ -110,7 +110,7 @@ const InteractiveDashboard = () => {
             <span>7-DAY STREAK</span>
           </div>
           <div className="w-8 h-8 rounded-full bg-[#FF5A36]/10 flex items-center justify-center text-xs font-bold text-[#FF5A36] border border-[#FF5A36]/20">
-            AM
+            IB
           </div>
         </div>
       </div>
@@ -353,7 +353,7 @@ const LandingPage = () => {
       role: "Ace Mock Prep",
       icon: Target,
       desc: "Simulate pressure behavioral rounds, tech design, and casing exercises. Receive real-time structure scores using the STAR framework.",
-      voice: "Vapi Voice: Formal Female",
+      voice: "AI Voice: Formal Female",
       accent: "Professional US Accent",
       badgeColor: "#FF6B8A",
       bgGradient: "from-pink-500/10 via-rose-500/5 to-transparent",
@@ -365,7 +365,7 @@ const LandingPage = () => {
       role: "Algorithms & Logic",
       icon: Code,
       desc: "Practice arrays, sliding windows, recursion, and trees. Ask for step-by-step guidance rather than just copy-pasting solutions.",
-      voice: "Vapi Voice: Casual Male",
+      voice: "AI Voice: Casual Male",
       accent: "Tech Nerd Vibe",
       badgeColor: "#4ECDC4",
       bgGradient: "from-teal-500/10 via-cyan-500/5 to-transparent",
@@ -377,7 +377,7 @@ const LandingPage = () => {
       role: "Summations & Notes",
       icon: BookOpen,
       desc: "Upload text, papers, or lecture files. Summarize heavy material, trigger interactive flashcard reviews, and construct custom templates.",
-      voice: "Vapi Voice: Casual Female",
+      voice: "AI Voice: Casual Female",
       accent: "Supportive Peer Tone",
       badgeColor: "#FFA726",
       bgGradient: "from-amber-500/10 via-orange-500/5 to-transparent",
@@ -389,7 +389,7 @@ const LandingPage = () => {
       role: "Standardized Drills",
       icon: Award,
       desc: "Prepare for final exams, board certifications, or AP courses. Adaptive testing matches your weaknesses with target explanations.",
-      voice: "Vapi Voice: Formal Male",
+      voice: "AI Voice: Formal Male",
       accent: "Academic Professor Tone",
       badgeColor: "#9C27B0",
       bgGradient: "from-purple-500/10 via-indigo-500/5 to-transparent",
@@ -401,7 +401,7 @@ const LandingPage = () => {
       role: "Industry Navigation",
       icon: Compass,
       desc: "Map your skillset, review resume formatting, align milestones for big tech roles, and optimize career growth strategies.",
-      voice: "Vapi Voice: Warm Female",
+      voice: "AI Voice: Warm Female",
       accent: "Consultant Style",
       badgeColor: "#45B7D1",
       bgGradient: "from-blue-500/10 via-sky-500/5 to-transparent",
@@ -413,7 +413,7 @@ const LandingPage = () => {
       role: "Speech & Pitch",
       icon: Mic,
       desc: "Perfect public speaking, pitches, and delivery. Get real-time metric analysis on speaking pace, filler words, and vocal modulation.",
-      voice: "Vapi Voice: Formal Female",
+      voice: "AI Voice: Formal Female",
       accent: "Vocal Trainer Vibe",
       badgeColor: "#66BB6A",
       bgGradient: "from-green-500/10 via-emerald-500/5 to-transparent",
@@ -425,7 +425,7 @@ const LandingPage = () => {
       role: "Proof & Logic Helper",
       icon: Brain,
       desc: "Solve calculus, linear algebra, discrete math, and physics. Receive visual proofs and conceptual break-downs of mathematical proofs.",
-      voice: "Vapi Voice: Direct Male",
+      voice: "AI Voice: Direct Male",
       accent: "Analytical Guide Accent",
       badgeColor: "#FF7043",
       bgGradient: "from-deep-orange-500/10 via-red-500/5 to-transparent",
@@ -442,7 +442,7 @@ const LandingPage = () => {
     },
     {
       q: "How does the voice-tutor interaction work?",
-      a: "By leveraging Vapi and state-of-the-art voice infrastructure, Cogniva tutors talk and listen with near-zero latency. You simply open a session, unmute your microphone, and converse naturally. The tutor hears you, responds immediately, and outputs a live transcript."
+      a: "By leveraging state-of-the-art AI voice infrastructure, Cogniva tutors talk and listen with near-zero latency. You simply open a session, unmute your microphone, and converse naturally. The tutor hears you, responds immediately, and outputs a live transcript."
     },
     {
       q: "Can I customize or build my own tutor companions?",
@@ -509,12 +509,11 @@ const LandingPage = () => {
             The Future of{" "}
             <span className="bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] bg-clip-text text-transparent">
               Personalized Learning
-            </span>{" "}
-            is Here
+            </span>
           </h1>
 
           {/* Centered Supporting Copy */}
-          <p className="text-lg md:text-xl text-[#6B7280] font-medium leading-relaxed max-w-2xl">
+          <p className="text-sm sm:text-base md:text-lg text-[#6B7280] font-medium leading-relaxed max-w-3xl">
             Unlock your potential with specialized AI companions that adapt to your unique learning style. Converse naturally, get instant audio feedback, and master any subject.
           </p>
 
@@ -558,7 +557,7 @@ const LandingPage = () => {
             </div>
             {/* Description Text */}
             <div className="text-xs font-semibold text-[#6B7280] text-center sm:text-left leading-relaxed">
-              <span className="text-[#111827] font-extrabold">Trusted by 10,000+</span> active students &amp; lifelong learners. <br className="hidden sm:inline" />
+              <span className="text-[#111827] font-extrabold">Trusted by 10+</span> active students &amp; lifelong learners. <br className="hidden sm:inline" />
               Accelerating academic and career excellence, every day.
             </div>
           </div>
@@ -974,7 +973,7 @@ const LandingPage = () => {
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4">
                 <div className="flex items-center gap-2.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                  <span className="text-xs font-bold text-gray-300">Vapi Latency: ~150ms</span>
+                  <span className="text-xs font-bold text-gray-300">Speech Latency: ~150ms</span>
                 </div>
                 <div className="w-1 h-1 rounded-full bg-gray-600" />
                 <div className="flex items-center gap-2.5">
@@ -992,7 +991,7 @@ const LandingPage = () => {
                   Live Voice Console
                 </span>
                 <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 border border-[#FF5A36]/20 px-2.5 py-1 rounded-md">
-                  VAPI ENGAGED
+                  AI VOICE ACTIVE
                 </span>
               </div>
 
@@ -1205,7 +1204,7 @@ const LandingPage = () => {
           {/* Review 1 */}
           <div className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
             <p className="text-sm font-semibold text-gray-700 leading-relaxed">
-              &ldquo;Cogniva completely revamped how I practice for technical coding tests. Instead of copying answers, the Coding Mentor prompts me step-by-step to explain logic aloud. Highly recommend Vapi voice speed.&rdquo;
+              &ldquo;Cogniva completely revamped how I practice for technical coding tests. Instead of copying answers, the Coding Mentor prompts me step-by-step to explain logic aloud. Highly recommend the AI voice speed.&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
@@ -1481,7 +1480,7 @@ const LandingPage = () => {
                 Founder of IB&apos;s Dev World—building accessible AI-powered tutoring platforms.
               </p>
               <div className="flex flex-wrap gap-1.5 pt-1">
-                {["Next.js 15", "Vapi.ai", "Supabase", "Clerk"].map((tech) => (
+                {["Next.js 15", "AI Voice", "Supabase", "Clerk"].map((tech) => (
                   <span
                     key={tech}
                     className="text-[9px] font-extrabold px-2 py-0.5 bg-white border border-gray-200 rounded-md text-gray-500"
