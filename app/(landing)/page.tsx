@@ -179,38 +179,49 @@ const InteractiveDashboard = () => {
                   <span>+18%</span>
                 </div>
               </div>
-              <div className="h-20 w-full relative mt-3 flex items-end">
-                <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#FF5A36" stopOpacity="0.2"/>
-                      <stop offset="100%" stopColor="#FF5A36" stopOpacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <motion.path
-                    d="M 0 35 Q 20 15 40 25 T 80 5 T 100 12 L 100 40 L 0 40 Z"
-                    fill="url(#chartGradient)"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                  />
-                  <motion.path
-                    d="M 0 35 Q 20 15 40 25 T 80 5 T 100 12"
-                    fill="none"
-                    stroke="#FF5A36"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                  />
-                </svg>
+              <div className="h-20 w-full flex items-end justify-between px-1 mt-3">
+                {[
+                  { day: "Mon", score: 45, active: false },
+                  { day: "Tue", score: 62, active: false },
+                  { day: "Wed", score: 55, active: false },
+                  { day: "Thu", score: 72, active: false },
+                  { day: "Fri", score: 80, active: false },
+                  { day: "Sat", score: 92, active: true },
+                  { day: "Sun", score: 78, active: false },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex-1 flex flex-col items-center group relative h-full justify-end">
+                    {/* Tooltip on Hover */}
+                    <div className="absolute bottom-full mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 flex flex-col items-center">
+                      <div className="bg-[#111827] text-white text-[9px] font-bold py-0.5 px-1.5 rounded shadow-sm">
+                        {item.score}%
+                      </div>
+                      <div className="w-1 h-1 bg-[#111827] rotate-45 -mt-0.5"></div>
+                    </div>
+                    
+                    {/* Bar */}
+                    <motion.div
+                      className={`w-3.5 rounded-t-full cursor-pointer transition-colors duration-200 ${
+                        item.active 
+                          ? "bg-gradient-to-t from-[#FF5A36] to-[#FF8A65] shadow-[0_0_8px_rgba(255,90,54,0.3)]" 
+                          : "bg-[#FF5A36]/15 group-hover:bg-[#FF5A36]/40"
+                      }`}
+                      style={{ transformOrigin: "bottom", height: `${item.score}%` }}
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: idx * 0.05 }}
+                      whileHover={{ scaleY: 1.05 }}
+                    />
+                  </div>
+                ))}
               </div>
-              <div className="flex justify-between text-[10px] text-gray-400 font-semibold px-1 mt-1">
-                <span>Mon</span>
-                <span>Wed</span>
-                <span>Fri</span>
-                <span>Sun</span>
+              <div className="flex justify-between text-[10px] text-gray-400 font-semibold px-2 mt-1">
+                <span className="w-6 text-center">Mon</span>
+                <span className="w-6 text-center">Tue</span>
+                <span className="w-6 text-center">Wed</span>
+                <span className="w-6 text-center">Thu</span>
+                <span className="w-6 text-center">Fri</span>
+                <span className="w-6 text-center">Sat</span>
+                <span className="w-6 text-center">Sun</span>
               </div>
             </div>
           </div>
@@ -581,11 +592,11 @@ const LandingPage = () => {
             Empowering students from leading educational institutions
           </p>
           <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">KIT,Kolhapur</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">KIT, Kolhapur</span>
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">D Y Patil University</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">JCE,Belagavi</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">VIT,Pune</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">IIT BOMBAY</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">JCE, Belagavi</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">VIT, Pune</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">IIIT Surat</span>
           </div>
         </div>
       </section>
