@@ -476,12 +476,12 @@ const LandingPage = () => {
       {/* ---------------------------------------------------------
           HERO SECTION
          --------------------------------------------------------- */}
-      <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-32 pb-20 px-6 max-w-7xl mx-auto border-b border-gray-100 text-center">
+      <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-25 pb-20 px-4 max-w-7xl mx-auto border-b border-gray-100 text-center">
         
         {/* Main Content Wrapper */}
         <div className="flex flex-col items-center gap-8 max-w-4xl mx-auto">
           {/* Premium Glow Badge */}
-          <div className="relative group">
+          {/* <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#FF5A36] via-[#FDBA3B] to-purple-500 rounded-full blur opacity-30 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
             <div className="relative bg-white border border-gray-200/80 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm">
               <Sparkles className="w-4 h-4 text-[#FF5A36]" />
@@ -502,7 +502,7 @@ const LandingPage = () => {
                 />
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Giant Premium Centered Headline */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.1] tracking-tight max-w-4xl">
@@ -581,10 +581,10 @@ const LandingPage = () => {
             Empowering students from leading educational institutions
           </p>
           <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">MIT</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">STANFORD</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">UC BERKELEY</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">CARNEGIE MELLON</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">KIT,Kolhapur</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">D Y Patil University</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">JCE,Belagavi</span>
+            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">VIT,Pune</span>
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">IIT BOMBAY</span>
           </div>
         </div>
@@ -1211,8 +1211,8 @@ const LandingPage = () => {
                 JD
               </div>
               <div>
-                <h5 className="text-sm font-extrabold text-[#111827]">Jonathan Dyer</h5>
-                <p className="text-xs font-bold text-[#FF5A36]">Computer Science Major</p>
+                <h5 className="text-sm font-extrabold text-[#111827]">Dheeraj Patil</h5>
+                <p className="text-xs font-bold text-[#FF5A36]">Computer Science(KIT)</p>
               </div>
             </div>
           </div>
@@ -1220,15 +1220,15 @@ const LandingPage = () => {
           {/* Review 2 */}
           <div className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
             <p className="text-sm font-semibold text-gray-700 leading-relaxed">
-              &ldquo;The Interview Coach is incredibly smart. It corrected my speech pace, cut down on my filler words, and prompted me with customized follow-ups. Placed as a PM at Stripe!&rdquo;
+              &ldquo;The Interview Coach is incredibly smart. It corrected my speech pace, cut down on my filler words, and prompted me with customized follow-ups. Amazing IB!&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
                 SK
               </div>
               <div>
-                <h5 className="text-sm font-extrabold text-[#111827]">Sarah Kim</h5>
-                <p className="text-xs font-bold text-[#FF5A36]">Product Manager</p>
+                <h5 className="text-sm font-extrabold text-[#111827]">Suhana Banadar</h5>
+                <p className="text-xs font-bold text-[#FF5A36]">AIML(JCE)</p>
               </div>
             </div>
           </div>
@@ -1236,15 +1236,15 @@ const LandingPage = () => {
           {/* Review 3 */}
           <div className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
             <p className="text-sm font-semibold text-gray-700 leading-relaxed">
-              &ldquo;I summarize entire organic chemistry chapters using the Study Buddy PDF uploader. It auto-generates smart audio summaries that I listen to during my commute. Lifesaver!&rdquo;
+              &ldquo;I summarize entire OOPs chapters using the Study Buddy my Personalized tutor in cogniva. It auto-generates smart audio summaries that I listen to during my commute. Lifesaver!&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
                 MR
               </div>
               <div>
-                <h5 className="text-sm font-extrabold text-[#111827]">Marcus Rivera</h5>
-                <p className="text-xs font-bold text-[#FF5A36]">Pre-Med Student</p>
+                <h5 className="text-sm font-extrabold text-[#111827]">Rizwan Sheikh</h5>
+                <p className="text-xs font-bold text-[#FF5A36]">Computer Science(DYPatil)</p>
               </div>
             </div>
           </div>
