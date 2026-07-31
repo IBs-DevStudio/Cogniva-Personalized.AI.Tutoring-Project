@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
@@ -33,6 +33,8 @@ import LandingNavbar from "@/components/LandingNavbar";
 import LoadingButton from "@/components/LoadingButton";
 import MobileWarningModal from "@/components/MobileWarningModal";
 import TypewriterText from "@/components/TypewriterText";
+import Preloader from "@/components/Preloader";
+import { PremiumCard } from "@/components/PremiumCard";
 
 // ---------------------------------------------------------
 // Sub-component: Soundwave Waveform Animation
@@ -309,10 +311,20 @@ const LandingPage = () => {
   const [micState, setMicState] = useState("idle"); // idle, listening, responding
   const [transcriptLines, setTranscriptLines] = useState<string[]>([]);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [isPreloaderComplete, setIsPreloaderComplete] = useState(false);
 
-  // Initialize page loaded state
+  // Initialize page loaded state and coordinate with Preloader
   useEffect(() => {
     setIsLoaded(true);
+
+    const handlePreloaderComplete = () => {
+      setIsPreloaderComplete(true);
+    };
+
+    window.addEventListener("cogniva-preloader-complete", handlePreloaderComplete);
+    return () => {
+      window.removeEventListener("cogniva-preloader-complete", handlePreloaderComplete);
+    };
   }, []);
 
   // Voice Section Speech Sim
@@ -469,9 +481,76 @@ const LandingPage = () => {
     }
   ];
 
+  // Framer Motion Page Entry Variants
+  const heroContainerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const heroItemVariants: Variants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 85,
+        damping: 17,
+      },
+    },
+  };
+
+  const dashboardMockupVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 50,
+        damping: 15,
+        delay: 0.65, // delayed start so texts and buttons load first
+      },
+    },
+  };
+
+  const scrollRevealVariants: Variants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 60,
+        damping: 15,
+      },
+    },
+  };
+
+  const staggerContainerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#111827] overflow-x-hidden relative font-sans selection:bg-[#FF5A36] selection:text-white">
-      {/* Mobile Warning Modal */}
+    <>
+      <Preloader />
+      <div className="min-h-screen bg-[#FAFAFA] text-[#111827] overflow-x-hidden relative font-sans selection:bg-[#FF5A36] selection:text-white">
+        {/* Mobile Warning Modal */}
       <MobileWarningModal />
 
       {/* Sticky Premium Navigation */}
@@ -490,7 +569,12 @@ const LandingPage = () => {
       <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-25 pb-20 px-4 max-w-7xl mx-auto border-b border-gray-100 text-center">
         
         {/* Main Content Wrapper */}
-        <div className="flex flex-col items-center gap-8 max-w-4xl mx-auto">
+        <motion.div
+          variants={heroContainerVariants}
+          initial="hidden"
+          animate={isPreloaderComplete ? "visible" : "hidden"}
+          className="flex flex-col items-center gap-8 max-w-4xl mx-auto"
+        >
           {/* Premium Glow Badge */}
           {/* <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#FF5A36] via-[#FDBA3B] to-purple-500 rounded-full blur opacity-30 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
@@ -516,20 +600,29 @@ const LandingPage = () => {
           </div> */}
 
           {/* Giant Premium Centered Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.1] tracking-tight max-w-4xl">
+          <motion.h1
+            variants={heroItemVariants}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.1] tracking-tight max-w-4xl"
+          >
             The Future of{" "}
             <span className="bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] bg-clip-text text-transparent">
               Personalized Learning
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Centered Supporting Copy */}
-          <p className="text-sm sm:text-base md:text-lg text-[#6B7280] font-medium leading-relaxed max-w-3xl">
+          <motion.p
+            variants={heroItemVariants}
+            className="text-sm sm:text-base md:text-lg text-[#6B7280] font-medium leading-relaxed max-w-3xl"
+          >
             Unlock your potential with specialized AI companions that adapt to your unique learning style. Converse naturally, get instant audio feedback, and master any subject.
-          </p>
+          </motion.p>
 
           {/* Centered CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 w-full sm:w-auto">
+          <motion.div
+            variants={heroItemVariants}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 w-full sm:w-auto"
+          >
             <LoadingButton
               href="/dashboard"
               variant="primary"
@@ -545,10 +638,13 @@ const LandingPage = () => {
               <Play className="w-4 h-4 fill-current text-[#FF5A36]" />
               <span>Watch Video Demo</span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Centered Trusted By / Student Avatar stack */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <motion.div
+            variants={heroItemVariants}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+          >
             {/* Overlapping initial badges */}
             <div className="flex -space-x-3">
               {[
@@ -571,41 +667,55 @@ const LandingPage = () => {
               <span className="text-[#111827] font-extrabold">Trusted by 10+</span> active students &amp; lifelong learners. <br className="hidden sm:inline" />
               Accelerating academic and career excellence, every day.
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Centered Interactive SaaS Dashboard Mockup below */}
-        <div className="w-full max-w-5xl mt-16 relative">
+        <motion.div
+          variants={dashboardMockupVariants}
+          initial="hidden"
+          animate={isPreloaderComplete ? "visible" : "hidden"}
+          className="w-full max-w-5xl mt-16 relative"
+        >
           {/* Glow backing */}
           <div className="absolute inset-0 bg-gradient-to-tr from-[#FF5A36]/5 to-[#FDBA3B]/5 rounded-3xl blur-3xl pointer-events-none" />
           <InteractiveDashboard />
-        </div>
+        </motion.div>
 
       </section>
 
-      {/* ---------------------------------------------------------
-          TRUSTED BY SECTION
-         --------------------------------------------------------- */}
-      <section className="py-12 bg-white border-b border-gray-100">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        className="py-12 bg-white border-b border-gray-100"
+      >
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-xs font-bold text-[#6B7280] uppercase tracking-widest mb-6">
+          <motion.p variants={scrollRevealVariants} className="text-xs font-bold text-[#6B7280] uppercase tracking-widest mb-6">
             Empowering students from leading educational institutions
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+          </motion.p>
+          <motion.div variants={scrollRevealVariants} className="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">KIT, Kolhapur</span>
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">D Y Patil University</span>
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">JCE, Belagavi</span>
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">VIT, Pune</span>
             <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">IIIT Surat</span>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           ABOUT COGNIVA
          --------------------------------------------------------- */}
-      <section className="py-24 px-6 max-w-5xl mx-auto text-center space-y-12">
-        <div className="space-y-4">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        className="py-24 px-6 max-w-5xl mx-auto text-center space-y-12"
+      >
+        <motion.div variants={scrollRevealVariants} className="space-y-4">
           <span className="inline-block text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full">
             About the Project
           </span>
@@ -615,41 +725,41 @@ const LandingPage = () => {
           <p className="text-lg md:text-xl text-[#6B7280] font-medium max-w-2xl mx-auto leading-relaxed">
             An AI-native learning platform built for students, job seekers, and lifelong learners. Instead of static videos, you get voice-powered AI tutors that adapt in real time.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left pt-6">
-          <div className="bg-white rounded-3xl p-7 border border-gray-200/70 shadow-sm flex flex-col gap-4">
+          <PremiumCard variants={scrollRevealVariants} glowColor="rgba(254, 89, 51, 0.12)">
             <div className="w-12 h-12 bg-[#FF5A36]/10 rounded-2xl flex items-center justify-center text-[#FF5A36]">
-              <Mic className="w-6 h-6" />
+              <Mic className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
             </div>
             <h4 className="text-lg font-bold text-[#111827]">Voice-First Learning</h4>
             <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
               Speak naturally with your AI tutor. Ask questions, practice answers, and receive instant spoken reviews.
             </p>
-          </div>
+          </PremiumCard>
 
-          <div className="bg-white rounded-3xl p-7 border border-gray-200/70 shadow-sm flex flex-col gap-4">
+          <PremiumCard variants={scrollRevealVariants} glowColor="rgba(252, 204, 65, 0.15)">
             <div className="w-12 h-12 bg-[#FDBA3B]/10 rounded-2xl flex items-center justify-center text-[#FDBA3B]">
-              <Target className="w-6 h-6" />
+              <Target className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
             </div>
             <h4 className="text-lg font-bold text-[#111827]">Goal-Driven Sessions</h4>
             <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
               Whether cracking a tech interview, preparing for exam boards, or learning linear algebra — custom tutors lead you to success.
             </p>
-          </div>
+          </PremiumCard>
 
-          <div className="bg-white rounded-3xl p-7 border border-gray-200/70 shadow-sm flex flex-col gap-4">
+          <PremiumCard variants={scrollRevealVariants} glowColor="rgba(168, 85, 247, 0.12)">
             <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500">
-              <Zap className="w-6 h-6" />
+              <Zap className="w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300" />
             </div>
             <h4 className="text-lg font-bold text-[#111827]">Always Available</h4>
             <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
               24/7 access to your specialized faculty. No scheduling or waiting — start learning whenever you are ready.
             </p>
-          </div>
+          </PremiumCard>
         </div>
 
-        <p className="text-sm font-semibold text-[#6B7280] pt-4">
+        <motion.p variants={scrollRevealVariants} className="text-sm font-semibold text-[#6B7280] pt-4">
           Built with care by{" "}
           <a
             href="https://www.linkedin.com/in/ikrambanadarwebdev"
@@ -660,16 +770,23 @@ const LandingPage = () => {
             Ikram Banadar
           </a>{" "}
           at IB&apos;s Dev World.
-        </p>
-      </section>
+        </motion.p>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           MEET YOUR AI FACULTY
          --------------------------------------------------------- */}
-      <section id="faculty" className="py-24 px-6 bg-white border-y border-gray-100">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        id="faculty"
+        className="py-24 px-6 bg-white border-y border-gray-100"
+      >
         <div className="max-w-7xl mx-auto flex flex-col gap-16">
           
-          <div className="text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div variants={scrollRevealVariants} className="text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
               <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
                 Personal AI Faculty
@@ -687,7 +804,7 @@ const LandingPage = () => {
                 <span>Interact with Cards below</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
@@ -697,7 +814,8 @@ const LandingPage = () => {
                 const isSelected = idx === activeTutorIndex;
                 const IconComp = tutor.icon;
                 return (
-                  <button
+                  <motion.button
+                    variants={scrollRevealVariants}
                     key={tutor.name}
                     onClick={() => setActiveTutorIndex(idx)}
                     className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative group ${
@@ -731,13 +849,13 @@ const LandingPage = () => {
                         {tutor.desc}
                       </p>
                     </div>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
 
             {/* Selected Tutor Premium Preview Console (Col 7) */}
-            <div className="lg:col-span-7 bg-gray-50 border border-gray-200 rounded-3xl p-8 flex flex-col justify-between min-h-[460px] relative overflow-hidden">
+            <motion.div variants={scrollRevealVariants} className="lg:col-span-7 bg-gray-50 border border-gray-200 rounded-3xl p-8 flex flex-col justify-between min-h-[460px] relative overflow-hidden">
               {/* Decorative Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent pointer-events-none" />
 
@@ -806,18 +924,25 @@ const LandingPage = () => {
                 </LoadingButton>
               </div>
 
-            </div>
+            </motion.div>
 
           </div>
 
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           WHY STUDENTS CHOOSE COGNIVA (BENTO GRID)
          --------------------------------------------------------- */}
-      <section id="features" className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        id="features"
+        className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16"
+      >
+        <motion.div variants={scrollRevealVariants} className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
             Comprehensive Capabilities
           </span>
@@ -827,15 +952,20 @@ const LandingPage = () => {
           <p className="text-lg text-[#6B7280] font-medium leading-relaxed">
             Replace simple flat lists with a dynamic Bento layout. Varying card sizes highlight core value propositions.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           {/* Card 1: Tall / Wide (Col-span 2) - Voice */}
-          <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[340px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="md:col-span-2 min-h-[340px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(254, 89, 51, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-[#FF5A36]/10 rounded-2xl flex items-center justify-center text-[#FF5A36] group-hover:scale-105 transition-transform">
-                <Mic className="w-6 h-6" />
+              <div className="w-12 h-12 bg-[#FF5A36]/10 rounded-2xl flex items-center justify-center text-[#FF5A36]">
+                <Mic className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
               </div>
               <h3 className="text-2xl font-extrabold text-[#111827]">Natural Voice Conversations</h3>
               <p className="text-sm md:text-base text-[#6B7280] font-medium leading-relaxed max-w-xl">
@@ -847,13 +977,18 @@ const LandingPage = () => {
               <span className="text-xs font-bold text-gray-400">VOICE WAVEFORM SIGNAL</span>
               <AudioWaveform active={true} color="#FF5A36" barCount={20} />
             </div>
-          </div>
+          </PremiumCard>
 
           {/* Card 2: Medium (Col-span 1) - Interview Ready */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[340px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="min-h-[340px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(244, 63, 94, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 group-hover:scale-105 transition-transform">
-                <Target className="w-6 h-6" />
+              <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500">
+                <Target className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
               </div>
               <h3 className="text-2xl font-extrabold text-[#111827]">Interview Ready</h3>
               <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
@@ -864,13 +999,18 @@ const LandingPage = () => {
               <span>Try behavioral drills</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
-          </div>
+          </PremiumCard>
 
           {/* Card 3: Medium (Col-span 1) - Exam Excellence */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[340px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="min-h-[340px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(245, 158, 11, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 group-hover:scale-105 transition-transform">
-                <Award className="w-6 h-6" />
+              <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500">
+                <Award className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
               </div>
               <h3 className="text-2xl font-extrabold text-[#111827]">Exam Excellence</h3>
               <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
@@ -881,13 +1021,18 @@ const LandingPage = () => {
               <span>Take adaptive mocks</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
-          </div>
+          </PremiumCard>
 
           {/* Card 4: Wide (Col-span 2) - Analytics Progress */}
-          <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[340px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="md:col-span-2 min-h-[340px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(20, 184, 166, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-500 group-hover:scale-105 transition-transform">
-                <TrendingUp className="w-6 h-6" />
+              <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-500">
+                <TrendingUp className="w-6 h-6 group-hover:scale-110 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
               </div>
               <h3 className="text-2xl font-extrabold text-[#111827]">Visual Performance Progress</h3>
               <p className="text-sm md:text-base text-[#6B7280] font-medium leading-relaxed max-w-xl">
@@ -909,54 +1054,76 @@ const LandingPage = () => {
                 Streak Multipliers Active
               </span>
             </div>
-          </div>
+          </PremiumCard>
 
           {/* Card 5: Small (Col-span 1) - Learn Quickly */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[280px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="min-h-[280px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(168, 85, 247, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 group-hover:scale-105 transition-transform">
-                <Clock className="w-6 h-6" />
+              <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500">
+                <Clock className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
               </div>
               <h3 className="text-xl font-extrabold text-[#111827]">Accelerate Learning</h3>
               <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
                 Study in chunks. Speed up summarize notes, optimize integration steps, and capture answers quickly.
               </p>
             </div>
-          </div>
+          </PremiumCard>
 
           {/* Card 6: Small (Col-span 1) - Any Subject */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[280px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="min-h-[280px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(14, 165, 233, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-sky-500/10 rounded-2xl flex items-center justify-center text-sky-500 group-hover:scale-105 transition-transform">
-                <BookOpen className="w-6 h-6" />
+              <div className="w-12 h-12 bg-sky-500/10 rounded-2xl flex items-center justify-center text-sky-500">
+                <BookOpen className="w-6 h-6 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300" />
               </div>
               <h3 className="text-xl font-extrabold text-[#111827]">Master Any Subject</h3>
               <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
                 From advanced computer science to organic chemistry, history, or literature—we cover everything you need.
               </p>
             </div>
-          </div>
+          </PremiumCard>
 
           {/* Card 7: Small (Col-span 1) - Instant Help */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300 min-h-[280px] group">
+          <PremiumCard
+            variants={scrollRevealVariants}
+            className="min-h-[280px]"
+            contentClassName="flex flex-col justify-between h-full w-full"
+            glowColor="rgba(16, 185, 129, 0.12)"
+          >
             <div className="space-y-4">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform">
-                <Zap className="w-6 h-6" />
+              <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500">
+                <Zap className="w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300" />
               </div>
               <h3 className="text-xl font-extrabold text-[#111827]">Instant Feedback</h3>
               <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
                 Ask a voice query, talk back and forth, and receive customized constructive analysis immediately.
               </p>
             </div>
-          </div>
+          </PremiumCard>
 
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           VOICE AI EXPERIENCE (PREMIUM DARK SHOWCASE SECTION)
          --------------------------------------------------------- */}
-      <section id="voice-experience" className="py-28 bg-[#0B0F19] text-white relative overflow-hidden">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        id="voice-experience"
+        className="py-28 bg-[#0B0F19] text-white relative overflow-hidden"
+      >
         {/* Glow rings in background */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#FF5A36]/15 via-purple-500/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
@@ -968,7 +1135,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
             {/* Left side text */}
-            <div className="lg:col-span-6 flex flex-col gap-6 text-center lg:text-left">
+            <motion.div variants={scrollRevealVariants} className="lg:col-span-6 flex flex-col gap-6 text-center lg:text-left">
               <span className="self-center lg:self-start text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 border border-[#FF5A36]/20 px-3.5 py-1.5 rounded-full">
                 Interactive Voice Sandbox
               </span>
@@ -992,10 +1159,10 @@ const LandingPage = () => {
                   <span className="text-xs font-bold text-gray-300">Real-Time Transcripts</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right side interactive console (Large glowing Mic) */}
-            <div className="lg:col-span-6 bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative backdrop-blur-md">
+            <motion.div variants={scrollRevealVariants} className="lg:col-span-6 bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative backdrop-blur-md">
               
               <div className="w-full flex items-center justify-between border-b border-white/10 pb-4 mb-8">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
@@ -1065,17 +1232,23 @@ const LandingPage = () => {
                 )}
               </div>
 
-            </div>
+            </motion.div>
 
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           LEARNING JOURNEY SECTION
          --------------------------------------------------------- */}
-      <section className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100">
-        <div className="text-center max-w-xl mx-auto space-y-4">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100"
+      >
+        <motion.div variants={scrollRevealVariants} className="text-center max-w-xl mx-auto space-y-4">
           <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
             Adaptive Path
           </span>
@@ -1085,7 +1258,7 @@ const LandingPage = () => {
           <p className="text-lg text-[#6B7280] font-medium">
             Three simple milestones to master any field with voice-powered tutoring.
           </p>
-        </div>
+        </motion.div>
 
         {/* Step-by-step horizontal progress pipeline */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
@@ -1093,7 +1266,7 @@ const LandingPage = () => {
           <div className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-[#FF5A36] via-purple-500 to-[#FDBA3B] opacity-30 z-0 pointer-events-none" />
 
           {/* Step 1 */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
+          <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
             <div className="w-16 h-16 bg-white border-2 border-[#FF5A36] rounded-full flex items-center justify-center font-black text-[#FF5A36] text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
               01
             </div>
@@ -1101,10 +1274,10 @@ const LandingPage = () => {
             <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
               Choose from our curated team of specialized AI Faculty members (Interview Coach, Coding Mentor, etc.) or construct your own.
             </p>
-          </div>
+          </motion.div>
 
           {/* Step 2 */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
+          <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
             <div className="w-16 h-16 bg-white border-2 border-purple-500 rounded-full flex items-center justify-center font-black text-purple-500 text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
               02
             </div>
@@ -1112,10 +1285,10 @@ const LandingPage = () => {
             <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
               Unmute your microphone and learn through back-and-forth speech. Hear reviews immediately and analyze topic concepts step-by-step.
             </p>
-          </div>
+          </motion.div>
 
           {/* Step 3 */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
+          <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
             <div className="w-16 h-16 bg-white border-2 border-[#FDBA3B] rounded-full flex items-center justify-center font-black text-[#FDBA3B] text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
               03
             </div>
@@ -1123,16 +1296,23 @@ const LandingPage = () => {
             <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
               Review your speech latency scores, daily progress, and mock grades on your analytics dashboard to systematically build competence.
             </p>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           STUDENT OUTCOMES / METRICS SECTION
          --------------------------------------------------------- */}
-      <section id="outcomes" className="py-24 px-6 bg-white border-b border-gray-100">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        id="outcomes"
+        className="py-24 px-6 bg-white border-b border-gray-100"
+      >
         <div className="max-w-7xl mx-auto flex flex-col gap-16">
-          <div className="text-center max-w-2xl mx-auto space-y-4">
+          <motion.div variants={scrollRevealVariants} className="text-center max-w-2xl mx-auto space-y-4">
             <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
               Measurable Success
             </span>
@@ -1142,12 +1322,12 @@ const LandingPage = () => {
             <p className="text-lg text-[#6B7280] font-medium">
               Cogniva directly impacts speed-to-comprehension, mock ratings, and career transitions.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             
             {/* Outcome Card 1 */}
-            <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
               <div>
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Confidence Index</span>
                 <p className="text-3xl font-black text-[#111827] mt-2">+85%</p>
@@ -1155,10 +1335,10 @@ const LandingPage = () => {
               <p className="text-xs text-[#6B7280] font-medium mt-4">
                 Increase in speech clarity and technical vocabulary confidence.
               </p>
-            </div>
+            </motion.div>
 
             {/* Outcome Card 2 */}
-            <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
               <div>
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Placement Rate</span>
                 <p className="text-3xl font-black text-[#111827] mt-2">94%</p>
@@ -1166,10 +1346,10 @@ const LandingPage = () => {
               <p className="text-xs text-[#6B7280] font-medium mt-4">
                 Pass rating within interview practice courses.
               </p>
-            </div>
+            </motion.div>
 
             {/* Outcome Card 3 */}
-            <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
               <div>
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Time Reclaimed</span>
                 <p className="text-3xl font-black text-[#111827] mt-2">12 Hrs</p>
@@ -1177,10 +1357,10 @@ const LandingPage = () => {
               <p className="text-xs text-[#6B7280] font-medium mt-4">
                 Saved weekly by summarizing lengthy textbook chapters.
               </p>
-            </div>
+            </motion.div>
 
             {/* Outcome Card 4 */}
-            <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
               <div>
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Global Reach</span>
                 <p className="text-3xl font-black text-[#111827] mt-2">150+</p>
@@ -1188,17 +1368,24 @@ const LandingPage = () => {
               <p className="text-xs text-[#6B7280] font-medium mt-4">
                 Countries represented in active user metrics.
               </p>
-            </div>
+            </motion.div>
 
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           TESTIMONIALS SECTION
          --------------------------------------------------------- */}
-      <section id="testimonials" className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100">
-        <div className="text-center max-w-xl mx-auto space-y-4">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        id="testimonials"
+        className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100"
+      >
+        <motion.div variants={scrollRevealVariants} className="text-center max-w-xl mx-auto space-y-4">
           <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
             Endorsements
           </span>
@@ -1208,12 +1395,12 @@ const LandingPage = () => {
           <p className="text-lg text-[#6B7280] font-medium">
             Hear how other learners leverage their custom AI Faculty companions.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           {/* Review 1 */}
-          <div className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
+          <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
             <p className="text-sm font-semibold text-gray-700 leading-relaxed">
               &ldquo;Cogniva completely revamped how I practice for technical coding tests. Instead of copying answers, the Coding Mentor prompts me step-by-step to explain logic aloud. Highly recommend the AI voice speed.&rdquo;
             </p>
@@ -1226,10 +1413,10 @@ const LandingPage = () => {
                 <p className="text-xs font-bold text-[#FF5A36]">Computer Science(KIT)</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Review 2 */}
-          <div className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
+          <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
             <p className="text-sm font-semibold text-gray-700 leading-relaxed">
               &ldquo;The Interview Coach is incredibly smart. It corrected my speech pace, cut down on my filler words, and prompted me with customized follow-ups. Amazing IB!&rdquo;
             </p>
@@ -1242,10 +1429,10 @@ const LandingPage = () => {
                 <p className="text-xs font-bold text-[#FF5A36]">AIML(JCE)</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Review 3 */}
-          <div className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
+          <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
             <p className="text-sm font-semibold text-gray-700 leading-relaxed">
               &ldquo;I summarize entire OOPs chapters using the Study Buddy my Personalized tutor in cogniva. It auto-generates smart audio summaries that I listen to during my commute. Lifesaver!&rdquo;
             </p>
@@ -1258,25 +1445,32 @@ const LandingPage = () => {
                 <p className="text-xs font-bold text-[#FF5A36]">Computer Science(DYPatil)</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           FAQ SECTION
          --------------------------------------------------------- */}
-      <section id="faq" className="py-24 px-6 max-w-4xl mx-auto flex flex-col gap-12">
-        <div className="text-center space-y-4">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+        id="faq"
+        className="py-24 px-6 max-w-4xl mx-auto flex flex-col gap-12"
+      >
+        <motion.div variants={scrollRevealVariants} className="text-center space-y-4">
           <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
             Common Inquiries
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
             Frequently Asked Questions
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="space-y-4">
+        <motion.div variants={scrollRevealVariants} className="space-y-4">
           {faqs.map((faq, idx) => {
             const isOpen = openFaqIndex === idx;
             return (
@@ -1312,14 +1506,20 @@ const LandingPage = () => {
               </div>
             );
           })}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           CTA BANNER SECTION
          --------------------------------------------------------- */}
-      <section className="py-16 px-6 max-w-5xl mx-auto">
-        <div className="relative bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] text-white rounded-[32px] px-8 py-16 text-center overflow-hidden shadow-2xl shadow-[#FF5A36]/20">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={scrollRevealVariants}
+        className="py-16 px-6 max-w-5xl mx-auto"
+      >
+        <div className="relative bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] text-white rounded-[32px] px-8 py-16 text-center overflow-hidden shadow-2xl shadow-[#FF5A36]/25">
           {/* Animated pulsing elements inside CTA */}
           <div className="absolute inset-0 bg-white/5 animate-pulse pointer-events-none" />
           
@@ -1347,7 +1547,7 @@ const LandingPage = () => {
             </LoadingButton>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ---------------------------------------------------------
           PREMIUM FOOTER
@@ -1589,6 +1789,7 @@ const LandingPage = () => {
       </AnimatePresence>
 
     </div>
+    </>
   );
 };
 
