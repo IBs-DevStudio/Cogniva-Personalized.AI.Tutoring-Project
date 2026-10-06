@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
+
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+
 import {
   ArrowRight,
   BookOpen,
@@ -27,7 +29,9 @@ import {
   Volume2,
   Check,
   Star,
-  PlayCircle
+  PlayCircle, AudioLines,
+  Layers
+
 } from "lucide-react";
 import LandingNavbar from "@/components/LandingNavbar";
 import LoadingButton from "@/components/LoadingButton";
@@ -51,13 +55,13 @@ const AudioWaveform = ({ active = true, color = "#FF5A36", barCount = 15 }) => {
           animate={
             active
               ? {
-                  height: [
-                    "20%",
-                    i % 2 === 0 ? "80%" : "60%",
-                    i % 3 === 0 ? "100%" : "40%",
-                    "20%",
-                  ],
-                }
+                height: [
+                  "20%",
+                  i % 2 === 0 ? "80%" : "60%",
+                  i % 3 === 0 ? "100%" : "40%",
+                  "20%",
+                ],
+              }
               : { height: "20%" }
           }
           transition={{
@@ -75,6 +79,9 @@ const AudioWaveform = ({ active = true, color = "#FF5A36", barCount = 15 }) => {
 // ---------------------------------------------------------
 // Sub-component: Simulated Interactive Dashboard Mockup
 // ---------------------------------------------------------
+
+
+
 const InteractiveDashboard = () => {
   const [currentGoal, setCurrentGoal] = useState(72);
   const [activeStep, setActiveStep] = useState(0);
@@ -85,7 +92,7 @@ const InteractiveDashboard = () => {
     { speaker: "Ikram (You)", text: "Yes! Can we mock a standard tech product manager opener?" },
     { speaker: "AI Coach", text: "Great. 'Tell me about a time you handled a difficult launch.'" },
     { speaker: "Ikram (You)", text: "Well, we had a dependency slip on our payment API..." },
-    { speaker: "AI Coach", text: "Good start. Remember to structure using the STAR method." }
+    { speaker: "AI Coach", text: "Good start. Remember to structure using the STAR method." },
   ];
 
   useEffect(() => {
@@ -121,8 +128,9 @@ const InteractiveDashboard = () => {
         {/* Mock Sidebar Navigation */}
         <div className="w-16 bg-gray-50 border-r border-gray-100 flex flex-col items-center py-6 gap-6 justify-between">
           <div className="flex flex-col gap-5 items-center">
+            {/* Brand / Home icon — swapped Brain -> AudioLines to reflect voice-first product */}
             <div className="p-2.5 bg-[#FF5A36]/10 rounded-xl text-[#FF5A36] cursor-pointer">
-              <Brain className="w-5 h-5" />
+              <AudioLines className="w-5 h-5" />
             </div>
             <div className="p-2.5 text-gray-400 hover:text-gray-600 rounded-xl cursor-pointer transition-colors">
               <Users className="w-5 h-5" />
@@ -134,14 +142,14 @@ const InteractiveDashboard = () => {
               <BookOpen className="w-5 h-5" />
             </div>
           </div>
+          {/* Quick Practice icon — swapped Zap -> Layers (flashcard stack) */}
           <div className="p-2.5 text-gray-400 hover:text-gray-600 rounded-xl cursor-pointer">
-            <Zap className="w-5 h-5 animate-bounce" />
+            <Layers className="w-5 h-5 animate-bounce" />
           </div>
         </div>
 
         {/* Dashboard Panels */}
         <div className="flex-1 p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-5 no-scrollbar bg-[#FAFAFA]">
-          
           {/* Left panel: Daily Goal Widget & Analytics Mini-Chart */}
           <div className="flex flex-col gap-5">
             {/* Daily Goal Card */}
@@ -199,14 +207,13 @@ const InteractiveDashboard = () => {
                       </div>
                       <div className="w-1 h-1 bg-[#111827] rotate-45 -mt-0.5"></div>
                     </div>
-                    
+
                     {/* Bar */}
                     <motion.div
-                      className={`w-3.5 rounded-t-full cursor-pointer transition-colors duration-200 ${
-                        item.active 
-                          ? "bg-gradient-to-t from-[#FF5A36] to-[#FF8A65] shadow-[0_0_8px_rgba(255,90,54,0.3)]" 
+                      className={`w-3.5 rounded-t-full cursor-pointer transition-colors duration-200 ${item.active
+                          ? "bg-gradient-to-t from-[#FF5A36] to-[#FF8A65] shadow-[0_0_8px_rgba(255,90,54,0.3)]"
                           : "bg-[#FF5A36]/15 group-hover:bg-[#FF5A36]/40"
-                      }`}
+                        }`}
                       style={{ transformOrigin: "bottom", height: `${item.score}%` }}
                       initial={{ scaleY: 0 }}
                       animate={{ scaleY: 1 }}
@@ -233,8 +240,9 @@ const InteractiveDashboard = () => {
             {/* Header Area */}
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <div className="flex items-center gap-3">
+                {/* Interview Coach avatar — swapped Target -> Mic to match "Live Voice Session" */}
                 <div className="w-10 h-10 rounded-full bg-[#FF5A36]/10 flex items-center justify-center text-[#FF5A36] border border-[#FF5A36]/20">
-                  <Target className="w-5 h-5" />
+                  <Mic className="w-5 h-5" />
                 </div>
                 <div>
                   <h5 className="text-sm font-bold text-[#111827]">Interview Coach</h5>
@@ -268,11 +276,10 @@ const InteractiveDashboard = () => {
                         {chat.speaker}
                       </span>
                       <div
-                        className={`rounded-2xl px-4 py-2.5 max-w-[85%] text-xs font-medium leading-relaxed ${
-                          isCoach
+                        className={`rounded-2xl px-4 py-2.5 max-w-[85%] text-xs font-medium leading-relaxed ${isCoach
                             ? "bg-gray-100 text-gray-800 rounded-tl-none border border-gray-200/50"
                             : "bg-[#FF5A36] text-white rounded-tr-none shadow-md shadow-[#FF5A36]/15"
-                        }`}
+                          }`}
                       >
                         {chat.text}
                       </div>
@@ -293,13 +300,13 @@ const InteractiveDashboard = () => {
                 <Mic className="w-4 h-4" />
               </button>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 // ---------------------------------------------------------
 // Main Landing Page Component
@@ -551,32 +558,32 @@ const LandingPage = () => {
       <Preloader />
       <div className="min-h-screen bg-[#FAFAFA] text-[#111827] overflow-x-hidden relative font-sans selection:bg-[#FF5A36] selection:text-white">
         {/* Mobile Warning Modal */}
-      <MobileWarningModal />
+        <MobileWarningModal />
 
-      {/* Sticky Premium Navigation */}
-      <LandingNavbar />
+        {/* Sticky Premium Navigation */}
+        <LandingNavbar />
 
-      {/* Ambient background glows */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-[#FF5A36]/5 rounded-full blur-[100px]" />
-        <div className="absolute top-[40%] left-[-10%] w-[600px] h-[600px] bg-[#FDBA3B]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[20%] right-[-5%] w-[450px] h-[450px] bg-purple-500/5 rounded-full blur-[90px]" />
-      </div>
+        {/* Ambient background glows */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-[#FF5A36]/5 rounded-full blur-[100px]" />
+          <div className="absolute top-[40%] left-[-10%] w-[600px] h-[600px] bg-[#FDBA3B]/5 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[20%] right-[-5%] w-[450px] h-[450px] bg-purple-500/5 rounded-full blur-[90px]" />
+        </div>
 
-      {/* ---------------------------------------------------------
+        {/* ---------------------------------------------------------
           HERO SECTION
          --------------------------------------------------------- */}
-      <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-25 pb-20 px-4 max-w-7xl mx-auto border-b border-gray-100 text-center">
-        
-        {/* Main Content Wrapper */}
-        <motion.div
-          variants={heroContainerVariants}
-          initial="hidden"
-          animate={isPreloaderComplete ? "visible" : "hidden"}
-          className="flex flex-col items-center gap-8 max-w-4xl mx-auto"
-        >
-          {/* Premium Glow Badge */}
-          {/* <div className="relative group">
+        <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-25 pb-20 px-4 max-w-7xl mx-auto border-b border-gray-100 text-center">
+
+          {/* Main Content Wrapper */}
+          <motion.div
+            variants={heroContainerVariants}
+            initial="hidden"
+            animate={isPreloaderComplete ? "visible" : "hidden"}
+            className="flex flex-col items-center gap-8 max-w-4xl mx-auto"
+          >
+            {/* Premium Glow Badge */}
+            {/* <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#FF5A36] via-[#FDBA3B] to-purple-500 rounded-full blur opacity-30 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
             <div className="relative bg-white border border-gray-200/80 rounded-full px-5 py-2 flex items-center gap-2 shadow-sm">
               <Sparkles className="w-4 h-4 text-[#FF5A36]" />
@@ -599,1196 +606,1192 @@ const LandingPage = () => {
             </div>
           </div> */}
 
-          {/* Giant Premium Centered Headline */}
-          <motion.h1
-            variants={heroItemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.1] tracking-tight max-w-4xl"
-          >
-            The Future of{" "}
-            <span className="bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] bg-clip-text text-transparent">
-              Personalized Learning
-            </span>
-          </motion.h1>
-
-          {/* Centered Supporting Copy */}
-          <motion.p
-            variants={heroItemVariants}
-            className="text-sm sm:text-base md:text-lg text-[#6B7280] font-medium leading-relaxed max-w-3xl"
-          >
-            Unlock your potential with specialized AI companions that adapt to your unique learning style. Converse naturally, get instant audio feedback, and master any subject.
-          </motion.p>
-
-          {/* Centered CTAs */}
-          <motion.div
-            variants={heroItemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 w-full sm:w-auto"
-          >
-            <LoadingButton
-              href="/dashboard"
-              variant="primary"
-              className="w-full sm:w-auto bg-[#FF5A36] hover:bg-[#FF5A36]/90 text-white rounded-2xl px-8 py-4.5 text-base font-extrabold flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF5A36]/25 hover:shadow-xl hover:shadow-[#FF5A36]/35 transition-all duration-300"
+            {/* Giant Premium Centered Headline */}
+            <motion.h1
+              variants={heroItemVariants}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#111827] leading-[1.1] tracking-tight max-w-4xl"
             >
-              Enter Cogniva Now
-            </LoadingButton>
-
-            <button
-              onClick={() => setIsDemoModalOpen(true)}
-              className="w-full sm:w-auto border border-gray-300/80 bg-white hover:bg-gray-50 text-[#111827] rounded-2xl px-8 py-4.5 text-base font-extrabold flex items-center justify-center gap-2.5 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
-            >
-              <Play className="w-4 h-4 fill-current text-[#FF5A36]" />
-              <span>Watch Video Demo</span>
-            </button>
-          </motion.div>
-
-          {/* Centered Trusted By / Student Avatar stack */}
-          <motion.div
-            variants={heroItemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
-          >
-            {/* Overlapping initial badges */}
-            <div className="flex -space-x-3">
-              {[
-                { name: "S", bg: "bg-red-500" },
-                { name: "K", bg: "bg-blue-500" },
-                { name: "M", bg: "bg-green-500" },
-                { name: "A", bg: "bg-amber-500" },
-                { name: "L", bg: "bg-purple-500" }
-              ].map((student, idx) => (
-                <div
-                  key={idx}
-                  className={`w-9 h-9 rounded-full ${student.bg} border-2 border-white flex items-center justify-center text-[10px] font-black text-white shadow-sm`}
-                >
-                  {student.name}
-                </div>
-              ))}
-            </div>
-            {/* Description Text */}
-            <div className="text-xs font-semibold text-[#6B7280] text-center sm:text-left leading-relaxed">
-              <span className="text-[#111827] font-extrabold">Trusted by 10+</span> active students &amp; lifelong learners. <br className="hidden sm:inline" />
-              Accelerating academic and career excellence, every day.
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Centered Interactive SaaS Dashboard Mockup below */}
-        <motion.div
-          variants={dashboardMockupVariants}
-          initial="hidden"
-          animate={isPreloaderComplete ? "visible" : "hidden"}
-          className="w-full max-w-5xl mt-16 relative"
-        >
-          {/* Glow backing */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#FF5A36]/5 to-[#FDBA3B]/5 rounded-3xl blur-3xl pointer-events-none" />
-          <InteractiveDashboard />
-        </motion.div>
-
-      </section>
-
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        className="py-12 bg-white border-b border-gray-100"
-      >
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.p variants={scrollRevealVariants} className="text-xs font-bold text-[#6B7280] uppercase tracking-widest mb-6">
-            Empowering students from leading educational institutions
-          </motion.p>
-          <motion.div variants={scrollRevealVariants} className="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">KIT, Kolhapur</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">D Y Patil University</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">JCE, Belagavi</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">VIT, Pune</span>
-            <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">IIIT Surat</span>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* ---------------------------------------------------------
-          ABOUT COGNIVA
-         --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        className="py-24 px-6 max-w-5xl mx-auto text-center space-y-12"
-      >
-        <motion.div variants={scrollRevealVariants} className="space-y-4">
-          <span className="inline-block text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full">
-            About the Project
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-            What is <span className="text-[#FF5A36]">Cogniva</span>?
-          </h2>
-          <p className="text-lg md:text-xl text-[#6B7280] font-medium max-w-2xl mx-auto leading-relaxed">
-            An AI-native learning platform built for students, job seekers, and lifelong learners. Instead of static videos, you get voice-powered AI tutors that adapt in real time.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left pt-6">
-          <PremiumCard variants={scrollRevealVariants} glowColor="rgba(254, 89, 51, 0.12)">
-            <div className="w-12 h-12 bg-[#FF5A36]/10 rounded-2xl flex items-center justify-center text-[#FF5A36]">
-              <Mic className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
-            </div>
-            <h4 className="text-lg font-bold text-[#111827]">Voice-First Learning</h4>
-            <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
-              Speak naturally with your AI tutor. Ask questions, practice answers, and receive instant spoken reviews.
-            </p>
-          </PremiumCard>
-
-          <PremiumCard variants={scrollRevealVariants} glowColor="rgba(252, 204, 65, 0.15)">
-            <div className="w-12 h-12 bg-[#FDBA3B]/10 rounded-2xl flex items-center justify-center text-[#FDBA3B]">
-              <Target className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
-            </div>
-            <h4 className="text-lg font-bold text-[#111827]">Goal-Driven Sessions</h4>
-            <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
-              Whether cracking a tech interview, preparing for exam boards, or learning linear algebra — custom tutors lead you to success.
-            </p>
-          </PremiumCard>
-
-          <PremiumCard variants={scrollRevealVariants} glowColor="rgba(168, 85, 247, 0.12)">
-            <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500">
-              <Zap className="w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300" />
-            </div>
-            <h4 className="text-lg font-bold text-[#111827]">Always Available</h4>
-            <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
-              24/7 access to your specialized faculty. No scheduling or waiting — start learning whenever you are ready.
-            </p>
-          </PremiumCard>
-        </div>
-
-        <motion.p variants={scrollRevealVariants} className="text-sm font-semibold text-[#6B7280] pt-4">
-          Built with care by{" "}
-          <a
-            href="https://www.linkedin.com/in/ikrambanadarwebdev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#FF5A36] hover:underline"
-          >
-            Ikram Banadar
-          </a>{" "}
-          at IB&apos;s Dev World.
-        </motion.p>
-      </motion.section>
-
-      {/* ---------------------------------------------------------
-          MEET YOUR AI FACULTY
-         --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        id="faculty"
-        className="py-24 px-6 bg-white border-y border-gray-100"
-      >
-        <div className="max-w-7xl mx-auto flex flex-col gap-16">
-          
-          <motion.div variants={scrollRevealVariants} className="text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-4">
-              <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
-                Personal AI Faculty
+              The Future of{" "}
+              <span className="bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] bg-clip-text text-transparent">
+                Personalized Learning
               </span>
-              <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-                Meet Your Specialized Instructors
-              </h2>
-              <p className="text-lg text-[#6B7280] font-medium max-w-xl">
-                An expert companion for every study path. Click on any companion below to listen to their voice samples and view parameters.
-              </p>
-            </div>
-            <div className="shrink-0 flex items-center justify-center">
-              <div className="px-5 py-2.5 bg-gray-50 border border-gray-200/80 rounded-2xl flex items-center gap-2.5 shadow-sm text-xs font-bold text-gray-500">
-                <Volume2 className="w-4 h-4 text-[#FF5A36] animate-pulse" />
-                <span>Interact with Cards below</span>
-              </div>
-            </div>
-          </motion.div>
+            </motion.h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Tutor List (Col 5) */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
-              {tutors.map((tutor, idx) => {
-                const isSelected = idx === activeTutorIndex;
-                const IconComp = tutor.icon;
-                return (
-                  <motion.button
-                    variants={scrollRevealVariants}
-                    key={tutor.name}
-                    onClick={() => setActiveTutorIndex(idx)}
-                    className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative group ${
-                      isSelected
-                        ? "bg-white border-[#FF5A36] shadow-md shadow-[#FF5A36]/5"
-                        : "bg-gray-50/50 border-gray-200/80 hover:bg-white hover:border-gray-300"
-                    }`}
-                  >
-                    {isSelected && (
-                      <div
-                        className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl"
-                        style={{ backgroundColor: "#FF5A36" }}
-                      />
-                    )}
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${tutor.badgeColor}20`, color: tutor.badgeColor }}
-                    >
-                      <IconComp className="w-6 h-6" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-extrabold text-[#111827] text-base group-hover:text-[#FF5A36] transition-colors">
-                          {tutor.name}
-                        </h4>
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">
-                          {tutor.role}
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#6B7280] font-medium mt-1 line-clamp-1">
-                        {tutor.desc}
-                      </p>
-                    </div>
-                  </motion.button>
-                );
-              })}
-            </div>
+            {/* Centered Supporting Copy */}
+            <motion.p
+              variants={heroItemVariants}
+              className="text-sm sm:text-base md:text-lg text-[#6B7280] font-medium leading-relaxed max-w-3xl"
+            >
+              Unlock your potential with specialized AI companions that adapt to your unique learning style. Converse naturally, get instant audio feedback, and master any subject.
+            </motion.p>
 
-            {/* Selected Tutor Premium Preview Console (Col 7) */}
-            <motion.div variants={scrollRevealVariants} className="lg:col-span-7 bg-gray-50 border border-gray-200 rounded-3xl p-8 flex flex-col justify-between min-h-[460px] relative overflow-hidden">
-              {/* Decorative Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent pointer-events-none" />
+            {/* Centered CTAs */}
+            <motion.div
+              variants={heroItemVariants}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 w-full sm:w-auto"
+            >
+              <LoadingButton
+                href="/dashboard"
+                variant="primary"
+                className="w-full sm:w-auto bg-[#FF5A36] hover:bg-[#FF5A36]/90 text-white rounded-2xl px-8 py-4.5 text-base font-extrabold flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF5A36]/25 hover:shadow-xl hover:shadow-[#FF5A36]/35 transition-all duration-300"
+              >
+                Enter Cogniva Now
+              </LoadingButton>
 
-              {/* Console Header */}
-              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-gray-200/80 pb-6">
-                <div className="flex items-center gap-4">
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-white"
-                    style={{ backgroundColor: tutors[activeTutorIndex].badgeColor }}
-                  >
-                    {(() => {
-                      const Icon = tutors[activeTutorIndex].icon;
-                      return <Icon className="w-7 h-7" />;
-                    })()}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-extrabold text-[#111827]">
-                      {tutors[activeTutorIndex].name}
-                    </h3>
-                    <p className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest mt-0.5">
-                      {tutors[activeTutorIndex].role}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-[10px] px-3 py-1 bg-white border border-gray-200 rounded-full font-bold text-gray-500">
-                    {tutors[activeTutorIndex].voice}
-                  </span>
-                  <span className="text-[10px] px-3 py-1 bg-white border border-gray-200 rounded-full font-bold text-gray-500">
-                    {tutors[activeTutorIndex].accent}
-                  </span>
-                </div>
-              </div>
-
-              {/* Console Body Speech Simulated Bubble */}
-              <div className="relative z-10 my-8">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  Active Faculty Speech preview
-                </span>
-                <div className="mt-2.5 bg-white border border-gray-200/80 rounded-2xl p-6 shadow-sm relative">
-                  {/* Speech Bubble triangle pointer */}
-                  <div className="absolute -left-2.5 top-8 w-5 h-5 bg-white border-l border-b border-gray-200/80 transform rotate-45 pointer-events-none" />
-                  
-                  <div className="flex items-start gap-4">
-                    <Volume2 className="w-5 h-5 text-[#FF5A36] shrink-0 mt-0.5 animate-pulse" />
-                    <p className="text-sm font-semibold text-[#111827] leading-relaxed italic">
-                      &ldquo;{tutors[activeTutorIndex].sample}&rdquo;
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Console Footer parameters */}
-              <div className="relative z-10 border-t border-gray-200/80 pt-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <p className="text-xs font-medium text-[#6B7280] max-w-sm">
-                  {tutors[activeTutorIndex].desc}
-                </p>
-                <LoadingButton
-                  href="/dashboard"
-                  variant="primary"
-                  className="!text-xs bg-[#FF5A36] text-white hover:bg-[#FF5A36]/90 px-5 py-2.5 rounded-xl shrink-0 font-bold"
-                  showArrow={false}
-                >
-                  Start Tutoring Session
-                </LoadingButton>
-              </div>
-
+              <button
+                onClick={() => setIsDemoModalOpen(true)}
+                className="w-full sm:w-auto border border-gray-300/80 bg-white hover:bg-gray-50 text-[#111827] rounded-2xl px-8 py-4.5 text-base font-extrabold flex items-center justify-center gap-2.5 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+              >
+                <Play className="w-4 h-4 fill-current text-[#FF5A36]" />
+                <span>Watch Video Demo</span>
+              </button>
             </motion.div>
 
-          </div>
+            {/* Centered Trusted By / Student Avatar stack */}
+            <motion.div
+              variants={heroItemVariants}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+            >
+              {/* Overlapping initial badges */}
+              <div className="flex -space-x-3">
+                {[
+                  { name: "S", bg: "bg-red-500" },
+                  { name: "K", bg: "bg-blue-500" },
+                  { name: "M", bg: "bg-green-500" },
+                  { name: "A", bg: "bg-amber-500" },
+                  { name: "L", bg: "bg-purple-500" }
+                ].map((student, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-9 h-9 rounded-full ${student.bg} border-2 border-white flex items-center justify-center text-[10px] font-black text-white shadow-sm`}
+                  >
+                    {student.name}
+                  </div>
+                ))}
+              </div>
+              {/* Description Text */}
+              <div className="text-xs font-semibold text-[#6B7280] text-center sm:text-left leading-relaxed">
+                <span className="text-[#111827] font-extrabold">Trusted by 10+</span> active students &amp; lifelong learners. <br className="hidden sm:inline" />
+                Accelerating academic and career excellence, every day.
+              </div>
+            </motion.div>
+          </motion.div>
 
-        </div>
-      </motion.section>
-
-      {/* ---------------------------------------------------------
-          WHY STUDENTS CHOOSE COGNIVA (BENTO GRID)
-         --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        id="features"
-        className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16"
-      >
-        <motion.div variants={scrollRevealVariants} className="text-center max-w-2xl mx-auto space-y-4">
-          <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
-            Comprehensive Capabilities
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-            Why Students Choose Cogniva
-          </h2>
-          <p className="text-lg text-[#6B7280] font-medium leading-relaxed">
-            Replace simple flat lists with a dynamic Bento layout. Varying card sizes highlight core value propositions.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          {/* Card 1: Tall / Wide (Col-span 2) - Voice */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="md:col-span-2 min-h-[340px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(254, 89, 51, 0.12)"
+          {/* Centered Interactive SaaS Dashboard Mockup below */}
+          <motion.div
+            variants={dashboardMockupVariants}
+            initial="hidden"
+            animate={isPreloaderComplete ? "visible" : "hidden"}
+            className="w-full max-w-5xl mt-16 relative"
           >
-            <div className="space-y-4">
+            {/* Glow backing */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#FF5A36]/5 to-[#FDBA3B]/5 rounded-3xl blur-3xl pointer-events-none" />
+            <InteractiveDashboard />
+          </motion.div>
+
+        </section>
+
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          className="py-12 bg-white border-b border-gray-100"
+        >
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <motion.p variants={scrollRevealVariants} className="text-xs font-bold text-[#6B7280] uppercase tracking-widest mb-6">
+              Empowering students from leading educational institutions
+            </motion.p>
+            <motion.div variants={scrollRevealVariants} className="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+              <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">KIT, Kolhapur</span>
+              <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">D Y Patil University</span>
+              <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">JCE, Belagavi</span>
+              <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">VIT, Pune</span>
+              <span className="text-lg md:text-xl font-black tracking-wider text-gray-800">IIIT Surat</span>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
+          ABOUT COGNIVA
+         --------------------------------------------------------- */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          className="py-24 px-6 max-w-5xl mx-auto text-center space-y-12"
+        >
+          <motion.div variants={scrollRevealVariants} className="space-y-4">
+            <span className="inline-block text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full">
+              About the Project
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
+              What is <span className="text-[#FF5A36]">Cogniva</span>?
+            </h2>
+            <p className="text-lg md:text-xl text-[#6B7280] font-medium max-w-2xl mx-auto leading-relaxed">
+              An AI-native learning platform built for students, job seekers, and lifelong learners. Instead of static videos, you get voice-powered AI tutors that adapt in real time.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left pt-6">
+            <PremiumCard variants={scrollRevealVariants} glowColor="rgba(254, 89, 51, 0.12)">
               <div className="w-12 h-12 bg-[#FF5A36]/10 rounded-2xl flex items-center justify-center text-[#FF5A36]">
                 <Mic className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
               </div>
-              <h3 className="text-2xl font-extrabold text-[#111827]">Natural Voice Conversations</h3>
-              <p className="text-sm md:text-base text-[#6B7280] font-medium leading-relaxed max-w-xl">
-                Conversations make learning feel natural—like talking with a knowledgeable classmate. Ask questions, clarify equations, and review topics without looking at screens.
+              <h4 className="text-lg font-bold text-[#111827]">Voice-First Learning</h4>
+              <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
+                Speak naturally with your AI tutor. Ask questions, practice answers, and receive instant spoken reviews.
               </p>
-            </div>
-            {/* Embedded Audio wave simulator visual */}
-            <div className="mt-8 border-t border-gray-100 pt-6 flex items-center justify-between">
-              <span className="text-xs font-bold text-gray-400">VOICE WAVEFORM SIGNAL</span>
-              <AudioWaveform active={true} color="#FF5A36" barCount={20} />
-            </div>
-          </PremiumCard>
+            </PremiumCard>
 
-          {/* Card 2: Medium (Col-span 1) - Interview Ready */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="min-h-[340px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(244, 63, 94, 0.12)"
-          >
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500">
+            <PremiumCard variants={scrollRevealVariants} glowColor="rgba(252, 204, 65, 0.15)">
+              <div className="w-12 h-12 bg-[#FDBA3B]/10 rounded-2xl flex items-center justify-center text-[#FDBA3B]">
                 <Target className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <h3 className="text-2xl font-extrabold text-[#111827]">Interview Ready</h3>
+              <h4 className="text-lg font-bold text-[#111827]">Goal-Driven Sessions</h4>
               <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
-                Practice mock case studies, systems architecture, and HR screening rounds with specialized tech recruiters.
+                Whether cracking a tech interview, preparing for exam boards, or learning linear algebra — custom tutors lead you to success.
               </p>
-            </div>
-            <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#FF5A36]">
-              <span>Try behavioral drills</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </PremiumCard>
+            </PremiumCard>
 
-          {/* Card 3: Medium (Col-span 1) - Exam Excellence */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="min-h-[340px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(245, 158, 11, 0.12)"
-          >
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500">
-                <Award className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
-              </div>
-              <h3 className="text-2xl font-extrabold text-[#111827]">Exam Excellence</h3>
-              <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
-                Acing midterms, board exams, or SAT mocks. Tutors isolate your weak areas and design targeted review cards.
-              </p>
-            </div>
-            <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#FF5A36]">
-              <span>Take adaptive mocks</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </PremiumCard>
-
-          {/* Card 4: Wide (Col-span 2) - Analytics Progress */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="md:col-span-2 min-h-[340px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(20, 184, 166, 0.12)"
-          >
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-500">
-                <TrendingUp className="w-6 h-6 group-hover:scale-110 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-              </div>
-              <h3 className="text-2xl font-extrabold text-[#111827]">Visual Performance Progress</h3>
-              <p className="text-sm md:text-base text-[#6B7280] font-medium leading-relaxed max-w-xl">
-                Observe your mastery progress index over time. Our analytics algorithms map your performance trends, identify topic gaps, and flag critical milestones.
-              </p>
-            </div>
-            {/* Visual elements */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              <span className="text-[10px] font-bold px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-500 flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 text-teal-500" />
-                Speech Latency: 120ms
-              </span>
-              <span className="text-[10px] font-bold px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-500 flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-green-500" />
-                STAR Framework Auditing
-              </span>
-              <span className="text-[10px] font-bold px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-500 flex items-center gap-1.5">
-                <Flame className="w-3.5 h-3.5 text-[#FDBA3B]" />
-                Streak Multipliers Active
-              </span>
-            </div>
-          </PremiumCard>
-
-          {/* Card 5: Small (Col-span 1) - Learn Quickly */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="min-h-[280px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(168, 85, 247, 0.12)"
-          >
-            <div className="space-y-4">
+            <PremiumCard variants={scrollRevealVariants} glowColor="rgba(168, 85, 247, 0.12)">
               <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500">
-                <Clock className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
-              </div>
-              <h3 className="text-xl font-extrabold text-[#111827]">Accelerate Learning</h3>
-              <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
-                Study in chunks. Speed up summarize notes, optimize integration steps, and capture answers quickly.
-              </p>
-            </div>
-          </PremiumCard>
-
-          {/* Card 6: Small (Col-span 1) - Any Subject */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="min-h-[280px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(14, 165, 233, 0.12)"
-          >
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-sky-500/10 rounded-2xl flex items-center justify-center text-sky-500">
-                <BookOpen className="w-6 h-6 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300" />
-              </div>
-              <h3 className="text-xl font-extrabold text-[#111827]">Master Any Subject</h3>
-              <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
-                From advanced computer science to organic chemistry, history, or literature—we cover everything you need.
-              </p>
-            </div>
-          </PremiumCard>
-
-          {/* Card 7: Small (Col-span 1) - Instant Help */}
-          <PremiumCard
-            variants={scrollRevealVariants}
-            className="min-h-[280px]"
-            contentClassName="flex flex-col justify-between h-full w-full"
-            glowColor="rgba(16, 185, 129, 0.12)"
-          >
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500">
                 <Zap className="w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300" />
               </div>
-              <h3 className="text-xl font-extrabold text-[#111827]">Instant Feedback</h3>
-              <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
-                Ask a voice query, talk back and forth, and receive customized constructive analysis immediately.
+              <h4 className="text-lg font-bold text-[#111827]">Always Available</h4>
+              <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
+                24/7 access to your specialized faculty. No scheduling or waiting — start learning whenever you are ready.
               </p>
-            </div>
-          </PremiumCard>
+            </PremiumCard>
+          </div>
 
-        </div>
-      </motion.section>
+          <motion.p variants={scrollRevealVariants} className="text-sm font-semibold text-[#6B7280] pt-4">
+            Built with care by{" "}
+            <a
+              href="https://www.linkedin.com/in/ikrambanadarwebdev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF5A36] hover:underline"
+            >
+              Ikram Banadar
+            </a>{" "}
+            at IB&apos;s Dev World.
+          </motion.p>
+        </motion.section>
 
-      {/* ---------------------------------------------------------
-          VOICE AI EXPERIENCE (PREMIUM DARK SHOWCASE SECTION)
+        {/* ---------------------------------------------------------
+          MEET YOUR AI FACULTY
          --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        id="voice-experience"
-        className="py-28 bg-[#0B0F19] text-white relative overflow-hidden"
-      >
-        {/* Glow rings in background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#FF5A36]/15 via-purple-500/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute top-[20%] right-[-10%] w-[350px] h-[350px] bg-[#FF5A36]/10 rounded-full blur-[90px]" />
-          <div className="absolute bottom-[10%] left-[-10%] w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[110px]" />
-        </div>
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          id="faculty"
+          className="py-24 px-6 bg-white border-y border-gray-100"
+        >
+          <div className="max-w-7xl mx-auto flex flex-col gap-16">
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
-            {/* Left side text */}
-            <motion.div variants={scrollRevealVariants} className="lg:col-span-6 flex flex-col gap-6 text-center lg:text-left">
-              <span className="self-center lg:self-start text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 border border-[#FF5A36]/20 px-3.5 py-1.5 rounded-full">
-                Interactive Voice Sandbox
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                Say a Word. <br />
-                Learn Anything.
-              </h2>
-              <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Test the low-latency conversational audio simulator. Click the large microphone button, speak a query in your mind, and watch the AI Faculty respond immediately.
-              </p>
-
-              {/* Metrics indicator */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                  <span className="text-xs font-bold text-gray-300">Speech Latency: ~150ms</span>
-                </div>
-                <div className="w-1 h-1 rounded-full bg-gray-600" />
-                <div className="flex items-center gap-2.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-400" />
-                  <span className="text-xs font-bold text-gray-300">Real-Time Transcripts</span>
+            <motion.div variants={scrollRevealVariants} className="text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4">
+                <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
+                  Personal AI Faculty
+                </span>
+                <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
+                  Meet Your Specialized Instructors
+                </h2>
+                <p className="text-lg text-[#6B7280] font-medium max-w-xl">
+                  An expert companion for every study path. Click on any companion below to listen to their voice samples and view parameters.
+                </p>
+              </div>
+              <div className="shrink-0 flex items-center justify-center">
+                <div className="px-5 py-2.5 bg-gray-50 border border-gray-200/80 rounded-2xl flex items-center gap-2.5 shadow-sm text-xs font-bold text-gray-500">
+                  <Volume2 className="w-4 h-4 text-[#FF5A36] animate-pulse" />
+                  <span>Interact with Cards below</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Right side interactive console (Large glowing Mic) */}
-            <motion.div variants={scrollRevealVariants} className="lg:col-span-6 bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative backdrop-blur-md">
-              
-              <div className="w-full flex items-center justify-between border-b border-white/10 pb-4 mb-8">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  Live Voice Console
-                </span>
-                <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 border border-[#FF5A36]/20 px-2.5 py-1 rounded-md">
-                  AI VOICE ACTIVE
-                </span>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-              {/* Animated pulsating microphone */}
-              <div className="relative w-44 h-44 flex items-center justify-center mb-8">
-                {/* Ping waves */}
-                {micState !== "idle" && (
-                  <>
-                    <div className="absolute inset-0 bg-[#FF5A36]/25 rounded-full animate-ping duration-1000" />
-                    <div className="absolute -inset-4 bg-[#FF5A36]/15 rounded-full animate-ping duration-2000" />
-                    <div className="absolute -inset-8 bg-purple-500/10 rounded-full animate-ping duration-3000" />
-                  </>
-                )}
-                
-                <button
-                  onClick={startSpeechSim}
-                  disabled={micState !== "idle"}
-                  className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-500 relative cursor-pointer outline-none ${
-                    micState === "idle"
-                      ? "bg-[#FF5A36] hover:bg-[#FF5A36]/90 text-white shadow-xl shadow-[#FF5A36]/20 hover:scale-105"
-                      : micState === "listening"
-                      ? "bg-green-500 text-white shadow-xl shadow-green-500/25 scale-95"
-                      : "bg-purple-600 text-white shadow-xl shadow-purple-600/25 animate-pulse"
-                  }`}
-                >
-                  <Mic className="w-10 h-10" />
-                </button>
-              </div>
-
-              {/* Status Message */}
-              <p className="text-sm font-bold tracking-wide uppercase text-gray-300 mb-4 h-6">
-                {micState === "idle" && "Click mic to test conversation"}
-                {micState === "listening" && "Listening to microphone... Say something"}
-                {micState === "responding" && "AI Faculty is formulating answer..."}
-              </p>
-
-              {/* Transcript list */}
-              <div className="w-full bg-black/40 border border-white/5 rounded-2xl p-5 text-left h-[180px] overflow-y-auto no-scrollbar font-mono text-xs space-y-3">
-                {transcriptLines.length === 0 ? (
-                  <p className="text-gray-500 italic text-center pt-12">Session inactive. Press microphone above to initiate transcript simulator.</p>
-                ) : (
-                  transcriptLines.map((line, index) => {
-                    const isAi = line.startsWith("[AI");
-                    const isYou = line.startsWith("[You]");
-                    return (
-                      <div
-                        key={index}
-                        className={`leading-relaxed border-l-2 pl-3 ${
-                          isAi
-                            ? "text-[#FF5A36] border-[#FF5A36]"
-                            : isYou && line.includes("Speaking")
-                            ? "text-green-400 border-green-400 italic animate-pulse"
-                            : "text-white border-gray-500"
+              {/* Tutor List (Col 5) */}
+              <div className="lg:col-span-5 flex flex-col gap-4">
+                {tutors.map((tutor, idx) => {
+                  const isSelected = idx === activeTutorIndex;
+                  const IconComp = tutor.icon;
+                  return (
+                    <motion.button
+                      variants={scrollRevealVariants}
+                      key={tutor.name}
+                      onClick={() => setActiveTutorIndex(idx)}
+                      className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative group ${isSelected
+                          ? "bg-white border-[#FF5A36] shadow-md shadow-[#FF5A36]/5"
+                          : "bg-gray-50/50 border-gray-200/80 hover:bg-white hover:border-gray-300"
                         }`}
+                    >
+                      {isSelected && (
+                        <div
+                          className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl"
+                          style={{ backgroundColor: "#FF5A36" }}
+                        />
+                      )}
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: `${tutor.badgeColor}20`, color: tutor.badgeColor }}
                       >
-                        {line}
+                        <IconComp className="w-6 h-6" />
                       </div>
-                    );
-                  })
-                )}
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-extrabold text-[#111827] text-base group-hover:text-[#FF5A36] transition-colors">
+                            {tutor.name}
+                          </h4>
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">
+                            {tutor.role}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#6B7280] font-medium mt-1 line-clamp-1">
+                          {tutor.desc}
+                        </p>
+                      </div>
+                    </motion.button>
+                  );
+                })}
               </div>
 
-            </motion.div>
+              {/* Selected Tutor Premium Preview Console (Col 7) */}
+              <motion.div variants={scrollRevealVariants} className="lg:col-span-7 bg-gray-50 border border-gray-200 rounded-3xl p-8 flex flex-col justify-between min-h-[460px] relative overflow-hidden">
+                {/* Decorative Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent pointer-events-none" />
+
+                {/* Console Header */}
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-gray-200/80 pb-6">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center text-white"
+                      style={{ backgroundColor: tutors[activeTutorIndex].badgeColor }}
+                    >
+                      {(() => {
+                        const Icon = tutors[activeTutorIndex].icon;
+                        return <Icon className="w-7 h-7" />;
+                      })()}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-extrabold text-[#111827]">
+                        {tutors[activeTutorIndex].name}
+                      </h3>
+                      <p className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest mt-0.5">
+                        {tutors[activeTutorIndex].role}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-[10px] px-3 py-1 bg-white border border-gray-200 rounded-full font-bold text-gray-500">
+                      {tutors[activeTutorIndex].voice}
+                    </span>
+                    <span className="text-[10px] px-3 py-1 bg-white border border-gray-200 rounded-full font-bold text-gray-500">
+                      {tutors[activeTutorIndex].accent}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Console Body Speech Simulated Bubble */}
+                <div className="relative z-10 my-8">
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                    Active Faculty Speech preview
+                  </span>
+                  <div className="mt-2.5 bg-white border border-gray-200/80 rounded-2xl p-6 shadow-sm relative">
+                    {/* Speech Bubble triangle pointer */}
+                    <div className="absolute -left-2.5 top-8 w-5 h-5 bg-white border-l border-b border-gray-200/80 transform rotate-45 pointer-events-none" />
+
+                    <div className="flex items-start gap-4">
+                      <Volume2 className="w-5 h-5 text-[#FF5A36] shrink-0 mt-0.5 animate-pulse" />
+                      <p className="text-sm font-semibold text-[#111827] leading-relaxed italic">
+                        &ldquo;{tutors[activeTutorIndex].sample}&rdquo;
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Console Footer parameters */}
+                <div className="relative z-10 border-t border-gray-200/80 pt-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <p className="text-xs font-medium text-[#6B7280] max-w-sm">
+                    {tutors[activeTutorIndex].desc}
+                  </p>
+                  <LoadingButton
+                    href="/dashboard"
+                    variant="primary"
+                    className="!text-xs bg-[#FF5A36] text-white hover:bg-[#FF5A36]/90 px-5 py-2.5 rounded-xl shrink-0 font-bold"
+                    showArrow={false}
+                  >
+                    Start Tutoring Session
+                  </LoadingButton>
+                </div>
+
+              </motion.div>
+
+            </div>
 
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ---------------------------------------------------------
-          LEARNING JOURNEY SECTION
+        {/* ---------------------------------------------------------
+          WHY STUDENTS CHOOSE COGNIVA (BENTO GRID)
          --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100"
-      >
-        <motion.div variants={scrollRevealVariants} className="text-center max-w-xl mx-auto space-y-4">
-          <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
-            Adaptive Path
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-            How Your Learning Journey Evolves
-          </h2>
-          <p className="text-lg text-[#6B7280] font-medium">
-            Three simple milestones to master any field with voice-powered tutoring.
-          </p>
-        </motion.div>
-
-        {/* Step-by-step horizontal progress pipeline */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
-          {/* Connector horizontal line for desktop */}
-          <div className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-[#FF5A36] via-purple-500 to-[#FDBA3B] opacity-30 z-0 pointer-events-none" />
-
-          {/* Step 1 */}
-          <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
-            <div className="w-16 h-16 bg-white border-2 border-[#FF5A36] rounded-full flex items-center justify-center font-black text-[#FF5A36] text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
-              01
-            </div>
-            <h4 className="text-xl font-extrabold text-[#111827] mt-2">Select Your AI Companion</h4>
-            <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
-              Choose from our curated team of specialized AI Faculty members (Interview Coach, Coding Mentor, etc.) or construct your own.
-            </p>
-          </motion.div>
-
-          {/* Step 2 */}
-          <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
-            <div className="w-16 h-16 bg-white border-2 border-purple-500 rounded-full flex items-center justify-center font-black text-purple-500 text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
-              02
-            </div>
-            <h4 className="text-xl font-extrabold text-[#111827] mt-2">Start Talking & Listening</h4>
-            <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
-              Unmute your microphone and learn through back-and-forth speech. Hear reviews immediately and analyze topic concepts step-by-step.
-            </p>
-          </motion.div>
-
-          {/* Step 3 */}
-          <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
-            <div className="w-16 h-16 bg-white border-2 border-[#FDBA3B] rounded-full flex items-center justify-center font-black text-[#FDBA3B] text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
-              03
-            </div>
-            <h4 className="text-xl font-extrabold text-[#111827] mt-2">View Metrics & Grow</h4>
-            <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
-              Review your speech latency scores, daily progress, and mock grades on your analytics dashboard to systematically build competence.
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* ---------------------------------------------------------
-          STUDENT OUTCOMES / METRICS SECTION
-         --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        id="outcomes"
-        className="py-24 px-6 bg-white border-b border-gray-100"
-      >
-        <div className="max-w-7xl mx-auto flex flex-col gap-16">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          id="features"
+          className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16"
+        >
           <motion.div variants={scrollRevealVariants} className="text-center max-w-2xl mx-auto space-y-4">
             <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
-              Measurable Success
+              Comprehensive Capabilities
             </span>
             <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-              Empowering Student Outcomes
+              Why Students Choose Cogniva
+            </h2>
+            <p className="text-lg text-[#6B7280] font-medium leading-relaxed">
+              Replace simple flat lists with a dynamic Bento layout. Varying card sizes highlight core value propositions.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {/* Card 1: Tall / Wide (Col-span 2) - Voice */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="md:col-span-2 min-h-[340px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(254, 89, 51, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-[#FF5A36]/10 rounded-2xl flex items-center justify-center text-[#FF5A36]">
+                  <Mic className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-[#111827]">Natural Voice Conversations</h3>
+                <p className="text-sm md:text-base text-[#6B7280] font-medium leading-relaxed max-w-xl">
+                  Conversations make learning feel natural—like talking with a knowledgeable classmate. Ask questions, clarify equations, and review topics without looking at screens.
+                </p>
+              </div>
+              {/* Embedded Audio wave simulator visual */}
+              <div className="mt-8 border-t border-gray-100 pt-6 flex items-center justify-between">
+                <span className="text-xs font-bold text-gray-400">VOICE WAVEFORM SIGNAL</span>
+                <AudioWaveform active={true} color="#FF5A36" barCount={20} />
+              </div>
+            </PremiumCard>
+
+            {/* Card 2: Medium (Col-span 1) - Interview Ready */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="min-h-[340px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(244, 63, 94, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500">
+                  <Target className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-[#111827]">Interview Ready</h3>
+                <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
+                  Practice mock case studies, systems architecture, and HR screening rounds with specialized tech recruiters.
+                </p>
+              </div>
+              <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#FF5A36]">
+                <span>Try behavioral drills</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </PremiumCard>
+
+            {/* Card 3: Medium (Col-span 1) - Exam Excellence */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="min-h-[340px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(245, 158, 11, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500">
+                  <Award className="w-6 h-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-[#111827]">Exam Excellence</h3>
+                <p className="text-sm text-[#6B7280] font-medium leading-relaxed">
+                  Acing midterms, board exams, or SAT mocks. Tutors isolate your weak areas and design targeted review cards.
+                </p>
+              </div>
+              <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#FF5A36]">
+                <span>Take adaptive mocks</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </PremiumCard>
+
+            {/* Card 4: Wide (Col-span 2) - Analytics Progress */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="md:col-span-2 min-h-[340px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(20, 184, 166, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-500">
+                  <TrendingUp className="w-6 h-6 group-hover:scale-110 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-[#111827]">Visual Performance Progress</h3>
+                <p className="text-sm md:text-base text-[#6B7280] font-medium leading-relaxed max-w-xl">
+                  Observe your mastery progress index over time. Our analytics algorithms map your performance trends, identify topic gaps, and flag critical milestones.
+                </p>
+              </div>
+              {/* Visual elements */}
+              <div className="mt-6 flex flex-wrap gap-3">
+                <span className="text-[10px] font-bold px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-500 flex items-center gap-1.5">
+                  <Activity className="w-3.5 h-3.5 text-teal-500" />
+                  Speech Latency: 120ms
+                </span>
+                <span className="text-[10px] font-bold px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-500 flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-green-500" />
+                  STAR Framework Auditing
+                </span>
+                <span className="text-[10px] font-bold px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-lg text-gray-500 flex items-center gap-1.5">
+                  <Flame className="w-3.5 h-3.5 text-[#FDBA3B]" />
+                  Streak Multipliers Active
+                </span>
+              </div>
+            </PremiumCard>
+
+            {/* Card 5: Small (Col-span 1) - Learn Quickly */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="min-h-[280px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(168, 85, 247, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500">
+                  <Clock className="w-6 h-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#111827]">Accelerate Learning</h3>
+                <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
+                  Study in chunks. Speed up summarize notes, optimize integration steps, and capture answers quickly.
+                </p>
+              </div>
+            </PremiumCard>
+
+            {/* Card 6: Small (Col-span 1) - Any Subject */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="min-h-[280px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(14, 165, 233, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-sky-500/10 rounded-2xl flex items-center justify-center text-sky-500">
+                  <BookOpen className="w-6 h-6 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#111827]">Master Any Subject</h3>
+                <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
+                  From advanced computer science to organic chemistry, history, or literature—we cover everything you need.
+                </p>
+              </div>
+            </PremiumCard>
+
+            {/* Card 7: Small (Col-span 1) - Instant Help */}
+            <PremiumCard
+              variants={scrollRevealVariants}
+              className="min-h-[280px]"
+              contentClassName="flex flex-col justify-between h-full w-full"
+              glowColor="rgba(16, 185, 129, 0.12)"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500">
+                  <Zap className="w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#111827]">Instant Feedback</h3>
+                <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
+                  Ask a voice query, talk back and forth, and receive customized constructive analysis immediately.
+                </p>
+              </div>
+            </PremiumCard>
+
+          </div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
+          VOICE AI EXPERIENCE (PREMIUM DARK SHOWCASE SECTION)
+         --------------------------------------------------------- */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          id="voice-experience"
+          className="py-28 bg-[#0B0F19] text-white relative overflow-hidden"
+        >
+          {/* Glow rings in background */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#FF5A36]/15 via-purple-500/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-[20%] right-[-10%] w-[350px] h-[350px] bg-[#FF5A36]/10 rounded-full blur-[90px]" />
+            <div className="absolute bottom-[10%] left-[-10%] w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[110px]" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+              {/* Left side text */}
+              <motion.div variants={scrollRevealVariants} className="lg:col-span-6 flex flex-col gap-6 text-center lg:text-left">
+                <span className="self-center lg:self-start text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 border border-[#FF5A36]/20 px-3.5 py-1.5 rounded-full">
+                  Interactive Voice Sandbox
+                </span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                  Say a Word. <br />
+                  Learn Anything.
+                </h2>
+                <p className="text-base md:text-lg text-gray-400 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  Test the low-latency conversational audio simulator. Click the large microphone button, speak a query in your mind, and watch the AI Faculty respond immediately.
+                </p>
+
+                {/* Metrics indicator */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+                    <span className="text-xs font-bold text-gray-300">Speech Latency: ~150ms</span>
+                  </div>
+                  <div className="w-1 h-1 rounded-full bg-gray-600" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-blue-400" />
+                    <span className="text-xs font-bold text-gray-300">Real-Time Transcripts</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right side interactive console (Large glowing Mic) */}
+              <motion.div variants={scrollRevealVariants} className="lg:col-span-6 bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative backdrop-blur-md">
+
+                <div className="w-full flex items-center justify-between border-b border-white/10 pb-4 mb-8">
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                    Live Voice Console
+                  </span>
+                  <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 border border-[#FF5A36]/20 px-2.5 py-1 rounded-md">
+                    AI VOICE ACTIVE
+                  </span>
+                </div>
+
+                {/* Animated pulsating microphone */}
+                <div className="relative w-44 h-44 flex items-center justify-center mb-8">
+                  {/* Ping waves */}
+                  {micState !== "idle" && (
+                    <>
+                      <div className="absolute inset-0 bg-[#FF5A36]/25 rounded-full animate-ping duration-1000" />
+                      <div className="absolute -inset-4 bg-[#FF5A36]/15 rounded-full animate-ping duration-2000" />
+                      <div className="absolute -inset-8 bg-purple-500/10 rounded-full animate-ping duration-3000" />
+                    </>
+                  )}
+
+                  <button
+                    onClick={startSpeechSim}
+                    disabled={micState !== "idle"}
+                    className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-500 relative cursor-pointer outline-none ${micState === "idle"
+                        ? "bg-[#FF5A36] hover:bg-[#FF5A36]/90 text-white shadow-xl shadow-[#FF5A36]/20 hover:scale-105"
+                        : micState === "listening"
+                          ? "bg-green-500 text-white shadow-xl shadow-green-500/25 scale-95"
+                          : "bg-purple-600 text-white shadow-xl shadow-purple-600/25 animate-pulse"
+                      }`}
+                  >
+                    <Mic className="w-10 h-10" />
+                  </button>
+                </div>
+
+                {/* Status Message */}
+                <p className="text-sm font-bold tracking-wide uppercase text-gray-300 mb-4 h-6">
+                  {micState === "idle" && "Click mic to test conversation"}
+                  {micState === "listening" && "Listening to microphone... Say something"}
+                  {micState === "responding" && "AI Faculty is formulating answer..."}
+                </p>
+
+                {/* Transcript list */}
+                <div className="w-full bg-black/40 border border-white/5 rounded-2xl p-5 text-left h-[180px] overflow-y-auto no-scrollbar font-mono text-xs space-y-3">
+                  {transcriptLines.length === 0 ? (
+                    <p className="text-gray-500 italic text-center pt-12">Session inactive. Press microphone above to initiate transcript simulator.</p>
+                  ) : (
+                    transcriptLines.map((line, index) => {
+                      const isAi = line.startsWith("[AI");
+                      const isYou = line.startsWith("[You]");
+                      return (
+                        <div
+                          key={index}
+                          className={`leading-relaxed border-l-2 pl-3 ${isAi
+                              ? "text-[#FF5A36] border-[#FF5A36]"
+                              : isYou && line.includes("Speaking")
+                                ? "text-green-400 border-green-400 italic animate-pulse"
+                                : "text-white border-gray-500"
+                            }`}
+                        >
+                          {line}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+
+              </motion.div>
+
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
+          LEARNING JOURNEY SECTION
+         --------------------------------------------------------- */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100"
+        >
+          <motion.div variants={scrollRevealVariants} className="text-center max-w-xl mx-auto space-y-4">
+            <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
+              Adaptive Path
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
+              How Your Learning Journey Evolves
             </h2>
             <p className="text-lg text-[#6B7280] font-medium">
-              Cogniva directly impacts speed-to-comprehension, mock ratings, and career transitions.
+              Three simple milestones to master any field with voice-powered tutoring.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            {/* Outcome Card 1 */}
-            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
-              <div>
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Confidence Index</span>
-                <p className="text-3xl font-black text-[#111827] mt-2">+85%</p>
+          {/* Step-by-step horizontal progress pipeline */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
+            {/* Connector horizontal line for desktop */}
+            <div className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-[#FF5A36] via-purple-500 to-[#FDBA3B] opacity-30 z-0 pointer-events-none" />
+
+            {/* Step 1 */}
+            <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
+              <div className="w-16 h-16 bg-white border-2 border-[#FF5A36] rounded-full flex items-center justify-center font-black text-[#FF5A36] text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                01
               </div>
-              <p className="text-xs text-[#6B7280] font-medium mt-4">
-                Increase in speech clarity and technical vocabulary confidence.
+              <h4 className="text-xl font-extrabold text-[#111827] mt-2">Select Your AI Companion</h4>
+              <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
+                Choose from our curated team of specialized AI Faculty members (Interview Coach, Coding Mentor, etc.) or construct your own.
               </p>
             </motion.div>
 
-            {/* Outcome Card 2 */}
-            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
-              <div>
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Placement Rate</span>
-                <p className="text-3xl font-black text-[#111827] mt-2">94%</p>
+            {/* Step 2 */}
+            <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
+              <div className="w-16 h-16 bg-white border-2 border-purple-500 rounded-full flex items-center justify-center font-black text-purple-500 text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                02
               </div>
-              <p className="text-xs text-[#6B7280] font-medium mt-4">
-                Pass rating within interview practice courses.
+              <h4 className="text-xl font-extrabold text-[#111827] mt-2">Start Talking & Listening</h4>
+              <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
+                Unmute your microphone and learn through back-and-forth speech. Hear reviews immediately and analyze topic concepts step-by-step.
               </p>
             </motion.div>
 
-            {/* Outcome Card 3 */}
-            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
-              <div>
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Time Reclaimed</span>
-                <p className="text-3xl font-black text-[#111827] mt-2">12 Hrs</p>
+            {/* Step 3 */}
+            <motion.div variants={scrollRevealVariants} className="flex flex-col items-center md:items-start text-center md:text-left gap-4 relative z-10 group">
+              <div className="w-16 h-16 bg-white border-2 border-[#FDBA3B] rounded-full flex items-center justify-center font-black text-[#FDBA3B] text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                03
               </div>
-              <p className="text-xs text-[#6B7280] font-medium mt-4">
-                Saved weekly by summarizing lengthy textbook chapters.
+              <h4 className="text-xl font-extrabold text-[#111827] mt-2">View Metrics & Grow</h4>
+              <p className="text-sm text-[#6B7280] font-medium leading-relaxed max-w-sm">
+                Review your speech latency scores, daily progress, and mock grades on your analytics dashboard to systematically build competence.
               </p>
             </motion.div>
-
-            {/* Outcome Card 4 */}
-            <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
-              <div>
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Global Reach</span>
-                <p className="text-3xl font-black text-[#111827] mt-2">150+</p>
-              </div>
-              <p className="text-xs text-[#6B7280] font-medium mt-4">
-                Countries represented in active user metrics.
-              </p>
-            </motion.div>
-
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ---------------------------------------------------------
+        {/* ---------------------------------------------------------
+          STUDENT OUTCOMES / METRICS SECTION
+         --------------------------------------------------------- */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          id="outcomes"
+          className="py-24 px-6 bg-white border-b border-gray-100"
+        >
+          <div className="max-w-7xl mx-auto flex flex-col gap-16">
+            <motion.div variants={scrollRevealVariants} className="text-center max-w-2xl mx-auto space-y-4">
+              <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
+                Measurable Success
+              </span>
+              <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
+                Empowering Student Outcomes
+              </h2>
+              <p className="text-lg text-[#6B7280] font-medium">
+                Cogniva directly impacts speed-to-comprehension, mock ratings, and career transitions.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+              {/* Outcome Card 1 */}
+              {/* Outcome Card 1 */}
+              <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+                <div>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Voice Latency</span>
+                  <p className="text-3xl font-black text-[#111827] mt-2">~120ms</p>
+                </div>
+                <p className="text-xs text-[#6B7280] font-medium mt-4">
+                  End-to-end speech-to-speech response time, measured in live sessions.
+                </p>
+              </motion.div>
+
+              {/* Outcome Card 2 */}
+              <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+                <div>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Sessions Run</span>
+                  <p className="text-3xl font-black text-[#111827] mt-2">100+</p>
+                </div>
+                <p className="text-xs text-[#6B7280] font-medium mt-4">
+                  Real voice tutoring sessions with students across 5 college campuses.
+                </p>
+              </motion.div>
+
+              {/* Outcome Card 3 */}
+              <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+                <div>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">AI Faculty</span>
+                  <p className="text-3xl font-black text-[#111827] mt-2">4+</p>
+                </div>
+                <p className="text-xs text-[#6B7280] font-medium mt-4">
+                  Specialized voice tutors — interview coach, coding mentor, study buddy, and custom builders.
+                </p>
+              </motion.div>
+
+              {/* Outcome Card 4 */}
+              <motion.div variants={scrollRevealVariants} className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col justify-between min-h-[160px] hover:border-gray-300 transition-colors">
+                <div>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Built By</span>
+                  <p className="text-3xl font-black text-[#111827] mt-2">1 Dev</p>
+                </div>
+                <p className="text-xs text-[#6B7280] font-medium mt-4">
+                  Designed, built, and deployed solo — from voice pipeline to analytics dashboard.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
           TESTIMONIALS SECTION
          --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        id="testimonials"
-        className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100"
-      >
-        <motion.div variants={scrollRevealVariants} className="text-center max-w-xl mx-auto space-y-4">
-          <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
-            Endorsements
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-            Loved by Students Globally
-          </h2>
-          <p className="text-lg text-[#6B7280] font-medium">
-            Hear how other learners leverage their custom AI Faculty companions.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          {/* Review 1 */}
-          <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
-            <p className="text-sm font-semibold text-gray-700 leading-relaxed">
-              &ldquo;Cogniva completely revamped how I practice for technical coding tests. Instead of copying answers, the Coding Mentor prompts me step-by-step to explain logic aloud. Highly recommend the AI voice speed.&rdquo;
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
-                JD
-              </div>
-              <div>
-                <h5 className="text-sm font-extrabold text-[#111827]">Dheeraj Patil</h5>
-                <p className="text-xs font-bold text-[#FF5A36]">Computer Science(KIT)</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Review 2 */}
-          <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
-            <p className="text-sm font-semibold text-gray-700 leading-relaxed">
-              &ldquo;The Interview Coach is incredibly smart. It corrected my speech pace, cut down on my filler words, and prompted me with customized follow-ups. Amazing IB!&rdquo;
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
-                SK
-              </div>
-              <div>
-                <h5 className="text-sm font-extrabold text-[#111827]">Suhana Banadar</h5>
-                <p className="text-xs font-bold text-[#FF5A36]">AIML(JCE)</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Review 3 */}
-          <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
-            <p className="text-sm font-semibold text-gray-700 leading-relaxed">
-              &ldquo;I summarize entire OOPs chapters using the Study Buddy my Personalized tutor in cogniva. It auto-generates smart audio summaries that I listen to during my commute. Lifesaver!&rdquo;
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
-                MR
-              </div>
-              <div>
-                <h5 className="text-sm font-extrabold text-[#111827]">Rizwan Sheikh</h5>
-                <p className="text-xs font-bold text-[#FF5A36]">Computer Science(DYPatil)</p>
-              </div>
-            </div>
-          </motion.div>
-
-        </div>
-      </motion.section>
-
-      {/* ---------------------------------------------------------
-          FAQ SECTION
-         --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainerVariants}
-        id="faq"
-        className="py-24 px-6 max-w-4xl mx-auto flex flex-col gap-12"
-      >
-        <motion.div variants={scrollRevealVariants} className="text-center space-y-4">
-          <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
-            Common Inquiries
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
-            Frequently Asked Questions
-          </h2>
-        </motion.div>
-
-        <motion.div variants={scrollRevealVariants} className="space-y-4">
-          {faqs.map((faq, idx) => {
-            const isOpen = openFaqIndex === idx;
-            return (
-              <div
-                key={idx}
-                className="bg-white border border-gray-200/80 rounded-2xl overflow-hidden transition-all duration-300 shadow-sm"
-              >
-                <button
-                  onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                  className="w-full text-left p-6 font-bold text-sm md:text-base text-[#111827] flex items-center justify-between gap-4 cursor-pointer outline-none hover:text-[#FF5A36] transition-colors"
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-                      isOpen ? "transform rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                      <div className="p-6 pt-0 border-t border-gray-100 text-xs md:text-sm text-[#6B7280] font-medium leading-relaxed bg-gray-50/30">
-                        {faq.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </motion.div>
-      </motion.section>
-
-      {/* ---------------------------------------------------------
-          CTA BANNER SECTION
-         --------------------------------------------------------- */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={scrollRevealVariants}
-        className="py-16 px-6 max-w-5xl mx-auto"
-      >
-        <div className="relative bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] text-white rounded-[32px] px-8 py-16 text-center overflow-hidden shadow-2xl shadow-[#FF5A36]/25">
-          {/* Animated pulsing elements inside CTA */}
-          <div className="absolute inset-0 bg-white/5 animate-pulse pointer-events-none" />
-          
-          <div className="relative z-10 max-w-2xl mx-auto flex flex-col gap-6 items-center">
-            <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/20 backdrop-blur rounded-full text-xs font-bold tracking-wider animate-bounce uppercase">
-              <Zap className="w-4 h-4 fill-current text-[#FDBA3B]" />
-              <span>Ready to Transform Your Learning?</span>
-            </div>
-            
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-              Start Your Journey <br />
-              With Cogniva Today
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          id="testimonials"
+          className="py-24 px-6 max-w-7xl mx-auto flex flex-col gap-16 border-b border-gray-100"
+        >
+          <motion.div variants={scrollRevealVariants} className="text-center max-w-xl mx-auto space-y-4">
+            <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-500/10 px-3.5 py-1.5 rounded-full inline-block">
+              Endorsements
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
+              Loved by Students Globally
             </h2>
-            
-            <p className="text-base md:text-lg opacity-90 font-medium">
-              Join thousands of global students accelerating their academic and interview metrics using tailored AI Faculty companions.
+            <p className="text-lg text-[#6B7280] font-medium">
+              Hear how other learners leverage their custom AI Faculty companions.
             </p>
+          </motion.div>
 
-            <LoadingButton
-              href="/dashboard"
-              variant="secondary"
-              className="mt-4 bg-white text-[#111827] hover:bg-gray-50 rounded-2xl px-10 py-5 text-lg font-extrabold shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              Enter Cogniva Now
-            </LoadingButton>
-          </div>
-        </div>
-      </motion.section>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-      {/* ---------------------------------------------------------
-          PREMIUM FOOTER
-         --------------------------------------------------------- */}
-      <footer className="border-t border-gray-200/60 bg-[#FAFAFA] text-[#111827]">
-        
-        {/* Newsletter banner strip */}
-        <div className="bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] py-10 px-6">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-white">
-              <h3 className="text-xl md:text-2xl font-black">Stay ahead of the curve</h3>
-              <p className="text-sm opacity-90 font-medium mt-1">Get custom prompts, tutorials, and new companion launches straight to your inbox.</p>
-            </div>
-            <form onSubmit={(e) => e.preventDefault()} className="flex w-full max-w-md gap-3 shrink-0">
-              <input
-                type="email"
-                placeholder="you@email.com"
-                required
-                className="flex-1 rounded-2xl px-5 py-3.5 text-sm bg-white/15 backdrop-blur border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/40"
-              />
-              <button
-                type="submit"
-                className="rounded-2xl px-6 py-3.5 bg-white text-[#FF5A36] font-bold text-sm hover:bg-white/90 transition-all shrink-0 cursor-pointer shadow-md"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* 4-column links navigation */}
-        <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-          
-          {/* Column 1: Brand details */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/logo.png"
-                alt="Cogniva Logo"
-                width={44}
-                height={44}
-                className="rounded-xl shadow-sm"
-              />
-              <div>
-                <p className="text-lg font-black text-[#111827]">Cogniva</p>
-                <p className="text-xs text-[#6B7280] font-bold">by IB&apos;s Dev World</p>
-              </div>
-            </div>
-            <p className="text-xs md:text-sm text-[#6B7280] font-semibold leading-relaxed">
-              Your personal AI faculty—available 24/7. Voice-powered companions that adapt to how you actually study, practice, and summarize topics.
-            </p>
-            
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href="https://www.linkedin.com/in/ikrambanadarwebdev"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-[#FF5A36] hover:text-white text-gray-500 flex items-center justify-center transition-all shadow-sm"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </a>
-              <a
-                href="https://github.com/IBs-DevStudio"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-[#FF5A36] hover:text-white text-gray-500 flex items-center justify-center transition-all shadow-sm"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-              </a>
-              <a
-                href="mailto:ikrambanadar04@gmail.com"
-                aria-label="Email"
-                className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-[#FF5A36] hover:text-white text-gray-500 flex items-center justify-center transition-all shadow-sm"
-              >
-                <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <rect width="20" height="16" x="2" y="4" rx="2" />
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          {/* Column 2: Platform Links */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Platform Navigation</h4>
-            <ul className="space-y-3">
-              {[
-                { label: "Dashboard Home", href: "/dashboard" },
-                { label: "AI Companions Library", href: "/companions" },
-                { label: "Explore More Tutors", href: "/explore-more" },
-                { label: "My Learning Journey", href: "/my-journey" },
-                { label: "Subscription Pricing", href: "/subscription" },
-              ].map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-xs md:text-sm text-[#6B7280] font-semibold hover:text-[#FF5A36] transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: Use Cases */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Popular Subjects</h4>
-            <ul className="space-y-3 text-xs md:text-sm text-[#6B7280] font-semibold">
-              <li>Mock Tech Interviews</li>
-              <li>Algorithm Coding Practice</li>
-              <li>Calculus & Linear Algebra</li>
-              <li>Chemistry & Biology Drills</li>
-              <li>SAT / AP Mock Exams</li>
-              <li>Vocal Pitch Delivery</li>
-            </ul>
-          </div>
-
-          {/* Column 4: Builder Card */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Built & Managed</h4>
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 space-y-4 shadow-sm">
+            {/* Review 1 */}
+            <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
+              <p className="text-sm font-semibold text-gray-700 leading-relaxed">
+                &ldquo;Cogniva completely revamped how I practice for technical coding tests. Instead of copying answers, the Coding Mentor prompts me step-by-step to explain logic aloud. Highly recommend the AI voice speed.&rdquo;
+              </p>
               <div className="flex items-center gap-3">
-                <Image
-                  src="/images/ib-2.png"
-                  alt="Ikram Banadar"
-                  width={38}
-                  height={38}
-                  className="rounded-full border border-gray-200 object-cover"
-                />
+                <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
+                  JD
+                </div>
                 <div>
-                  <p className="text-xs font-extrabold text-[#111827]">Ikram Banadar</p>
-                  <p className="text-[10px] font-bold text-gray-400">Founder & Dev</p>
+                  <h5 className="text-sm font-extrabold text-[#111827]">Dheeraj Patil</h5>
+                  <p className="text-xs font-bold text-[#FF5A36]">Computer Science(KIT)</p>
                 </div>
               </div>
-              <p className="text-[11px] text-[#6B7280] font-medium leading-relaxed">
-                Founder of IB&apos;s Dev World—building accessible AI-powered tutoring platforms.
+            </motion.div>
+
+            {/* Review 2 */}
+            <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
+              <p className="text-sm font-semibold text-gray-700 leading-relaxed">
+                &ldquo;The Interview Coach is incredibly smart. It corrected my speech pace, cut down on my filler words, and prompted me with customized follow-ups. Amazing IB!&rdquo;
               </p>
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {["Next.js 15", "AI Voice", "Supabase", "Clerk"].map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-[9px] font-extrabold px-2 py-0.5 bg-white border border-gray-200 rounded-md text-gray-500"
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
+                  SK
+                </div>
+                <div>
+                  <h5 className="text-sm font-extrabold text-[#111827]">Suhana Banadar</h5>
+                  <p className="text-xs font-bold text-[#FF5A36]">AIML(JCE)</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Review 3 */}
+            <motion.div variants={scrollRevealVariants} className="bg-white border border-gray-200 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-6">
+              <p className="text-sm font-semibold text-gray-700 leading-relaxed">
+                &ldquo;I summarize entire OOPs chapters using the Study Buddy my Personalized tutor in cogniva. It auto-generates smart audio summaries that I listen to during my commute. Lifesaver!&rdquo;
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs">
+                  MR
+                </div>
+                <div>
+                  <h5 className="text-sm font-extrabold text-[#111827]">Rizwan Sheikh</h5>
+                  <p className="text-xs font-bold text-[#FF5A36]">Computer Science(DYPatil)</p>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
+          FAQ SECTION
+         --------------------------------------------------------- */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainerVariants}
+          id="faq"
+          className="py-24 px-6 max-w-4xl mx-auto flex flex-col gap-12"
+        >
+          <motion.div variants={scrollRevealVariants} className="text-center space-y-4">
+            <span className="text-xs font-bold text-[#FF5A36] uppercase tracking-widest bg-[#FF5A36]/10 px-3.5 py-1.5 rounded-full inline-block">
+              Common Inquiries
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#111827] tracking-tight">
+              Frequently Asked Questions
+            </h2>
+          </motion.div>
+
+          <motion.div variants={scrollRevealVariants} className="space-y-4">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white border border-gray-200/80 rounded-2xl overflow-hidden transition-all duration-300 shadow-sm"
+                >
+                  <button
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    className="w-full text-left p-6 font-bold text-sm md:text-base text-[#111827] flex items-center justify-between gap-4 cursor-pointer outline-none hover:text-[#FF5A36] transition-colors"
                   >
-                    {tech}
-                  </span>
+                    <span>{faq.q}</span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isOpen ? "transform rotate-180" : ""
+                        }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="p-6 pt-0 border-t border-gray-100 text-xs md:text-sm text-[#6B7280] font-medium leading-relaxed bg-gray-50/30">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </motion.div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
+          CTA BANNER SECTION
+         --------------------------------------------------------- */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={scrollRevealVariants}
+          className="py-16 px-6 max-w-5xl mx-auto"
+        >
+          <div className="relative bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] text-white rounded-[32px] px-8 py-16 text-center overflow-hidden shadow-2xl shadow-[#FF5A36]/25">
+            {/* Animated pulsing elements inside CTA */}
+            <div className="absolute inset-0 bg-white/5 animate-pulse pointer-events-none" />
+
+            <div className="relative z-10 max-w-2xl mx-auto flex flex-col gap-6 items-center">
+              <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/20 backdrop-blur rounded-full text-xs font-bold tracking-wider animate-bounce uppercase">
+                <Zap className="w-4 h-4 fill-current text-[#FDBA3B]" />
+                <span>Ready to Transform Your Learning?</span>
+              </div>
+
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+                Start Your Journey <br />
+                With Cogniva Today
+              </h2>
+
+              <p className="text-base md:text-lg opacity-90 font-medium">
+                Join thousands of global students accelerating their academic and interview metrics using tailored AI Faculty companions.
+              </p>
+
+              <LoadingButton
+                href="/dashboard"
+                variant="secondary"
+                className="mt-4 bg-white text-[#111827] hover:bg-gray-50 rounded-2xl px-10 py-5 text-lg font-extrabold shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                Enter Cogniva Now
+              </LoadingButton>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ---------------------------------------------------------
+          PREMIUM FOOTER
+         --------------------------------------------------------- */}
+        <footer className="border-t border-gray-200/60 bg-[#FAFAFA] text-[#111827]">
+
+          {/* Newsletter banner strip */}
+          <div className="bg-gradient-to-r from-[#FF5A36] via-[#FF5A36] to-[#FDBA3B] py-10 px-6">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="text-white">
+                <h3 className="text-xl md:text-2xl font-black">Stay ahead of the curve</h3>
+                <p className="text-sm opacity-90 font-medium mt-1">Get custom prompts, tutorials, and new companion launches straight to your inbox.</p>
+              </div>
+              <form onSubmit={(e) => e.preventDefault()} className="flex w-full max-w-md gap-3 shrink-0">
+                <input
+                  type="email"
+                  placeholder="you@email.com"
+                  required
+                  className="flex-1 rounded-2xl px-5 py-3.5 text-sm bg-white/15 backdrop-blur border border-white/20 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/40"
+                />
+                <button
+                  type="submit"
+                  className="rounded-2xl px-6 py-3.5 bg-white text-[#FF5A36] font-bold text-sm hover:bg-white/90 transition-all shrink-0 cursor-pointer shadow-md"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* 4-column links navigation */}
+          <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+
+            {/* Column 1: Brand details */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/images/logo.png"
+                  alt="Cogniva Logo"
+                  width={44}
+                  height={44}
+                  className="rounded-xl shadow-sm"
+                />
+                <div>
+                  <p className="text-lg font-black text-[#111827]">Cogniva</p>
+                  <p className="text-xs text-[#6B7280] font-bold">by IB&apos;s Dev World</p>
+                </div>
+              </div>
+              <p className="text-xs md:text-sm text-[#6B7280] font-semibold leading-relaxed">
+                Your personal AI faculty—available 24/7. Voice-powered companions that adapt to how you actually study, practice, and summarize topics.
+              </p>
+
+              {/* Social Links */}
+              <div className="flex items-center gap-3 pt-2">
+                <a
+                  href="https://www.linkedin.com/in/ikrambanadarwebdev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-[#FF5A36] hover:text-white text-gray-500 flex items-center justify-center transition-all shadow-sm"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
+                <a
+                  href="https://github.com/IBs-DevStudio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-[#FF5A36] hover:text-white text-gray-500 flex items-center justify-center transition-all shadow-sm"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                </a>
+                <a
+                  href="mailto:ikrambanadar04@gmail.com"
+                  aria-label="Email"
+                  className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-[#FF5A36] hover:text-white text-gray-500 flex items-center justify-center transition-all shadow-sm"
+                >
+                  <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Column 2: Platform Links */}
+            <div className="space-y-4">
+              <h4 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Platform Navigation</h4>
+              <ul className="space-y-3">
+                {[
+                  { label: "Dashboard Home", href: "/dashboard" },
+                  { label: "AI Companions Library", href: "/companions" },
+                  { label: "Explore More Tutors", href: "/explore-more" },
+                  { label: "My Learning Journey", href: "/my-journey" },
+                  { label: "Subscription Pricing", href: "/subscription" },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="text-xs md:text-sm text-[#6B7280] font-semibold hover:text-[#FF5A36] transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 3: Use Cases */}
+            <div className="space-y-4">
+              <h4 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Popular Subjects</h4>
+              <ul className="space-y-3 text-xs md:text-sm text-[#6B7280] font-semibold">
+                <li>Mock Tech Interviews</li>
+                <li>Algorithm Coding Practice</li>
+                <li>Calculus & Linear Algebra</li>
+                <li>Chemistry & Biology Drills</li>
+                <li>SAT / AP Mock Exams</li>
+                <li>Vocal Pitch Delivery</li>
+              </ul>
+            </div>
+
+            {/* Column 4: Builder Card */}
+            <div className="space-y-4">
+              <h4 className="text-xs font-bold text-[#111827] uppercase tracking-widest">Built & Managed</h4>
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 space-y-4 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src="/images/ib-2.png"
+                    alt="Ikram Banadar"
+                    width={38}
+                    height={38}
+                    className="rounded-full border border-gray-200 object-cover"
+                  />
+                  <div>
+                    <p className="text-xs font-extrabold text-[#111827]">Ikram Banadar</p>
+                    <p className="text-[10px] font-bold text-gray-400">Founder & Dev</p>
+                  </div>
+                </div>
+                <p className="text-[11px] text-[#6B7280] font-medium leading-relaxed">
+                  Founder of IB&apos;s Dev World—building accessible AI-powered tutoring platforms.
+                </p>
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {["Next.js 15", "AI Voice", "Supabase", "Clerk"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-[9px] font-extrabold px-2 py-0.5 bg-white border border-gray-200 rounded-md text-gray-500"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Bottom copyright details */}
+          <div className="border-t border-gray-200/60 px-6 py-6 bg-white">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-[10px] md:text-xs font-semibold text-[#6B7280] text-center sm:text-left">
+                © {new Date().getFullYear()} Cogniva &amp; IB&apos;s Dev World. All rights reserved. Transforming education via AI.
+              </p>
+              <div className="flex items-center gap-6">
+                {["Privacy Policy", "Terms of Service", "Support Help"].map((item) => (
+                  <a
+                    key={item}
+                    href="#"
+                    className="text-[10px] md:text-xs font-semibold text-[#6B7280] hover:text-[#FF5A36] transition-colors"
+                  >
+                    {item}
+                  </a>
                 ))}
               </div>
             </div>
           </div>
+        </footer>
 
-        </div>
-
-        {/* Bottom copyright details */}
-        <div className="border-t border-gray-200/60 px-6 py-6 bg-white">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-[10px] md:text-xs font-semibold text-[#6B7280] text-center sm:text-left">
-              © {new Date().getFullYear()} Cogniva &amp; IB&apos;s Dev World. All rights reserved. Transforming education via AI.
-            </p>
-            <div className="flex items-center gap-6">
-              {["Privacy Policy", "Terms of Service", "Support Help"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-[10px] md:text-xs font-semibold text-[#6B7280] hover:text-[#FF5A36] transition-colors"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      {/* ---------------------------------------------------------
+        {/* ---------------------------------------------------------
           Demo Video Overlay Modal
          --------------------------------------------------------- */}
-      <AnimatePresence>
-        {isDemoModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 backdrop-blur-md p-4"
-          >
+        <AnimatePresence>
+          {isDemoModalOpen && (
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white rounded-3xl overflow-hidden max-w-4xl w-full border border-gray-200 shadow-2xl relative"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 backdrop-blur-md p-4"
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setIsDemoModalOpen(false)}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow hover:scale-105 transition-all cursor-pointer"
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-3xl overflow-hidden max-w-4xl w-full border border-gray-200 shadow-2xl relative"
               >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Video Player */}
-              <div className="relative aspect-video w-full bg-black">
-                <video
-                  className="w-full h-full object-contain"
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="auto"
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsDemoModalOpen(false)}
+                  className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-gray-800 flex items-center justify-center shadow hover:scale-105 transition-all cursor-pointer"
                 >
-                  <source
-                    src="https://res.cloudinary.com/dchmterf0/video/upload/q_auto,f_auto/Cogniva_Demo_main_tikqmf.mp4"
-                    type="video/mp4"
-                  />
-                </video>
-              </div>
+                  <X className="w-5 h-5" />
+                </button>
 
-              {/* Video Title */}
-              <div className="p-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-                <div>
-                  <h4 className="font-extrabold text-[#111827] text-base">Cogniva App Demonstration</h4>
-                  <p className="text-xs text-[#6B7280] font-medium mt-0.5">Explore how the voice tutoring interface, user dashboard, and companions work.</p>
+                {/* Video Player */}
+                <div className="relative aspect-video w-full bg-black">
+                  <video
+                    className="w-full h-full object-contain"
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="auto"
+                  >
+                    <source
+                      src="https://res.cloudinary.com/dchmterf0/video/upload/q_auto,f_auto/Cogniva_Demo_main_tikqmf.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
                 </div>
-                <LoadingButton
-                  href="/dashboard"
-                  variant="primary"
-                  className="!text-xs bg-[#FF5A36] text-white hover:bg-[#FF5A36]/90 px-6 py-2.5 rounded-xl font-bold shrink-0"
-                  showArrow={false}
-                >
-                  Get Started Immediately
-                </LoadingButton>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-    </div>
+                {/* Video Title */}
+                <div className="p-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                  <div>
+                    <h4 className="font-extrabold text-[#111827] text-base">Cogniva App Demonstration</h4>
+                    <p className="text-xs text-[#6B7280] font-medium mt-0.5">Explore how the voice tutoring interface, user dashboard, and companions work.</p>
+                  </div>
+                  <LoadingButton
+                    href="/dashboard"
+                    variant="primary"
+                    className="!text-xs bg-[#FF5A36] text-white hover:bg-[#FF5A36]/90 px-6 py-2.5 rounded-xl font-bold shrink-0"
+                    showArrow={false}
+                  >
+                    Get Started Immediately
+                  </LoadingButton>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+      </div>
     </>
   );
 };

@@ -38,7 +38,7 @@ const MobileWarningModal = () => {
     sessionStorage.setItem('mobileWarningDismissed', 'true');
   };
 
-  // Don't show modal if user already dismissed it in this session
+  // Don't show modal if user already exited it in this session
   useEffect(() => {
     const dismissed = sessionStorage.getItem('mobileWarningDismissed');
     if (dismissed) {
