@@ -1765,7 +1765,7 @@ const LandingPage = () => {
                     preload="auto"
                   >
                     <source
-                      src="https://res.cloudinary.com/dchmterf0/video/upload/q_auto,f_auto/Cogniva_Demo_main_tikqmf.mp4"
+                      src="https://res.cloudinary.com/dchmterf0/video/upload/v1791293181/ikram_bhai_real_project_w4yws3.mp4"
                       type="video/mp4"
                     />
                   </video>
