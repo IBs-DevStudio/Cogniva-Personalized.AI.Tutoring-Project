@@ -8,6 +8,7 @@ export const subjects = [
   "machinelearning",
 ];
 
+
 export const subjectsColors = {
   interview: "#FF6B8A",
   coding: "#4ECDC4",

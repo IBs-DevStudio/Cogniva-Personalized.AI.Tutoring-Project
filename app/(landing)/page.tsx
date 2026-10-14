@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import LandingNavbar from "@/components/LandingNavbar";
-import MobileWarningModal from "@/components/MobileWarningModal";
 import Preloader from "@/components/Preloader";
 import {
   HeroSection,
@@ -39,9 +38,6 @@ const LandingPage = () => {
     <>
       <Preloader />
       <div className="min-h-screen bg-[#FAFAFA] text-[#111827] overflow-x-hidden relative font-sans selection:bg-[#FF5A36] selection:text-white">
-        {/* Mobile Warning Modal */}
-        <MobileWarningModal />
-
         {/* Sticky Premium Navigation */}
         <LandingNavbar />
 
