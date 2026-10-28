@@ -229,4 +229,17 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .custom-transcript-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-transcript-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-transcript-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 9999px;
+  }
+  .custom-transcript-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+  }
 }
