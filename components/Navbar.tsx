@@ -40,6 +40,19 @@ const Navbar = () => {
 
         <SignedIn>
           <div className="flex items-center gap-3 pl-4 border-l border-gray-300">
+            <Link
+              href="/bookmarks"
+              title="Saved Bookmarks"
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700 hover:text-primary active:scale-95 group"
+            >
+              <Image
+                src="/icons/bookmark.svg"
+                alt="bookmarks"
+                width={17}
+                height={17}
+                className="group-hover:scale-110 transition-transform"
+              />
+            </Link>
             <UserButton
               appearance={{
                 elements: { avatarBox: "w-9 h-9" },

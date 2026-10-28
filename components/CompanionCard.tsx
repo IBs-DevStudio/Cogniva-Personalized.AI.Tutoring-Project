@@ -1,11 +1,11 @@
 "use client";
-// import { removeBookmark } from "@/lib/actions/companion.actions";
-// import { addBookmark } from "@/lib/actions/companion.actions";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { formatSubjectName, getSubjectColor } from "@/lib/utils";
+import { cn, formatSubjectName, getSubjectColor } from "@/lib/utils";
 import CompanionLaunchOverlay from "@/components/CompanionLaunchOverlay";
+import { useBookmarks } from "@/hooks/useBookmarks";
 
 interface CompanionCardProps {
   id: string;
@@ -13,7 +13,8 @@ interface CompanionCardProps {
   topic: string;
   subject: string;
   duration: number;
-  color?: string; // Make color optional since we'll calculate it
+  color?: string; // Optional: calculated from subject if omitted
+  onBookmarkToggle?: (id: string, isBookmarked: boolean) => void;
 }
 
 const CompanionCard = ({
@@ -23,11 +24,14 @@ const CompanionCard = ({
   subject,
   duration,
   color,
+  onBookmarkToggle,
 }: CompanionCardProps) => {
   const router = useRouter();
   const [isLaunching, setIsLaunching] = useState(false);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
 
   const cardBackgroundColor = color || getSubjectColor(subject);
+  const bookmarked = isBookmarked(id);
 
   const handleLaunch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -36,6 +40,24 @@ const CompanionCard = ({
     setTimeout(() => {
       router.push(`/companions/${id}`);
     }, 900);
+  };
+
+  const handleBookmarkClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const newBookmarkedState = await toggleBookmark({
+      id,
+      name,
+      topic,
+      subject,
+      duration,
+      color: cardBackgroundColor,
+    });
+
+    if (onBookmarkToggle) {
+      onBookmarkToggle(id, newBookmarkedState);
+    }
   };
 
   return (
@@ -52,12 +74,29 @@ const CompanionCard = ({
       >
         <div className="flex justify-between items-center">
           <div className="subject-badge">{formatSubjectName(subject)}</div>
-          <button className="companion-bookmark">
+          <button
+            type="button"
+            onClick={handleBookmarkClick}
+            aria-label={
+              bookmarked ? `Remove ${name} from bookmarks` : `Bookmark ${name}`
+            }
+            title={bookmarked ? "Remove from bookmarks" : "Save to bookmarks"}
+            className={cn(
+              "companion-bookmark transition-all duration-200 active:scale-95 group",
+              bookmarked
+                ? "bg-black ring-2 ring-primary/60 shadow-sm"
+                : "bg-black hover:bg-black/85",
+            )}
+          >
             <Image
-              src={"/icons/bookmark.svg"}
+              src={bookmarked ? "/icons/bookmark-filled.svg" : "/icons/bookmark.svg"}
               alt="bookmark"
               width={12.5}
               height={15}
+              className={cn(
+                "transition-transform duration-200",
+                bookmarked ? "scale-115" : "group-hover:scale-110",
+              )}
             />
           </button>
         </div>

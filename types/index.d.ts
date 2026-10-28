@@ -70,6 +70,18 @@ interface SavedMessage {
   timestamp?: string;
 }
 
+interface BookmarkedCompanion {
+  id: string;
+  name: string;
+  topic: string;
+  subject: string;
+  duration: number;
+  color?: string;
+  voice?: string;
+  style?: string;
+  bookmarkedAt?: string;
+}
+
 interface CompanionComponentProps {
   companionId: string;
   subject: string;
