@@ -222,6 +222,7 @@ import {
   getBookmarks as fetchBookmarks,
   toggleBookmarkAction as toggleAction,
   removeBookmarkAction as removeAction,
+  syncBookmarksAction as syncAction,
   type BookmarkedCompanionData,
 } from "./bookmarks.action";
 
@@ -241,6 +242,13 @@ export const removeBookmarkAction = async (
   path?: string
 ) => {
   return removeAction(companionId, path);
+};
+
+export const syncBookmarksAction = async (
+  bookmarks: BookmarkedCompanionData[],
+  path?: string
+) => {
+  return syncAction(bookmarks, path);
 };
 
 export const getBookmarkedCompanions = async () => {

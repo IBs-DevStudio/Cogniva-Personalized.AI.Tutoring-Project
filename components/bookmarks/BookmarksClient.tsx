@@ -154,11 +154,6 @@ const BookmarksClient = ({ initialBookmarks }: BookmarksClientProps) => {
                   subject={companion.subject}
                   duration={companion.duration}
                   color={companion.color || getSubjectColor(companion.subject)}
-                  onBookmarkToggle={(id, isBookmarked) => {
-                    if (!isBookmarked) {
-                      removeBookmark(id);
-                    }
-                  }}
                 />
               ))}
             </div>

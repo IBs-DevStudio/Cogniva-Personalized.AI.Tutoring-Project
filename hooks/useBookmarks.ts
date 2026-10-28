@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
-import { toggleBookmarkAction, removeBookmarkAction } from "@/lib/actions/bookmarks.action";
+import { syncBookmarksAction } from "@/lib/actions/bookmarks.action";
 
 export interface BookmarkedItem {
   id: string;
@@ -18,6 +18,7 @@ export interface BookmarkedItem {
 }
 
 const BOOKMARK_EVENT = "cogniva-bookmarks-change";
+let globalSyncTimer: NodeJS.Timeout | null = null;
 
 export const useBookmarks = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -44,14 +45,10 @@ export const useBookmarks = () => {
       // ignore JSON parse errors
     }
 
-    // Merge/check with user.unsafeMetadata if available
     const metadataBookmarks = (user.unsafeMetadata?.bookmarks as BookmarkedItem[]) || [];
-
-    // Use metadata if available, otherwise cachedList
     const finalList = metadataBookmarks.length > 0 ? metadataBookmarks : cachedList;
     setBookmarks(finalList);
 
-    // Ensure localStorage has it
     if (finalList.length > 0) {
       try {
         localStorage.setItem(storageKey, JSON.stringify(finalList));
@@ -69,7 +66,6 @@ export const useBookmarks = () => {
     }
   }, [isLoaded, loadUserBookmarks]);
 
-  // Listen for bookmark change events across components
   useEffect(() => {
     const handleBookmarkChange = (e: Event) => {
       const customEvent = e as CustomEvent<BookmarkedItem[]>;
@@ -85,6 +81,26 @@ export const useBookmarks = () => {
       window.removeEventListener(BOOKMARK_EVENT, handleBookmarkChange);
     };
   }, [loadUserBookmarks]);
+
+  // Debounced server sync to prevent Clerk 429 rate limit errors
+  const scheduleServerSync = useCallback(
+    (updatedList: BookmarkedItem[]) => {
+      if (!user) return;
+
+      if (globalSyncTimer) {
+        clearTimeout(globalSyncTimer);
+      }
+
+      globalSyncTimer = setTimeout(async () => {
+        try {
+          await syncBookmarksAction(updatedList);
+        } catch (err) {
+          console.warn("Background bookmark sync caught error:", err);
+        }
+      }, 700);
+    },
+    [user]
+  );
 
   const isBookmarked = useCallback(
     (id: string) => {
@@ -109,7 +125,6 @@ export const useBookmarks = () => {
         (b) => String(b.id) === companionIdStr
       );
 
-      // Optimistic update
       let updatedList: BookmarkedItem[];
       if (isCurrentlyBookmarked) {
         updatedList = bookmarks.filter((b) => String(b.id) !== companionIdStr);
@@ -125,7 +140,6 @@ export const useBookmarks = () => {
 
       setBookmarks(updatedList);
 
-      // Update local storage cache
       try {
         localStorage.setItem(
           `cogniva_bookmarks_${user.id}`,
@@ -135,12 +149,10 @@ export const useBookmarks = () => {
         // ignore
       }
 
-      // Notify other components
       window.dispatchEvent(
         new CustomEvent(BOOKMARK_EVENT, { detail: updatedList })
       );
 
-      // Show user feedback
       if (!isCurrentlyBookmarked) {
         toast.success(`Saved to bookmarks`, {
           description: `"${companion.name}" is now in your bookmarked collection.`,
@@ -151,16 +163,10 @@ export const useBookmarks = () => {
         });
       }
 
-      // Sync with server action in background
-      try {
-        await toggleBookmarkAction(companion);
-      } catch (err) {
-        console.error("Failed to sync bookmark with server:", err);
-      }
-
+      scheduleServerSync(updatedList);
       return !isCurrentlyBookmarked;
     },
-    [bookmarks, isLoaded, isSignedIn, user]
+    [bookmarks, isLoaded, isSignedIn, user, scheduleServerSync]
   );
 
   const removeBookmark = useCallback(
@@ -191,13 +197,9 @@ export const useBookmarks = () => {
         });
       }
 
-      try {
-        await removeBookmarkAction(companionId);
-      } catch (err) {
-        console.error("Failed to sync removal with server:", err);
-      }
+      scheduleServerSync(updatedList);
     },
-    [bookmarks, isSignedIn, user]
+    [bookmarks, isSignedIn, user, scheduleServerSync]
   );
 
   return {
